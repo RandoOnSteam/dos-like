@@ -38,39 +38,42 @@ int frametimer_frame_counter( frametimer_t* frametimer );
 #ifdef FRAMETIMER_IMPLEMENTATION
 #undef FRAMETIMER_IMPLEMENTATION
 
-#define _CRT_NONSTDC_NO_DEPRECATE 
+#define _CRT_NONSTDC_NO_DEPRECATE
 #ifndef _CRT_SECURE_NO_WARNINGS
 	#define _CRT_SECURE_NO_WARNINGS
 #endif
 #ifdef _WIN32
-	#if !defined( _WIN32_WINNT ) || _WIN32_WINNT < 0x0501 
+	#if !defined( _WIN32_WINNT ) || _WIN32_WINNT < 0x0501
 	    #undef _WIN32_WINNT
 	    #define _WIN32_WINNT 0x0501 // requires Windows XP minimum
 	#endif
-	// 0x0400=Windows NT 4.0, 0x0500=Windows 2000, 0x0501=Windows XP, 0x0502=Windows Server 2003, 0x0600=Windows Vista, 
-	// 0x0601=Windows 7, 0x0602=Windows 8, 0x0603=Windows 8.1, 0x0A00=Windows 10, 
+	// 0x0400=Windows NT 4.0, 0x0500=Windows 2000, 0x0501=Windows XP, 0x0502=Windows Server 2003, 0x0600=Windows Vista,
+	// 0x0601=Windows 7, 0x0602=Windows 8, 0x0603=Windows 8.1, 0x0A00=Windows 10,
 	#define _WINSOCKAPI_
 	#pragma warning( push )
-    #pragma warning( disable: 4619 ) 
+    #pragma warning( disable: 4619 )
 	#pragma warning( disable: 4668 ) // 'symbol' is not defined as a preprocessor macro, replacing with '0' for 'directives'
-    #pragma warning( disable: 4768 ) // __declspec attributes before linkage specification are ignored	
+    #pragma warning( disable: 4768 ) // __declspec attributes before linkage specification are ignored
 	#pragma warning( disable: 4255 ) // 'function' : no function prototype given: converting '()' to '(void)'
 	#include <windows.h>
 	#pragma warning( pop )
     #ifndef __TINYC__
         #pragma comment(lib, "winmm.lib")
     #endif
-    #if defined( __TINYC__ )
+    #if !defined( TIMERR_NOCANDO ) && defined(_WIN32)
         typedef struct timecaps_tag { UINT wPeriodMin; UINT wPeriodMax; } TIMECAPS, *PTIMECAPS, NEAR *NPTIMECAPS, FAR *LPTIMECAPS;
         typedef UINT MMRESULT;
         #define TIMERR_NOERROR (0)
         static MMRESULT (*timeGetDevCaps)( LPTIMECAPS ptc, UINT cbtc );
         static MMRESULT (*timeBeginPeriod)( UINT uPeriod );
         static MMRESULT (*timeEndPeriod)( UINT uPeriod );
+		typedef MMRESULT (*timeGetDevCapsProc)( LPTIMECAPS ptc, UINT cbtc );
+		typedef MMRESULT (*timeBeginPeriodProc)( UINT uPeriod );
+		typedef MMRESULT (*timeEndPeriodProc)( UINT uPeriod );
     #endif
 
 #elif defined( __APPLE__ )
-	#include <mach/mach_time.h> 	
+	#include <mach/mach_time.h>
 #else
 	#include <time.h>
 #endif
@@ -87,10 +90,10 @@ int frametimer_frame_counter( frametimer_t* frametimer );
 #endif
 
 #ifndef FRAMETIMER_U64
-	#define FRAMETIMER_U64 unsigned long long 
+	#define FRAMETIMER_U64 unsigned long long
 #endif
 
-	
+
 struct frametimer_t
 	{
 	FRAMETIMER_U64 clock_freq;
@@ -108,23 +111,23 @@ struct frametimer_t
 
 frametimer_t* frametimer_create( void* memctx )
 	{
-    #if defined( __TINYC__ )
+    #if !defined( TIMERR_NOCANDO ) && defined(_WIN32)
         if( !timeGetDevCaps) {
             HMODULE winmm = LoadLibrary( "winmm" );
-            timeGetDevCaps = GetProcAddress( winmm, "timeGetDevCaps");
-            timeBeginPeriod = GetProcAddress( winmm, "timeBeginPeriod");
-            timeEndPeriod = GetProcAddress( winmm, "timeEndPeriod");
+            timeGetDevCaps = (timeGetDevCapsProc) GetProcAddress( winmm, "timeGetDevCaps");
+            timeBeginPeriod = (timeBeginPeriodProc) GetProcAddress( winmm, "timeBeginPeriod");
+            timeEndPeriod = (timeEndPeriodProc) GetProcAddress( winmm, "timeEndPeriod");
         }
     #endif
 
 	frametimer_t* frametimer = (frametimer_t*) FRAMETIMER_MALLOC( memctx, sizeof( frametimer_t ) );
 	#ifdef _WIN32
     	TIMECAPS tc;
-		if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR ) 
+		if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
 			timeBeginPeriod( tc.wPeriodMin );
 	    frametimer->waitable_timer = CreateWaitableTimer(NULL, TRUE, NULL);
 	#endif
-	   
+
 	frametimer->memctx = memctx;
 	frametimer->initialized = 0;
 
@@ -149,7 +152,7 @@ void frametimer_destroy( frametimer_t* frametimer )
 	#ifdef _WIN32
 		CloseHandle( frametimer->waitable_timer );
 		TIMECAPS tc;
-		if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR ) 
+		if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
 			timeEndPeriod( tc.wPeriodMin );
 	#endif
 	FRAMETIMER_FREE( frametimer->memctx, frametimer );
@@ -220,22 +223,22 @@ float frametimer_update( frametimer_t* frametimer )
 					}
 			#else
 				struct timespec t = { 0, 0 };
-				t.tv_nsec = wait;				
+				t.tv_nsec = wait;
 				while( t.tv_nsec > 0 )
 					{
 					struct timespec r = { 0, 0 };
 					if( nanosleep( &t, &r ) >= 0 ) break;
 					t = r;
-					}				
+					}
 			#endif
 			curr_clock += wait;
 			}
 		}
-	
+
 	FRAMETIMER_U64 delta_clock = 0ULL;
 	if( curr_clock > frametimer->prev_clock ) delta_clock = curr_clock - frametimer->prev_clock;
-	
-	// Cap delta time if it is too high (running at less than 5 fps ) or things will jump 
+
+	// Cap delta time if it is too high (running at less than 5 fps ) or things will jump
 	// like crazy on occasional long stalls.
 	if( delta_clock > frametimer->clock_freq / 5ULL ) delta_clock = frametimer->clock_freq / 5ULL; // Cap to 5 fps
 
@@ -274,22 +277,22 @@ ALTERNATIVE A - MIT License
 
 Copyright (c) 2015 Mattias Gustavsson
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ------------------------------------------------------------------------------
@@ -298,22 +301,22 @@ ALTERNATIVE B - Public Domain (www.unlicense.org)
 
 This is free and unencumbered software released into the public domain.
 
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this 
-software, either in source code form or as a compiled binary, for any purpose, 
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
+software, either in source code form or as a compiled binary, for any purpose,
 commercial or non-commercial, and by any means.
 
-In jurisdictions that recognize copyright laws, the author or authors of this 
-software dedicate any and all copyright interest in the software to the public 
-domain. We make this dedication for the benefit of the public at large and to 
-the detriment of our heirs and successors. We intend this dedication to be an 
-overt act of relinquishment in perpetuity of all present and future rights to 
+In jurisdictions that recognize copyright laws, the author or authors of this
+software dedicate any and all copyright interest in the software to the public
+domain. We make this dedication for the benefit of the public at large and to
+the detriment of our heirs and successors. We intend this dedication to be an
+overt act of relinquishment in perpetuity of all present and future rights to
 this software under copyright law.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN 
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ------------------------------------------------------------------------------

@@ -82,7 +82,7 @@ I place all my changes under the same license as the original code (see below).
     //
     // Must return 0 if successful
     typedef int (*OPB_StreamSeeker)(void* context, long offset, int origin);
-    
+
     // Custom tell handler of the same form as stdio.h's ftell for writing to memory
     // This function must return the current write position for the user-defined context object
     // Must return -1L if unsuccessful
@@ -378,7 +378,7 @@ static void Log(const char* format, ...) {
         vprintf(format, args);
     }
     else {
-        vsprintf(s, format, args);
+        vsnprintf(s, size, format, args);
     }
     va_end(args);
 
@@ -601,18 +601,18 @@ static Instrument GetInstrument(Context* context, Command* feedconn,
 
     // no instrument found, create and store new instrument
     Instrument instr = {
-        feedconn == NULL ? -1 : feedconn->Data,
+        (int16_t)(feedconn == NULL ? -1 : feedconn->Data),
         {
-            modChar == NULL ? -1 : modChar->Data,
-            modAttack == NULL ? -1 : modAttack->Data,
-            modSustain == NULL ? -1 : modSustain->Data,
-            modWave == NULL ? -1 : modWave->Data,
+            (int16_t)(modChar == NULL ? -1 : modChar->Data),
+            (int16_t)(modAttack == NULL ? -1 : modAttack->Data),
+            (int16_t)(modSustain == NULL ? -1 : modSustain->Data),
+            (int16_t)(modWave == NULL ? -1 : modWave->Data),
         },
         {
-            carChar == NULL ? -1 : carChar->Data,
-            carAttack == NULL ? -1 : carAttack->Data,
-            carSustain == NULL ? -1 : carSustain->Data,
-            carWave == NULL ? -1 : carWave->Data,
+            (int16_t)(carChar == NULL ? -1 : carChar->Data),
+            (int16_t)(carAttack == NULL ? -1 : carAttack->Data),
+            (int16_t)(carSustain == NULL ? -1 : carSustain->Data),
+            (int16_t)(carWave == NULL ? -1 : carWave->Data),
         },
         (int)context->Instruments.Count
     };
@@ -765,7 +765,7 @@ static int CountInstrumentChanges(Command* feedconn,
     return count;
 }
 
-static int ProcessRange(Context* context, int channel, double time, Command* commands, int cmdCount, Vector* range, 
+static int ProcessRange(Context* context, int channel, double time, Command* commands, int cmdCount, Vector* range,
     int _debug_start, int _debug_end // these last two are only for logging in case of error
 ) {
     for (int i = 0; i < cmdCount; i++) {
@@ -1006,7 +1006,7 @@ static int ProcessTrack(Context* context, int channel, Vector* chOut) {
             Vector_Free(&range);
             return ret;
         }
-        
+
         Vector_AddRange(chOut, range.Storage, range.Count);
         Vector_Free(&range);
 
@@ -1324,7 +1324,7 @@ static int ReadCommand(Context* context, OPB_Command* buffer, int* bufferIndex, 
             ADD_TO_BUFFER(context, buffer, bufferIndex, MakeCommand( (uint16_t)addr, data, context->Time ));
             break;
         }
-        
+
         case OPB_CMD_PLAYINSTRUMENT:
         case OPB_CMD_SETINSTRUMENT: {
             int instrIndex;
@@ -1510,7 +1510,7 @@ static int ReadOpbRaw(Context* context) {
             uint8_t data = value[4];
 
             time += elapsed / 1000.0;
-            
+
             OPB_Command cmd = {
                 addr,
                 data,

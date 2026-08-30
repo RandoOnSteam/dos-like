@@ -2,14 +2,13 @@
 // Basically, it is just using dos-like to read keyboard input and print text,
 // passing all actual commands through to Windows cmd.exe.
 // There are lots of things missing and things that won't work as expected, so
-// don't use this as a real command line environment - it is merely intended 
+// don't use this as a real command line environment - it is merely intended
 // as a bit of fun, to be able to edit (using the bundled edit.c), compile and
 // run the samples while staying in a seemingly dos-like environment.
 //      /Mattias Gustavsson
 
-#ifndef _WIN32
-    #error command.c can only be built for Windows
-#endif
+#ifdef _WIN32
+	//#error command.c can only be built for Windows
 
 #include "dos.h"
 #include <stdio.h>
@@ -46,11 +45,11 @@ int print( const char* format, ... ) {
 		textline = (char*) realloc( textline, textline_capacity );
 		len = vsnprintf( textline, textline_capacity - 1, format, args );
 	}
-	
+
 	const char* str = textline;
 	while( *str ) {
-		if( wherex() >= screenwidth() || *str == '\n' )  { 
-			gotoxy( 0, wherey() +  1 ); 
+		if( wherex() >= screenwidth() || *str == '\n' )  {
+			gotoxy( 0, wherey() +  1 );
 		}
 		while( wherey() >= screenheight() ) {
 			memmove( ((uint16_t*)screenbuffer()), ((uint16_t*)screenbuffer()) + screenwidth(), screenwidth() * ( screenheight() - 1 ) * sizeof( uint16_t ) );
@@ -75,7 +74,7 @@ int print( const char* format, ... ) {
 					gotoxy( wherex(), y < 0 ? 0 : y );
 					str = ansi;
 				} break;
- 
+
 				case 'B': { // Cursor Down ESC[PnB
 					str +=2;
 					int num = getnum( &str );
@@ -85,7 +84,7 @@ int print( const char* format, ... ) {
 					gotoxy( wherex(), y >= h ? h - 1 : y );
 					str = ansi;
 				} break;
-				
+
 				case 'C': { // Cursor Forward ESC[PnC
 					str +=2;
 					int num = getnum( &str );
@@ -95,7 +94,7 @@ int print( const char* format, ... ) {
 					gotoxy(  x >= w ? w - 1 : x, wherey() );
 					str = ansi;
 				} break;
- 
+
 				case 'D': { // Cursor Backward ESC[PnD
 					str +=2;
 					int num = getnum( &str );
@@ -104,9 +103,9 @@ int print( const char* format, ... ) {
 					gotoxy( x < 0 ? 0 : x, wherey() );
 					str = ansi;
 				} break;
-			
-                
-				case 'm': { // Set Graphics Mode ESC[Ps;...;Psm 
+
+
+				case 'm': { // Set Graphics Mode ESC[Ps;...;Psm
 					str +=2;
 					while( *str != 'm' ) {
 						int num = getnum( &str );
@@ -127,7 +126,7 @@ int print( const char* format, ... ) {
 					}
 					str = ansi;
 				} break;
- 
+
 				default:
 					goto nonansi;
 					break;
@@ -136,7 +135,7 @@ int print( const char* format, ... ) {
 		}
 		++str;
 	}
-	if( wherex() >= screenwidth() || *str == '\n' ) { 
+	if( wherex() >= screenwidth() || *str == '\n' ) {
         gotoxy( 0, wherey() + 1 );
 	}
 	while( wherey() >= screenheight() ) {
@@ -160,7 +159,7 @@ int input( char* buffer, int size ) {
 			switch( c >> 8 ) {
 				case 0x08: { // Backspace
 					if( len > 0 ) {
-						--len; 
+						--len;
                         gotoxy( wherex() - 1, wherey() );
 						print( " " );
                         gotoxy( wherex() - 1, wherey() );
@@ -193,9 +192,9 @@ void exec( char* cmd ) {
 	strcat( command_string,  cmd );
 	strcat( command_string, " \" 2>&1" );
 	FILE* pipe = _popen( command_string, "r" );
-	if (!pipe) { 
-        print( "cmd.exe not found." ); 
-        return; 
+	if (!pipe) {
+        print( "cmd.exe not found." );
+        return;
     }
 	char buffer[128];
 	while( !feof( pipe ) ) {
@@ -213,10 +212,10 @@ int main( int argc, char *argv[] ) {
 
     textline_capacity = 256;
 	textline = (char*) malloc( textline_capacity );
-    
+
     print( "Starting dos-like...\n" );
     for( int i = 0; i < 60; ++i ) waitvbl();
-    
+
 	char command[ 256 ];
 	getcwd( command, 256 );
 	print( "\n%s>",command );
@@ -248,3 +247,8 @@ int main( int argc, char *argv[] ) {
     free( textline );
     return 0;
 }
+#else
+int dosmain( int argc, char** argv ) {
+	return -1;
+}
+#endif // _WIN32

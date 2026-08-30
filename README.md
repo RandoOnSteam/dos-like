@@ -1,3 +1,9 @@
+# STATUS
+
+This is an experimental fork of Mattias Gustavsson's cool [dos-like](https://github.com/mattiasgustavsson/dos-like). It uses my single header libs for his app class for improved cross-platform compatibility. 
+
+So far it compiles and runs alright on Windows (there seems to be a bug with double entry in edit, but it happens when compiled without my libs), and it compiles on Ubuntu.
+
 ![build](https://github.com/mattiasgustavsson/dos-like/actions/workflows/main.yml/badge.svg)
 
 # dos-like
@@ -99,4 +105,3 @@ build environment is already included.
 
 The wasm build environment is a compact distribution of [node](https://nodejs.org/en/download/), [clang/wasm-ld](https://releases.llvm.org/download.html),
 [WAjic](https://github.com/schellingb/wajic) and [wasm system libraries](https://github.com/emscripten-core/emscripten/tree/main/system).
-

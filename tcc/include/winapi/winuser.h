@@ -5146,7 +5146,7 @@ extern "C" {
 #endif
 #endif
 
-#ifdef UNICODE 
+#ifdef UNICODE
 #define GetMonitorInfo GetMonitorInfoW
 #else
 #define GetMonitorInfo GetMonitorInfoA

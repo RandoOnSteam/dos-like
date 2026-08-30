@@ -236,7 +236,7 @@ struct tml_tempomsg
 
 struct tml_parser
 {
-	unsigned char *buf, *buf_end; 
+	unsigned char *buf, *buf_end;
 	int last_status, message_array_size, message_count;
 };
 
@@ -329,7 +329,7 @@ static int tml_parsemessage(tml_message** f, struct tml_parser* p)
 	}
 	else //channel message
 	{
-		int param; 
+		int param;
 		if ((param = tml_readbyte(p)) < 0) { TML_WARN("Unexpected end of file"); return -1; }
 		evt->key = (param & 0x7f);
 		evt->channel = (status & 0x0f);

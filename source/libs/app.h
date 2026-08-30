@@ -1,27 +1,26 @@
 /*
 ------------------------------------------------------------------------------
-          Licensing information can be found at the end of the file.
+		  Licensing information can be found at the end of the file.
 ------------------------------------------------------------------------------
 
 app.h - v0.4 - Small cross-platform base framework for graphical apps.
 
 Do this:
-    #define APP_IMPLEMENTATION
+	#define APP_IMPLEMENTATION
 before you include this file in *one* C/C++ file to create the implementation.
 */
-
 
 #ifndef app_h
 #define app_h
 
 #ifndef APP_S16
-    #define APP_S16 short
+	#define APP_S16 short
 #endif
 #ifndef APP_U32
-    #define APP_U32 unsigned int
+	#define APP_U32 unsigned int
 #endif
 #ifndef APP_U64
-    #define APP_U64 unsigned long long
+	#define APP_U64 unsigned long long
 #endif
 
 
@@ -72,67 +71,68 @@ int app_window_x( app_t* app );
 int app_window_y( app_t* app );
 
 typedef struct app_display_t
-    {
-    char id[ 64 ];
-    int x;
-    int y;
-    int width;
-    int height;
-    } app_display_t ;
+	{
+	char id[ 64 ];
+	int x;
+	int y;
+	int width;
+	int height;
+	} app_display_t ;
 
 typedef struct app_displays_t { app_display_t* displays; int count; } app_displays_t;
 app_displays_t app_displays( app_t* app );
 
+void app_setcurrent( app_t* app );
 void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr );
 
 void app_sound( app_t* app, int sample_pairs_count,
-    void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data );
+	void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data );
 void app_sound_volume( app_t* app, float volume );
 
 typedef enum app_key_t { APP_KEY_INVALID, APP_KEY_LBUTTON, APP_KEY_RBUTTON, APP_KEY_CANCEL, APP_KEY_MBUTTON,
-    APP_KEY_XBUTTON1, APP_KEY_XBUTTON2, APP_KEY_BACK, APP_KEY_TAB, APP_KEY_CLEAR, APP_KEY_RETURN, APP_KEY_SHIFT,
-    APP_KEY_CONTROL, APP_KEY_MENU, APP_KEY_PAUSE, APP_KEY_CAPITAL, APP_KEY_KANA, APP_KEY_HANGUL = APP_KEY_KANA,
-    APP_KEY_JUNJA, APP_KEY_FINAL, APP_KEY_HANJA, APP_KEY_KANJI = APP_KEY_HANJA, APP_KEY_ESCAPE, APP_KEY_CONVERT,
-    APP_KEY_NONCONVERT, APP_KEY_ACCEPT, APP_KEY_MODECHANGE, APP_KEY_SPACE, APP_KEY_PRIOR, APP_KEY_NEXT, APP_KEY_END,
-    APP_KEY_HOME, APP_KEY_LEFT, APP_KEY_UP, APP_KEY_RIGHT, APP_KEY_DOWN, APP_KEY_SELECT, APP_KEY_PRINT, APP_KEY_EXEC,
-    APP_KEY_SNAPSHOT, APP_KEY_INSERT, APP_KEY_DELETE, APP_KEY_HELP, APP_KEY_0, APP_KEY_1, APP_KEY_2, APP_KEY_3,
-    APP_KEY_4, APP_KEY_5, APP_KEY_6, APP_KEY_7, APP_KEY_8, APP_KEY_9, APP_KEY_A, APP_KEY_B, APP_KEY_C, APP_KEY_D,
-    APP_KEY_E, APP_KEY_F, APP_KEY_G, APP_KEY_H, APP_KEY_I, APP_KEY_J, APP_KEY_K, APP_KEY_L, APP_KEY_M, APP_KEY_N,
-    APP_KEY_O, APP_KEY_P, APP_KEY_Q, APP_KEY_R, APP_KEY_S, APP_KEY_T, APP_KEY_U, APP_KEY_V, APP_KEY_W, APP_KEY_X,
-    APP_KEY_Y, APP_KEY_Z, APP_KEY_LWIN, APP_KEY_RWIN, APP_KEY_APPS, APP_KEY_SLEEP, APP_KEY_NUMPAD0, APP_KEY_NUMPAD1,
-    APP_KEY_NUMPAD2, APP_KEY_NUMPAD3, APP_KEY_NUMPAD4, APP_KEY_NUMPAD5, APP_KEY_NUMPAD6, APP_KEY_NUMPAD7,
-    APP_KEY_NUMPAD8, APP_KEY_NUMPAD9, APP_KEY_MULTIPLY, APP_KEY_ADD, APP_KEY_SEPARATOR, APP_KEY_SUBTRACT,
-    APP_KEY_DECIMAL, APP_KEY_DIVIDE, APP_KEY_F1, APP_KEY_F2, APP_KEY_F3, APP_KEY_F4, APP_KEY_F5, APP_KEY_F6, APP_KEY_F7,
-    APP_KEY_F8, APP_KEY_F9, APP_KEY_F10, APP_KEY_F11, APP_KEY_F12, APP_KEY_F13, APP_KEY_F14, APP_KEY_F15, APP_KEY_F16,
-    APP_KEY_F17, APP_KEY_F18, APP_KEY_F19, APP_KEY_F20, APP_KEY_F21, APP_KEY_F22, APP_KEY_F23, APP_KEY_F24,
-    APP_KEY_NUMLOCK, APP_KEY_SCROLL, APP_KEY_LSHIFT, APP_KEY_RSHIFT, APP_KEY_LCONTROL, APP_KEY_RCONTROL, APP_KEY_LMENU,
-    APP_KEY_RMENU, APP_KEY_BROWSER_BACK, APP_KEY_BROWSER_FORWARD, APP_KEY_BROWSER_REFRESH, APP_KEY_BROWSER_STOP,
-    APP_KEY_BROWSER_SEARCH, APP_KEY_BROWSER_FAVORITES, APP_KEY_BROWSER_HOME, APP_KEY_VOLUME_MUTE, APP_KEY_VOLUME_DOWN,
-    APP_KEY_VOLUME_UP, APP_KEY_MEDIA_NEXT_TRACK, APP_KEY_MEDIA_PREV_TRACK, APP_KEY_MEDIA_STOP, APP_KEY_MEDIA_PLAY_PAUSE,
-    APP_KEY_LAUNCH_MAIL, APP_KEY_LAUNCH_MEDIA_SELECT, APP_KEY_LAUNCH_APP1, APP_KEY_LAUNCH_APP2, APP_KEY_OEM_1,
-    APP_KEY_OEM_PLUS, APP_KEY_OEM_COMMA, APP_KEY_OEM_MINUS, APP_KEY_OEM_PERIOD, APP_KEY_OEM_2, APP_KEY_OEM_3,
-    APP_KEY_OEM_4, APP_KEY_OEM_5, APP_KEY_OEM_6, APP_KEY_OEM_7, APP_KEY_OEM_8, APP_KEY_OEM_102, APP_KEY_PROCESSKEY,
-    APP_KEY_ATTN, APP_KEY_CRSEL, APP_KEY_EXSEL, APP_KEY_EREOF, APP_KEY_PLAY, APP_KEY_ZOOM, APP_KEY_NONAME, APP_KEY_PA1,
-    APP_KEY_OEM_CLEAR, APP_KEYCOUNT } app_key_t;
+	APP_KEY_XBUTTON1, APP_KEY_XBUTTON2, APP_KEY_BACK, APP_KEY_TAB, APP_KEY_CLEAR, APP_KEY_RETURN, APP_KEY_SHIFT,
+	APP_KEY_CONTROL, APP_KEY_MENU, APP_KEY_PAUSE, APP_KEY_CAPITAL, APP_KEY_KANA, APP_KEY_HANGUL = APP_KEY_KANA,
+	APP_KEY_JUNJA, APP_KEY_FINAL, APP_KEY_HANJA, APP_KEY_KANJI = APP_KEY_HANJA, APP_KEY_ESCAPE, APP_KEY_CONVERT,
+	APP_KEY_NONCONVERT, APP_KEY_ACCEPT, APP_KEY_MODECHANGE, APP_KEY_SPACE, APP_KEY_PRIOR, APP_KEY_NEXT, APP_KEY_END,
+	APP_KEY_HOME, APP_KEY_LEFT, APP_KEY_UP, APP_KEY_RIGHT, APP_KEY_DOWN, APP_KEY_SELECT, APP_KEY_PRINT, APP_KEY_EXEC,
+	APP_KEY_SNAPSHOT, APP_KEY_INSERT, APP_KEY_DELETE, APP_KEY_HELP, APP_KEY_0, APP_KEY_1, APP_KEY_2, APP_KEY_3,
+	APP_KEY_4, APP_KEY_5, APP_KEY_6, APP_KEY_7, APP_KEY_8, APP_KEY_9, APP_KEY_A, APP_KEY_B, APP_KEY_C, APP_KEY_D,
+	APP_KEY_E, APP_KEY_F, APP_KEY_G, APP_KEY_H, APP_KEY_I, APP_KEY_J, APP_KEY_K, APP_KEY_L, APP_KEY_M, APP_KEY_N,
+	APP_KEY_O, APP_KEY_P, APP_KEY_Q, APP_KEY_R, APP_KEY_S, APP_KEY_T, APP_KEY_U, APP_KEY_V, APP_KEY_W, APP_KEY_X,
+	APP_KEY_Y, APP_KEY_Z, APP_KEY_LWIN, APP_KEY_RWIN, APP_KEY_APPS, APP_KEY_SLEEP, APP_KEY_NUMPAD0, APP_KEY_NUMPAD1,
+	APP_KEY_NUMPAD2, APP_KEY_NUMPAD3, APP_KEY_NUMPAD4, APP_KEY_NUMPAD5, APP_KEY_NUMPAD6, APP_KEY_NUMPAD7,
+	APP_KEY_NUMPAD8, APP_KEY_NUMPAD9, APP_KEY_MULTIPLY, APP_KEY_ADD, APP_KEY_SEPARATOR, APP_KEY_SUBTRACT,
+	APP_KEY_DECIMAL, APP_KEY_DIVIDE, APP_KEY_F1, APP_KEY_F2, APP_KEY_F3, APP_KEY_F4, APP_KEY_F5, APP_KEY_F6, APP_KEY_F7,
+	APP_KEY_F8, APP_KEY_F9, APP_KEY_F10, APP_KEY_F11, APP_KEY_F12, APP_KEY_F13, APP_KEY_F14, APP_KEY_F15, APP_KEY_F16,
+	APP_KEY_F17, APP_KEY_F18, APP_KEY_F19, APP_KEY_F20, APP_KEY_F21, APP_KEY_F22, APP_KEY_F23, APP_KEY_F24,
+	APP_KEY_NUMLOCK, APP_KEY_SCROLL, APP_KEY_LSHIFT, APP_KEY_RSHIFT, APP_KEY_LCONTROL, APP_KEY_RCONTROL, APP_KEY_LMENU,
+	APP_KEY_RMENU, APP_KEY_BROWSER_BACK, APP_KEY_BROWSER_FORWARD, APP_KEY_BROWSER_REFRESH, APP_KEY_BROWSER_STOP,
+	APP_KEY_BROWSER_SEARCH, APP_KEY_BROWSER_FAVORITES, APP_KEY_BROWSER_HOME, APP_KEY_VOLUME_MUTE, APP_KEY_VOLUME_DOWN,
+	APP_KEY_VOLUME_UP, APP_KEY_MEDIA_NEXT_TRACK, APP_KEY_MEDIA_PREV_TRACK, APP_KEY_MEDIA_STOP, APP_KEY_MEDIA_PLAY_PAUSE,
+	APP_KEY_LAUNCH_MAIL, APP_KEY_LAUNCH_MEDIA_SELECT, APP_KEY_LAUNCH_APP1, APP_KEY_LAUNCH_APP2, APP_KEY_OEM_1,
+	APP_KEY_OEM_PLUS, APP_KEY_OEM_COMMA, APP_KEY_OEM_MINUS, APP_KEY_OEM_PERIOD, APP_KEY_OEM_2, APP_KEY_OEM_3,
+	APP_KEY_OEM_4, APP_KEY_OEM_5, APP_KEY_OEM_6, APP_KEY_OEM_7, APP_KEY_OEM_8, APP_KEY_OEM_102, APP_KEY_PROCESSKEY,
+	APP_KEY_ATTN, APP_KEY_CRSEL, APP_KEY_EXSEL, APP_KEY_EREOF, APP_KEY_PLAY, APP_KEY_ZOOM, APP_KEY_NONAME, APP_KEY_PA1,
+	APP_KEY_OEM_CLEAR, APP_KEYCOUNT } app_key_t;
 
 typedef enum app_input_type_t { APP_INPUT_KEY_DOWN, APP_INPUT_KEY_UP, APP_INPUT_DOUBLE_CLICK, APP_INPUT_CHAR,
-    APP_INPUT_MOUSE_MOVE, APP_INPUT_MOUSE_DELTA, APP_INPUT_SCROLL_WHEEL, APP_INPUT_TABLET } app_input_type_t;
+	APP_INPUT_MOUSE_MOVE, APP_INPUT_MOUSE_DELTA, APP_INPUT_SCROLL_WHEEL, APP_INPUT_TABLET } app_input_type_t;
 
 typedef enum app_pressed_t { APP_NOT_PRESSED, APP_PRESSED, } app_pressed_t;
 
 typedef struct app_input_event_t
-    {
-    app_input_type_t type;
-    union data_t
-        {
-        app_key_t key;
-        char char_code;
-        struct { int x; int y; } mouse_pos;
-        struct { float x; float y; } mouse_delta;
-        float wheel_delta;
-        struct { int x; int y; float pressure; app_pressed_t tip; app_pressed_t lower; app_pressed_t upper; } tablet;
-        } data;
-    } app_input_event_t;
+	{
+	app_input_type_t type;
+	union data_t
+		{
+		app_key_t key;
+		char char_code;
+		struct { int x; int y; } mouse_pos;
+		struct { float x; float y; } mouse_delta;
+		float wheel_delta;
+		struct { int x; int y; float pressure; app_pressed_t tip; app_pressed_t lower; app_pressed_t upper; } tablet;
+		} data;
+	} app_input_event_t;
 
 typedef struct app_input_t { app_input_event_t* events; int count; } app_input_t;
 app_input_t app_input( app_t* app );
@@ -156,39 +156,39 @@ Example
 
 Here's a basic sample program which starts a windowed app and plots random pixels.
 
-    #define  APP_IMPLEMENTATION
-    #define  APP_WINDOWS
-    #include "app.h"
+	#define  APP_IMPLEMENTATION
+	#define  APP_WINDOWS
+	#include "app.h"
 
-    #include <stdlib.h> // for rand and __argc/__argv
-    #include <string.h> // for memset
+	#include <stdlib.h> // for rand and __argc/__argv
+	#include <string.h> // for memset
 
-    int app_proc( app_t* app, void* user_data ) {
-        APP_U32 canvas[ 320 * 200 ]; // a place for us to draw stuff
-        memset( canvas, 0xC0, sizeof( canvas ) ); // clear to grey
-        app_screenmode( app, APP_SCREENMODE_WINDOW );
+	int app_proc( app_t* app, void* user_data ) {
+		APP_U32 canvas[ 320 * 200 ]; // a place for us to draw stuff
+		memset( canvas, 0xC0, sizeof( canvas ) ); // clear to grey
+		app_screenmode( app, APP_SCREENMODE_WINDOW );
 
-        // keep running until the user close the window
-        while( app_yield( app ) != APP_STATE_EXIT_REQUESTED ) {
-            // plot a random pixel on the canvas
-            int x = rand() % 320;
-            int y = rand() % 200;
-            APP_U32 color = rand() | ( (APP_U32) rand() << 16 );
-            canvas[ x + y * 320 ] = color;
+		// keep running until the user close the window
+		while( app_yield( app ) != APP_STATE_EXIT_REQUESTED ) {
+			// plot a random pixel on the canvas
+			int x = rand() % 320;
+			int y = rand() % 200;
+			APP_U32 color = rand() | ( (APP_U32) rand() << 16 );
+			canvas[ x + y * 320 ] = color;
 
-            // display the canvas
-            app_present( app, canvas, 320, 200, 0xffffff, 0x000000 );
-        }
-        return 0;
-    }
+			// display the canvas
+			app_present( app, canvas, 320, 200, 0xffffff, 0x000000 );
+		}
+		return 0;
+	}
 
-    int main( int argc, char** argv ) {
-        (void) argc, argv;
-        return app_run( app_proc, NULL, NULL, NULL, NULL );
-    }
+	int main( int argc, char** argv ) {
+		(void) argc, argv;
+		return app_run( app_proc, NULL, NULL, NULL, NULL );
+	}
 
-    // pass-through so the program will build with either /SUBSYSTEM:WINDOWS or /SUBSYSTEN:CONSOLE
-    extern "C" int __stdcall WinMain( struct HINSTANCE__*, struct HINSTANCE__*, char*, int ) { return main( __argc, __argv ); }
+	// pass-through so the program will build with either /SUBSYSTEM:WINDOWS or /SUBSYSTEN:CONSOLE
+	extern "C" int __stdcall WinMain( struct HINSTANCE__*, struct HINSTANCE__*, char*, int ) { return main( __argc, __argv ); }
 
 
 
@@ -201,14 +201,14 @@ C or C++ file, and #define the symbol `APP_IMPLEMENTATION` before you do.
 
 As app.h is a cross platform library, you must also define which platform you are running on, like this for Windows:
 
-    #define APP_IMPLEMENTATION
-    #define APP_WINDOWS
-    #include "app.h"
+	#define APP_IMPLEMENTATION
+	#define APP_WINDOWS
+	#include "app.h"
 
 Or like this for other platforms:
-    #define APP_IMPLEMENTATION
-    #define APP_SDL
-    #include "app.h"
+	#define APP_IMPLEMENTATION
+	#define APP_SDL
+	#include "app.h"
 
 ### Customization
 
@@ -219,10 +219,10 @@ redefined by #defining APP_S16, APP_U32 and APP_U64 respectively, before includi
 example, use the types from `<stdint.h>` in the rest of your program, and you want app.h to use compatible types. In
 this case, you would include app.h using the following code:
 
-    #define APP_S16 int16_t
-    #define APP_U32 uint32_t
-    #define APP_U64 uint64_t
-    #include "app.h"
+	#define APP_S16 int16_t
+	#define APP_U32 uint32_t
+	#define APP_U64 uint64_t
+	#include "app.h"
 
 Note that when customizing the data types, you need to use the same definition in every place where you include app.h,
 as they affect the declarations as well as the definitions.
@@ -238,10 +238,10 @@ dynamic allocation by calling `malloc`. Programs might want to keep track of all
 pools to allocate memory from. app.h allows for specifying custom memory allocation functions for `malloc` and `free`.
 This is done with the following code:
 
-    #define APP_IMPLEMENTATION
-    #define APP_MALLOC( ctx, size ) ( my_custom_malloc( ctx, size ) )
-    #define APP_FREE( ctx, ptr ) ( my_custom_free( ctx, ptr ) )
-    #include "app.h"
+	#define APP_IMPLEMENTATION
+	#define APP_MALLOC( ctx, size ) ( my_custom_malloc( ctx, size ) )
+	#define APP_FREE( ctx, ptr ) ( my_custom_free( ctx, ptr ) )
+	#include "app.h"
 
 where `my_custom_malloc` and `my_custom_free` are your own memory allocation/deallocation functions. The `ctx` parameter
 is an optional parameter of type `void*`. When `app_run` is called, you can pass in a `memctx` parameter, which can be a
@@ -261,9 +261,9 @@ error messages when things go wrong. By default, logging is done by a simple pri
 need a different behavior, such as writing out a log file, it is possible to override the default logging behavior
 through defines like this:
 
-    #define APP_IMPLEMENTATION
-    #define APP_LOG( ctx, level, message ) ( my_log_func( ctx, level, message ) )
-    #include "app.h"
+	#define APP_IMPLEMENTATION
+	#define APP_LOG( ctx, level, message ) ( my_log_func( ctx, level, message ) )
+	#include "app.h"
 
 where `my_log_func` is your own logging function. Just like for the memory allocators, the `ctx` parameter is optional,
 and is just a `void*` value which is passed through. But in the case of logging, it will be passed through as the value
@@ -280,9 +280,9 @@ fatal error happens, app.h will print a message to stdout, show a messagebox to 
 
 It is possible to change this behaviour using the following define:
 
-    #define APP_IMPLEMENTATION
-    #define APP_FATAL_ERROR( ctx, message ) ( my_custom_fatal_error_func( ctx, message ) )
-    #include "app.h"
+	#define APP_IMPLEMENTATION
+	#define APP_FATAL_ERROR( ctx, message ) ( my_custom_fatal_error_func( ctx, message ) )
+	#include "app.h"
 
 where `my_custom_fatal_error_func` is your own error reporting function. The `ctx` parameter fills the same purpose as
 for the allocator and logging functions, but here it is the `fatalctx` parameter to `app_run` which is passed through.
@@ -291,13 +291,13 @@ for the allocator and logging functions, but here it is the `fatalctx` parameter
 app_run
 -------
 
-    int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
+	int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
 
 Creates a new app instance, calls the given app_proc and waits for it to return. Then it destroys the app instance.
 
 * app_proc - function pointer to the user defined starting point of the app. The parameters to that function are:
-    app_t* a pointer to the app instance. This is an opaque type, and it is passed to all other functions in the API.
-    void* pointer to the user defined data that was passed as the `user_data` parameter to `app_run`.
+	app_t* a pointer to the app instance. This is an opaque type, and it is passed to all other functions in the API.
+	void* pointer to the user defined data that was passed as the `user_data` parameter to `app_run`.
 * user_data - pointer to user defined data which will be passed through to app_proc. May be NULL.
 * memctx - pointer to user defined data which will be passed through to custom APP_MALLOC/APP_FREE calls. May be NULL.
 * logctx - pointer to user defined data to be passed through to custom APP_LOG calls. May be NULL.
@@ -313,7 +313,7 @@ from the `app_proc`. After `app_run` returns, the `app_t*` value is no longer va
 app_yield
 ---------
 
-    app_state_t app_yield( app_t* app )
+	app_state_t app_yield( app_t* app )
 
 Allows for app.h and the operating system to perform internal house keeping and updates. It should be called on each
 iteration of your main loop.
@@ -328,7 +328,7 @@ should exit. In the case of `APP_STATE_NORMAL`, there is no need to do anything.
 app_cancel_exit
 ---------------
 
-    void app_cancel_exit( app_t* app )
+	void app_cancel_exit( app_t* app )
 
 Used to reset the `APP_STATE_EXIT_REQUESTED` state. See `app_yield` for details.
 
@@ -336,7 +336,7 @@ Used to reset the `APP_STATE_EXIT_REQUESTED` state. See `app_yield` for details.
 app_title
 ---------
 
-    void app_title( app_t* app, char const* title )
+	void app_title( app_t* app, char const* title )
 
 Sets the name of the application, which is displayed in the task switcher and in the title bar of the window.
 
@@ -344,7 +344,7 @@ Sets the name of the application, which is displayed in the task switcher and in
 app_cmdline
 -----------
 
-    char const* app_cmdline( app_t* app )
+	char const* app_cmdline( app_t* app )
 
 Returns the command line string used to launch the executable. This can be parsed to get command line arguments.
 
@@ -352,7 +352,7 @@ Returns the command line string used to launch the executable. This can be parse
 app_filename
 ------------
 
-    char const* app_filename( app_t* app )
+	char const* app_filename( app_t* app )
 
 Returns the full filename and path of the executable. The first part of `app_cmdline` usually contains the name of the
 executable, but not necessarily the full path, depending on how it was launched. `app_filename`, however, always returns
@@ -362,7 +362,7 @@ the full path.
 app_userdata
 ------------
 
-    char const* app_userdata( app_t* app )
+	char const* app_userdata( app_t* app )
 
 Returns the full path to a directory where a users personal files can be stored. Depending on the access rights of the
 user, it may or may not be possible to write data to the same location as the executable, and instead it must be stored
@@ -374,7 +374,7 @@ the data there.
 app_appdata
 -----------
 
-    char const* app_appdata( app_t* app )
+	char const* app_appdata( app_t* app )
 
 Returns the full path to a directory where application specific files can be stored. Similar to the location returned by
 `app_userdata`, but suitable for application data shared between users. Typical use for this is to store the result of
@@ -384,7 +384,7 @@ cached calculations or temporary files.
 app_time_count
 --------------
 
-    APP_U64 app_time_count( app_t* app )
+	APP_U64 app_time_count( app_t* app )
 
 Returns the current value of the high precision clock. The epoch is undefined, and the resolution can vary between
 systems. Use `app_time_freq` to convert to seconds. Typical use is to make two calls to `app_time_count` and calculate
@@ -394,14 +394,14 @@ the difference, to measure the time elapsed between the two calls.
 app_time_freq
 -------------
 
-    APP_U64 app_time_freq( app_t* app )
+	APP_U64 app_time_freq( app_t* app )
 
 Returns the number of clock ticks per second of the high precision clock. An example use case could be:
 
-    APP_U64 current_count = app_time_count( app );
-    APP_U64 delta_count = current_count - previous_count;
-    double delta_time = ( (double) delta_count ) / ( (double) app_time_freq( app ) );
-    previous_count = current_count;
+	APP_U64 current_count = app_time_count( app );
+	APP_U64 delta_count = current_count - previous_count;
+	double delta_time = ( (double) delta_count ) / ( (double) app_time_freq( app ) );
+	previous_count = current_count;
 
 to measure the time between two iterations through your main loop.
 
@@ -409,7 +409,7 @@ to measure the time between two iterations through your main loop.
 app_log
 -------
 
-    void app_log( app_t* app, app_log_level_t level, char const* message )
+	void app_log( app_t* app, app_log_level_t level, char const* message )
 
 app.h will do logging on certain events, e.q when the app starts and ends or when something goes wrong. As the logging
 can be customized (see section on customization), it might be desirable for the program to do its own logging the same
@@ -420,7 +420,7 @@ logging or default logging is being used.
 app_fatal_error
 ---------------
 
-    void app_fatal_error( app_t* app, char const* message )
+	void app_fatal_error( app_t* app, char const* message )
 
 Same as with app_log, but for reporting fatal errors, `app_fatal_error` will report an error the same way as is done
 internally in app.h, whether custom or default fatal error reporting is being used.
@@ -429,20 +429,20 @@ internally in app.h, whether custom or default fatal error reporting is being us
 app_pointer
 -----------
 
-    void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
+	void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
 
 Sets the appearence current mouse pointer. `app_pointer` is called with the following parameters:
 
 * width, height - the horizontal and vertical dimensions of the mouse pointer bitmap.
 * pixels_abgr - width x height number of pixels making up the pointer bitmap, each pixel being a 32-bit unsigned integer
-    where the highest 8 bits are the alpha channel, and the following 8-bit groups are blue, green and red channels.
+	where the highest 8 bits are the alpha channel, and the following 8-bit groups are blue, green and red channels.
 * hotspot_x, hotspot_y - offset into the bitmap of the pointer origin, the center point it will be drawn at.
 
 
 app_pointer_default
 -------------------
 
-    void app_pointer_default( app_t* app, int* width, int* height, APP_U32* pixels_abgr, int* hotspot_x, int* hotspot_y )
+	void app_pointer_default( app_t* app, int* width, int* height, APP_U32* pixels_abgr, int* hotspot_x, int* hotspot_y )
 
 Retrieves the width, height, pixel data and hotspot for the default mouse pointer. Useful for restoring the default
 pointer after using `app_pointer`, or for doing software rendered pointers. Called with the following parameters:
@@ -458,7 +458,7 @@ dimensions, and then call it again after preparing a large enough memory area.
 app_pointer_pos
 ---------------
 
-    void app_pointer_pos( app_t* app, int x, int y )
+	void app_pointer_pos( app_t* app, int x, int y )
 
 Set the position of the mouse pointer, in window coordinates. The function `app_coordinates_bitmap_to_window` can be
 used to convert between the coordinate system of the currently displayed bitmap and that of the window.
@@ -467,7 +467,7 @@ used to convert between the coordinate system of the currently displayed bitmap 
 app_pointer_limit
 -----------------
 
-    void app_pointer_limit( app_t* app, int x, int y, int width, int height )
+	void app_pointer_limit( app_t* app, int x, int y, int width, int height )
 
 Locks the mouse pointer movements to stay within the specified area, in window coordinates. The function
 `app_coordinates_bitmap_to_window` can be used to convert between the coordinate system of the currently displayed
@@ -477,7 +477,7 @@ bitmap and that of the window.
 app_pointer_limit_off
 ---------------------
 
-    void app_pointer_limit_off( app_t* app )
+	void app_pointer_limit_off( app_t* app )
 
 Turns of the mouse pointer movement restriction, allowing the pointer to be moved freely again.
 
@@ -485,7 +485,7 @@ Turns of the mouse pointer movement restriction, allowing the pointer to be move
 app_interpolation
 -----------------
 
-    void app_interpolation( app_t* app, app_interpolation_t interpolation )
+	void app_interpolation( app_t* app, app_interpolation_t interpolation )
 
 app.h supports two different modes of displaying a bitmap. When using `APP_INTERPOLATION_LINEAR`, the bitmap will be
 drawn with bilinear interpolations, stretching it to fill the window (maintaining aspect ratio), giving it a smooth, if
@@ -497,7 +497,7 @@ interpolation, which is particularly suitable to maintain the clean, precise loo
 app_screenmode
 --------------
 
-    void app_screenmode( app_t* app, app_screenmode_t screenmode )
+	void app_screenmode( app_t* app, app_screenmode_t screenmode )
 
 Switch between windowed mode and fullscreen mode. `APP_SCREENMODE_WINDOW` is used to select windowed mode, and
 `APP_SCREENMODE_FULLSCREEN` is used to switch to fullscreen mode. `APP_SCREENMODE_FULLSCREEN` is the default. Note that
@@ -510,7 +510,7 @@ that the window is currently on.
 app_window_size
 ---------------
 
-    void app_window_size( app_t* app, int width, int height )
+	void app_window_size( app_t* app, int width, int height )
 
 Sets the size of the window. If currently in `APP_SCREENMODE_FULLSCREEN` screen mode, the setting will not take effect
 until switching to `APP_SCREENMODE_WINDOW`. `width` and `height` specifies the size of the windows client area, not
@@ -520,8 +520,8 @@ counting borders, title bar or decorations.
 app_window_width/app_window_height
 ----------------------------------
 
-    int app_window_width( app_t* app )
-    int app_window_height( app_t* app )
+	int app_window_width( app_t* app )
+	int app_window_height( app_t* app )
 
 Returns the current dimensions of the window (which might have been resized by the user). Regardless of whether the app
 is currently in fullscreen or windowed mode, `app_window_width` and `app_window_height` returns the dimension the window
@@ -532,7 +532,7 @@ title bar or decorations.
 app_window_pos
 --------------
 
-    void app_window_pos( app_t* app, int x, int y )
+	void app_window_pos( app_t* app, int x, int y )
 
 Sets the position of the top left corner of the window. If currently in `APP_SCREENMODE_FULLSCREEN` screen mode, the
 setting will not take effect until switching to `APP_SCREENMODE_WINDOW`.
@@ -541,8 +541,8 @@ setting will not take effect until switching to `APP_SCREENMODE_WINDOW`.
 app_window_x/app_window_y
 -------------------------
 
-    int app_window_x( app_t* app )
-    int app_window_y( app_t* app )
+	int app_window_x( app_t* app )
+	int app_window_y( app_t* app )
 
 Returns the current position of the windows top left corner. Regardless of whether the app is currently in fullscreen or
 windowed mode, `app_window_x` and `app_window_y` returns the position the window *would* have in windowed mode.
@@ -551,7 +551,7 @@ windowed mode, `app_window_x` and `app_window_y` returns the position the window
 app_displays
 ------------
 
-    app_displays_t app_displays( app_t* app )
+	app_displays_t app_displays( app_t* app )
 
 Returns a list of all displays connected to the system. For each display, the following fields are reported:
 * id - a platform specific string used to identify the display. Useful for saving which display was in use.
@@ -562,20 +562,20 @@ Returns a list of all displays connected to the system. For each display, the fo
 app_present
 -----------
 
-    void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
+	void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
 
 app.h provides a very minimal API for drawing - the only thing you can really do, is provide it with a bitmap for it to
 display on the screen. It is then up to the rest of your program to implement code for drawing shapes or sprites onto
 that bitmap. When all your drawing is done, you call `app_present` passing it the bitmap, and it will be displayed on
 the screen. `app_present` takes the following parameters:
 * pixels_xbgr - width x height number of pixels making up the bitmap to be presented, each pixel being a 32-bit unsigned
-    integer where the highest 8 bits are not used, and the following 8-bit groups are blue, green and red channels. This
-    parameter may be NULL, in which case no bitmap is drawn, to allow for custom rendering. See below for details.
+	integer where the highest 8 bits are not used, and the following 8-bit groups are blue, green and red channels. This
+	parameter may be NULL, in which case no bitmap is drawn, to allow for custom rendering. See below for details.
 * width, height - the horizontal and vertical dimensions of the bitmap
 * mod_xbgr - an rgb color value which will be automatically multiplied with each pixel, component by component, before
-    it is displayed. Can be used to for example fade the bitmap to/from black. Set to 0xffffff for no effect.
+	it is displayed. Can be used to for example fade the bitmap to/from black. Set to 0xffffff for no effect.
 * border_xbgr - an rgb color value to be used as *border color*. The borders are the areas outside of the bitmap, which
-    are visible when the window aspect ratio does not match that of the bitmap, so you get bars above or below it.
+	are visible when the window aspect ratio does not match that of the bitmap, so you get bars above or below it.
 
 Since app.h uses opengl, you can also opt to not pass a bitmap to `app_present`, by passing NULL as the `pixels_xbgr`
 parameter (in which case the rest of the parameters are ignored). When doing this, it is up to your program to perform
@@ -586,7 +586,7 @@ will be automatically called whenever the window is resized.
 app_sound_buffer_size
 ---------------------
 
-    void app_sound_buffer_size( app_t* app, int sample_pairs_count )
+	void app_sound_buffer_size( app_t* app, int sample_pairs_count )
 
 The api for playing sound samples is just as minimal as that for drawing. app.h provides a single, looping sound stream,
 and it is up to your program to handle sound formats, voices and mixing. By calling `app_sound_buffer_size`, a sound
@@ -603,7 +603,7 @@ the exact byte size of the sound buffer is not important in the app.h API.
 app_sound_position
 ------------------
 
-    int app_sound_position( app_t* app )
+	int app_sound_position( app_t* app )
 
 Returns the current playback position of the sound stream, given in the number of sample pairs from the start of the
 buffer. Typical use of a streaming sound buffer is to fill the buffer with data, wait for the playback position to get
@@ -614,7 +614,7 @@ so on.
 app_sound_write
 ---------------
 
-    void app_sound_write( app_t* app, int sample_pairs_offset, int sample_pairs_count, APP_S16 const* sample_pairs )
+	void app_sound_write( app_t* app, int sample_pairs_offset, int sample_pairs_count, APP_S16 const* sample_pairs )
 
 Writes sample data to the sound buffer. It takes the following parameters:
 
@@ -628,7 +628,7 @@ The `sample_pairs` parameter can be NULL, in which case the corresponding part o
 app_sound_volume
 ----------------
 
-    void app_sound_volume( app_t* app, float volume )
+	void app_sound_volume( app_t* app, float volume )
 
 Sets the output volume level of the sound stream, as a normalized linear value in the range 0.0f to 1.0f, inclusive.
 
@@ -636,52 +636,52 @@ Sets the output volume level of the sound stream, as a normalized linear value i
 app_input
 ---------
 
-    app_input_t app_input( app_t* app )
+	app_input_t app_input( app_t* app )
 
 Returns a list of input events which occured since the last call to `app_input`. Each input event can be of one of a
 list of types, and the `type` field of the `app_input_event_t` struct specifies which type the event is. The `data`
 struct is a union of fields, where only one of them is valid, depending on the value of `type`:
 * APP_INPUT_KEY_DOWN, APP_INPUT_KEY_UP, APP_INPUT_DOUBLE_CLICK - use the `key` field of the `data` union, which contains
-    one of the keyboard key identifiers from the `app_key_t` enumeration. `APP_INPUT_KEY_DOWN` means a key was pressed,
-    or that it was held long enough for the key repeat to kick in. `APP_INPUT_KEY_UP` means a key was released, and is
-    not sent on key repeats. For both these events, a `key` may also mean a mouse button, as those are listed in the
-    `app_key_t` enum. `APP_INPUT_DOUBLE_CLICK` means a mouse button have been double clicked, and is not sent for
-    keyboard keys.
+	one of the keyboard key identifiers from the `app_key_t` enumeration. `APP_INPUT_KEY_DOWN` means a key was pressed,
+	or that it was held long enough for the key repeat to kick in. `APP_INPUT_KEY_UP` means a key was released, and is
+	not sent on key repeats. For both these events, a `key` may also mean a mouse button, as those are listed in the
+	`app_key_t` enum. `APP_INPUT_DOUBLE_CLICK` means a mouse button have been double clicked, and is not sent for
+	keyboard keys.
 * APP_INPUT_CHAR - use the `char_code` field of the `data` union, which contains the ASCII value of the key that was
-    pressed. This is used to read text input, and will handle things like upper/lower case, and characters which
-    requires multiple keys to be pressed in sequence to generate one input. This means that generally, when a key is
-    pressed, you will get both an `APP_INPUT_KEY_DOWN` event and an `APP_INPUT_CHAR` event - just use the one you are
-    interested in, and ignore the other.
+	pressed. This is used to read text input, and will handle things like upper/lower case, and characters which
+	requires multiple keys to be pressed in sequence to generate one input. This means that generally, when a key is
+	pressed, you will get both an `APP_INPUT_KEY_DOWN` event and an `APP_INPUT_CHAR` event - just use the one you are
+	interested in, and ignore the other.
 * APP_INPUT_MOUSE_MOVE - use the `mouse_pos` field of the `data` union, which contains the x and y position of the
-    mouse pointer, in window coordinates. The function `app_coordinates_window_to_bitmap` can be used to convert between
-    the coordinate system of the window and that of the currently displayed bitmap. The `APP_INPUT_MOUSE_MOVE` event is
-    sent whenever the user moves the mouse, as long as the window has focus and the pointer is inside its client area.
+	mouse pointer, in window coordinates. The function `app_coordinates_window_to_bitmap` can be used to convert between
+	the coordinate system of the window and that of the currently displayed bitmap. The `APP_INPUT_MOUSE_MOVE` event is
+	sent whenever the user moves the mouse, as long as the window has focus and the pointer is inside its client area.
 * APP_INPUT_MOUSE_DELTA - use the `mouse_delta` field of the `data` union, which contains the horizontal and vertical
-    offset which the mouse has been moved by. Ideally, these values should be in normalized -1.0f to 1.0f range, but as
-    there is no standardisation on the hardware and os level for this, it is not possible to do, so instead the value
-    have been scaled to give roughly normalized -1.0f to 1.0f values on a typical setup. For serious use, sensitivity
-    settings and/or user calibration is recommended. The `APP_INPUT_MOUSE_DELTA` event is sent whenever the user moves
-    the mouse, regardless of whether the window has focus or whether the pointer is inside the window or not. The
-    `APP_INPUT_MOUSE_DELTA` event is a better option for reading relative mouse movements than using the
-    `APP_INPUT_MOUSE_MOVE` event together with `app_pointer_pos` to re-center the pointer on every update.
+	offset which the mouse has been moved by. Ideally, these values should be in normalized -1.0f to 1.0f range, but as
+	there is no standardisation on the hardware and os level for this, it is not possible to do, so instead the value
+	have been scaled to give roughly normalized -1.0f to 1.0f values on a typical setup. For serious use, sensitivity
+	settings and/or user calibration is recommended. The `APP_INPUT_MOUSE_DELTA` event is sent whenever the user moves
+	the mouse, regardless of whether the window has focus or whether the pointer is inside the window or not. The
+	`APP_INPUT_MOUSE_DELTA` event is a better option for reading relative mouse movements than using the
+	`APP_INPUT_MOUSE_MOVE` event together with `app_pointer_pos` to re-center the pointer on every update.
 * APP_INPUT_SCROLL_WHEEL - use the `wheel_delta` field of the `data` union, which contains the number of clicks by which
-    the scroll wheel on the mouse was turned, where positive values indicate that the wheel have been rotated away from
-    the user, and negative values means it has turned towards the user. The `APP_INPUT_SCROLL_WHEEL` is sent every time
-    the user turns the scroll wheel, as long as the window has focus.
+	the scroll wheel on the mouse was turned, where positive values indicate that the wheel have been rotated away from
+	the user, and negative values means it has turned towards the user. The `APP_INPUT_SCROLL_WHEEL` is sent every time
+	the user turns the scroll wheel, as long as the window has focus.
 * APP_INPUT_TABLET - use the `tablet` field of the `data` union, which contains details about the pen used with a
-    graphical tablet, if connected and installed. The `x` and `y` fields are the horizontal and vertical positions of
-    the pen on the tablet, scaled to the coordinate system of the window. The function `app_coordinates_window_to_bitmap`
-    can be used to convert between the coordinate system of the window and that of the currently displayed bitmap. The
-    `pressure` field is the current pressure of the pen against the tablet, in normalized 0.0f to 1.0f range, inclusive,
-    where 0.0f means no pressure and 1.0f means full pressure. The `tip` field is set to `APP_PRESSED` if the tip of the
-    pen is touching the tablet at all, and to `APP_NOT_PRESSED` otherwise. The `upper` and `lower` fields indicate the
-    current state of the buttons on the side of the pen. The "eraser" part of the pen is not currently supported.
+	graphical tablet, if connected and installed. The `x` and `y` fields are the horizontal and vertical positions of
+	the pen on the tablet, scaled to the coordinate system of the window. The function `app_coordinates_window_to_bitmap`
+	can be used to convert between the coordinate system of the window and that of the currently displayed bitmap. The
+	`pressure` field is the current pressure of the pen against the tablet, in normalized 0.0f to 1.0f range, inclusive,
+	where 0.0f means no pressure and 1.0f means full pressure. The `tip` field is set to `APP_PRESSED` if the tip of the
+	pen is touching the tablet at all, and to `APP_NOT_PRESSED` otherwise. The `upper` and `lower` fields indicate the
+	current state of the buttons on the side of the pen. The "eraser" part of the pen is not currently supported.
 
 
 app_coordinates_window_to_bitmap
 --------------------------------
 
-    void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
+	void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
 
 Functions in the `app.h` API expects and returns coordinates in the windows coordinate system, where 0, 0 is the top
 left corner of the windows client area (the area inside of the window borders, excluding title bar and decorations), and
@@ -692,14 +692,14 @@ used: `APP_INTERPOLATION_NONE` or `APP_INTERPOLATION_LINEAR`. `app_coordinates_w
 translation, and is called with the following parameters:
 * width, height - dimensions of the bitmap being presented, the same as the ones passed to `app_present`.
 * x, y - pointers to integer values containing the coordinate, in the coordinate system of the window, to be translated.
-    When the function returns, their values will have been updated with the corresponding position in the coordinate
-    system of the bitmap.
+	When the function returns, their values will have been updated with the corresponding position in the coordinate
+	system of the bitmap.
 
 
 app_coordinates_bitmap_to_window
 --------------------------------
 
-    void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
+	void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
 
 This performs the opposite translation to `app_coordinates_window_to_bitmap` - it converts a position given in the
 coordinate system of the bitmap into the coordinate system of the window. See `app_coordinates_window_to_bitmap` for
@@ -709,7 +709,7 @@ details.
 
 /*
 ----------------------
-    IMPLEMENTATION
+	IMPLEMENTATION
 ----------------------
 */
 #ifdef APP_IMPLEMENTATION
@@ -721,414 +721,546 @@ details.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef APP_NULL
+//#define DSTEST
 
-#if defined( APP_WINDOWS )
+#if defined( APP_WINDOWS ) || defined( APP_WS )
+	#if defined(macintosh)
+		#include "gl.h"
+		#include "glu.h"
+	#elif defined(__MACH__)
+		#include <OpenGL/glew.h>
+		#include <OpenGL/gl.h> /* has to be caps */
+		#include <OpenGL/glu.h> /* has to be caps */
+	#elif !defined(_WIN32)
+		#include <GL/glew.h>
+		#include <GL/gl.h> /* has to be caps */
+		#include <GL/glu.h> /* has to be caps */
+	#endif
 
-    #define _CRT_NONSTDC_NO_DEPRECATE
-    #ifndef _CRT_SECURE_NO_WARNINGS
-        #define _CRT_SECURE_NO_WARNINGS
-    #endif
-    #include <stddef.h>
-    #define APP_GLCALLTYPE __stdcall
-    typedef unsigned int APP_GLuint;
-    typedef int APP_GLsizei;
-    typedef unsigned int APP_GLenum;
-    typedef int APP_GLint;
-    typedef float APP_GLfloat;
-    typedef char APP_GLchar;
-    typedef unsigned char APP_GLboolean;
-    typedef size_t APP_GLsizeiptr;
-    typedef unsigned int APP_GLbitfield;
+	#define _CRT_NONSTDC_NO_DEPRECATE
+	#ifndef _CRT_SECURE_NO_WARNINGS
+		#define _CRT_SECURE_NO_WARNINGS
+	#endif
+	#include <stddef.h>
+	#if defined(_WIN32)
+		#define APP_GLCALLTYPE __stdcall
+	#else
+		#define APP_GLCALLTYPE GLAPIENTRY
+	#endif
+	typedef unsigned int APP_GLuint;
+	typedef int APP_GLsizei;
+	typedef unsigned int APP_GLenum;
+	typedef int APP_GLint;
+	typedef float APP_GLfloat;
+	typedef char APP_GLchar;
+	typedef unsigned char APP_GLboolean;
+	typedef double APP_GLdouble;
+	#if defined(APP_WS)
+		typedef ptrdiff_t APP_GLsizeiptr;
+	#else
+		typedef size_t APP_GLsizeiptr;
+	#endif
+	typedef unsigned int APP_GLbitfield;
 
-    #define APP_GL_FLOAT 0x1406
-    #define APP_GL_FALSE 0
-    #define APP_GL_FRAGMENT_SHADER 0x8b30
-    #define APP_GL_VERTEX_SHADER 0x8b31
-    #define APP_GL_COMPILE_STATUS 0x8b81
-    #define APP_GL_LINK_STATUS 0x8b82
-    #define APP_GL_INFO_LOG_LENGTH 0x8b84
-    #define APP_GL_ARRAY_BUFFER 0x8892
-    #define APP_GL_TEXTURE_2D 0x0de1
-    #define APP_GL_TEXTURE0 0x84c0
-    #define APP_GL_CLAMP 0x2900
-    #define APP_GL_TEXTURE_WRAP_S 0x2802
-    #define APP_GL_TEXTURE_WRAP_T 0x2803
-    #define APP_GL_TEXTURE_MIN_FILTER 0x2801
-    #define APP_GL_TEXTURE_MAG_FILTER 0x2800
-    #define APP_GL_NEAREST 0x2600
-    #define APP_GL_LINEAR 0x2601
-    #define APP_GL_STATIC_DRAW 0x88e4
-    #define APP_GL_RGBA 0x1908
-    #define APP_GL_UNSIGNED_BYTE 0x1401
-    #define APP_GL_COLOR_BUFFER_BIT 0x00004000
-    #define APP_GL_TRIANGLE_FAN 0x0006
+	#define APP_GL_FLOAT 0x1406
+	#define APP_GL_FALSE 0
+	#define APP_GL_FRAGMENT_SHADER 0x8b30
+	#define APP_GL_VERTEX_SHADER 0x8b31
+	#define APP_GL_COMPILE_STATUS 0x8b81
+	#define APP_GL_LINK_STATUS 0x8b82
+	#define APP_GL_INFO_LOG_LENGTH 0x8b84
+	#define APP_GL_ARRAY_BUFFER 0x8892
+	#define APP_GL_TEXTURE_2D 0x0de1
+	#define APP_GL_TEXTURE0 0x84c0
+	#define APP_GL_CLAMP 0x2900
+	#define APP_GL_TEXTURE_WRAP_S 0x2802
+	#define APP_GL_TEXTURE_WRAP_T 0x2803
+	#define APP_GL_TEXTURE_MIN_FILTER 0x2801
+	#define APP_GL_TEXTURE_MAG_FILTER 0x2800
+	#define APP_GL_NEAREST 0x2600
+	#define APP_GL_LINEAR 0x2601
+	#define APP_GL_STATIC_DRAW 0x88e4
+	#define APP_GL_RGBA 0x1908
+	#define APP_GL_UNSIGNED_BYTE 0x1401
+	#define APP_GL_COLOR_BUFFER_BIT 0x00004000
+	#define APP_GL_TRIANGLE_FAN 0x0006
+	#define APP_GL_TEXTURE_ENV_MODE 0x2200
+	#define APP_GL_TEXTURE_ENV_COLOR 0x2201
+	#define APP_GL_TEXTURE_ENV 0x2300
+	#define APP_GL_QUADS 0x0007
+	#define APP_GL_MODULATE 0x2100
+	#define APP_GL_MODELVIEW 0x1700
+	#define APP_GL_PROJECTION 0x1701
 
 #elif defined( APP_SDL ) || defined( APP_WASM )
+	#if defined( APP_WASM )
+		#include <wajic_gl.h>
+		#include <wajic_coro.h>
+	#else
+		#if defined(__MACH__)
+			#include <GL/glew.h>
+		#else
+			#include <GL/glew.h>
+		#endif
+		#include "SDL_opengl.h"
+	#endif
+	#define APP_GLCALLTYPE GLAPIENTRY
+	typedef GLuint APP_GLuint;
+	typedef GLsizei APP_GLsizei;
+	typedef GLenum APP_GLenum;
+	typedef GLint APP_GLint;
+	typedef GLfloat APP_GLfloat;
+	typedef GLchar APP_GLchar;
+	typedef GLboolean APP_GLboolean;
+	typedef GLsizeiptr APP_GLsizeiptr;
+	typedef GLbitfield APP_GLbitfield;
+	typedef GLdouble APP_GLdouble;
 
-    #if defined( APP_WASM )
-        #include <wajic_gl.h>
-        #include <wajic_coro.h>
-    #else
-        #include <GL/glew.h>
-        #include "SDL_opengl.h"
-    #endif
-    #define APP_GLCALLTYPE GLAPIENTRY
-    typedef GLuint APP_GLuint;
-    typedef GLsizei APP_GLsizei;
-    typedef GLenum APP_GLenum;
-    typedef GLint APP_GLint;
-    typedef GLfloat APP_GLfloat;
-    typedef GLchar APP_GLchar;
-    typedef GLboolean APP_GLboolean;
-    typedef GLsizeiptr APP_GLsizeiptr;
-    typedef GLbitfield APP_GLbitfield;
-
-    #define APP_GL_FLOAT GL_FLOAT
-    #define APP_GL_FALSE GL_FALSE
-    #define APP_GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER
-    #define APP_GL_VERTEX_SHADER GL_VERTEX_SHADER
-    #define APP_GL_COMPILE_STATUS GL_COMPILE_STATUS
-    #define APP_GL_LINK_STATUS GL_LINK_STATUS
-    #define APP_GL_INFO_LOG_LENGTH GL_INFO_LOG_LENGTH
-    #define APP_GL_ARRAY_BUFFER GL_ARRAY_BUFFER
-    #define APP_GL_TEXTURE_2D GL_TEXTURE_2D
-    #define APP_GL_TEXTURE0 GL_TEXTURE0
-    #if defined( APP_WASM )
-        #define APP_GL_CLAMP GL_CLAMP_TO_EDGE
-    #else
-        #define APP_GL_CLAMP GL_CLAMP
-    #endif
-    #define APP_GL_TEXTURE_WRAP_S GL_TEXTURE_WRAP_S
-    #define APP_GL_TEXTURE_WRAP_T GL_TEXTURE_WRAP_T
-    #define APP_GL_TEXTURE_MIN_FILTER GL_TEXTURE_MIN_FILTER
-    #define APP_GL_TEXTURE_MAG_FILTER GL_TEXTURE_MAG_FILTER
-    #define APP_GL_NEAREST GL_NEAREST
-    #define APP_GL_LINEAR GL_LINEAR
-    #define APP_GL_STATIC_DRAW GL_STATIC_DRAW
-    #define APP_GL_RGBA GL_RGBA
-    #define APP_GL_UNSIGNED_BYTE GL_UNSIGNED_BYTE
-    #define APP_GL_COLOR_BUFFER_BIT GL_COLOR_BUFFER_BIT
-    #define APP_GL_TRIANGLE_FAN GL_TRIANGLE_FAN
+	#define APP_GL_FLOAT GL_FLOAT
+	#define APP_GL_FALSE GL_FALSE
+	#define APP_GL_FRAGMENT_SHADER GL_FRAGMENT_SHADER
+	#define APP_GL_VERTEX_SHADER GL_VERTEX_SHADER
+	#define APP_GL_COMPILE_STATUS GL_COMPILE_STATUS
+	#define APP_GL_LINK_STATUS GL_LINK_STATUS
+	#define APP_GL_INFO_LOG_LENGTH GL_INFO_LOG_LENGTH
+	#define APP_GL_ARRAY_BUFFER GL_ARRAY_BUFFER
+	#define APP_GL_TEXTURE_2D GL_TEXTURE_2D
+	#define APP_GL_TEXTURE0 GL_TEXTURE0
+	#if defined( APP_WASM )
+		#define APP_GL_CLAMP GL_CLAMP_TO_EDGE
+	#else
+		#define APP_GL_CLAMP GL_CLAMP
+	#endif
+	#define APP_GL_TEXTURE_WRAP_S GL_TEXTURE_WRAP_S
+	#define APP_GL_TEXTURE_WRAP_T GL_TEXTURE_WRAP_T
+	#define APP_GL_TEXTURE_MIN_FILTER GL_TEXTURE_MIN_FILTER
+	#define APP_GL_TEXTURE_MAG_FILTER GL_TEXTURE_MAG_FILTER
+	#define APP_GL_NEAREST GL_NEAREST
+	#define APP_GL_LINEAR GL_LINEAR
+	#define APP_GL_STATIC_DRAW GL_STATIC_DRAW
+	#define APP_GL_RGBA GL_RGBA
+	#define APP_GL_UNSIGNED_BYTE GL_UNSIGNED_BYTE
+	#define APP_GL_COLOR_BUFFER_BIT GL_COLOR_BUFFER_BIT
+	#define APP_GL_TRIANGLE_FAN GL_TRIANGLE_FAN
+	#define APP_GL_TEXTURE_ENV_MODE GL_TEXTURE_ENV_MODE
+	#define APP_GL_TEXTURE_ENV_COLOR GL_TEXTURE_ENV_COLOR
+	#define APP_GL_TEXTURE_ENV GL_TEXTURE_ENV
+	#define APP_GL_QUADS GL_QUADS
+	#define APP_GL_MODULATE GL_MODULATE
+	#define APP_GL_MODELVIEW GL_MODELVIEW
+	#define APP_GL_PROJECTION GL_PROJECTION
 
 #else
 
-    #error Undefined platform. Define APP_WINDOWS, APP_SDL, APP_WASM or APP_NULL.
-    #define APP_GLCALLTYPE
-    typedef int APP_GLuint;
-    typedef int APP_GLsizei;
-    typedef int APP_GLenum;
-    typedef int APP_GLint;
-    typedef int APP_GLfloat;
-    typedef int APP_GLchar;
-    typedef int APP_GLboolean;
-    typedef int APP_GLsizeiptr;
-    typedef int APP_GLbitfield;
+	#error Undefined platform. Define APP_WINDOWS, APP_SDL, APP_WASM or APP_NULL.
+	#define APP_GLCALLTYPE
+	typedef int APP_GLuint;
+	typedef int APP_GLsizei;
+	typedef int APP_GLenum;
+	typedef int APP_GLint;
+	typedef int APP_GLfloat;
+	typedef int APP_GLchar;
+	typedef int APP_GLboolean;
+	typedef int APP_GLsizeiptr;
+	typedef int APP_GLbitfield;
 
 #endif
 
 
 #ifdef APP_REPORT_SHADER_ERRORS
-    #include <string.h>
+	#include <string.h>
 #endif
+typedef void (APP_GLCALLTYPE* glBeginProc)(APP_GLenum mode);
+typedef void (APP_GLCALLTYPE* glEndProc)(void);
+typedef void (APP_GLCALLTYPE* glTexCoord2fProc)(APP_GLfloat s, APP_GLfloat t);
+typedef void (APP_GLCALLTYPE* glVertex2fProc)(APP_GLfloat x, APP_GLfloat y);
+typedef void (APP_GLCALLTYPE* glDisableProc)(APP_GLenum cap);
+typedef void (APP_GLCALLTYPE* glOrthoProc)(APP_GLdouble left, APP_GLdouble right, APP_GLdouble bottom, APP_GLdouble top, APP_GLdouble zNear, APP_GLdouble zFar);
+typedef void (APP_GLCALLTYPE* glMatrixModeProc)(APP_GLenum mode);
+typedef void (APP_GLCALLTYPE* glLoadIdentityProc)(void);
+typedef void (APP_GLCALLTYPE* glColor3fProc)(APP_GLfloat red, APP_GLfloat green, APP_GLfloat blue);
+typedef void (APP_GLCALLTYPE* glTexEnviProc)(APP_GLenum target, APP_GLenum pname, APP_GLint param);
 
 struct app_internal_opengl_t
-    {
+	{
 
-    APP_GLuint (APP_GLCALLTYPE* CreateShader) (APP_GLenum type);
-    void (APP_GLCALLTYPE* ShaderSource) (APP_GLuint shader, APP_GLsizei count, APP_GLchar const* const* string, APP_GLint const* length);
-    void (APP_GLCALLTYPE* CompileShader) (APP_GLuint shader);
-    void (APP_GLCALLTYPE* GetShaderiv) (APP_GLuint shader, APP_GLenum pname, APP_GLint *params);
-    APP_GLuint (APP_GLCALLTYPE* CreateProgram) (void);
-    void (APP_GLCALLTYPE* AttachShader) (APP_GLuint program, APP_GLuint shader);
-    void (APP_GLCALLTYPE* BindAttribLocation) (APP_GLuint program, APP_GLuint index, APP_GLchar const* name);
-    void (APP_GLCALLTYPE* LinkProgram) (APP_GLuint program);
-    void (APP_GLCALLTYPE* GetProgramiv) (APP_GLuint program, APP_GLenum pname, APP_GLint *params);
-    void (APP_GLCALLTYPE* GenBuffers) (APP_GLsizei n, APP_GLuint *buffers);
-    void (APP_GLCALLTYPE* BindBuffer) (APP_GLenum target, APP_GLuint buffer);
-    void (APP_GLCALLTYPE* EnableVertexAttribArray) (APP_GLuint index);
-    void (APP_GLCALLTYPE* VertexAttribPointer) (APP_GLuint index, APP_GLint size, APP_GLenum type, APP_GLboolean normalized, APP_GLsizei stride, void const* pointer);
-    void (APP_GLCALLTYPE* GenTextures) (APP_GLsizei n, APP_GLuint* textures);
-    void (APP_GLCALLTYPE* Enable) (APP_GLenum cap);
-    void (APP_GLCALLTYPE* ActiveTexture) (APP_GLenum texture);
-    void (APP_GLCALLTYPE* BindTexture) (APP_GLenum target, APP_GLuint texture);
-    void (APP_GLCALLTYPE* TexParameteri) (APP_GLenum target, APP_GLenum pname, APP_GLint param);
-    void (APP_GLCALLTYPE* DeleteBuffers) (APP_GLsizei n, APP_GLuint const* buffers);
-    void (APP_GLCALLTYPE* DeleteTextures) (APP_GLsizei n, APP_GLuint const* textures);
-    void (APP_GLCALLTYPE* BufferData) (APP_GLenum target, APP_GLsizeiptr size, void const *data, APP_GLenum usage);
-    void (APP_GLCALLTYPE* UseProgram) (APP_GLuint program);
-    void (APP_GLCALLTYPE* Uniform1i) (APP_GLint location, APP_GLint v0);
-    void (APP_GLCALLTYPE* Uniform3f) (APP_GLint location, APP_GLfloat v0, APP_GLfloat v1, APP_GLfloat v2);
-    APP_GLint (APP_GLCALLTYPE* GetUniformLocation) (APP_GLuint program, APP_GLchar const* name);
-    void (APP_GLCALLTYPE* TexImage2D) (APP_GLenum target, APP_GLint level, APP_GLint internalformat, APP_GLsizei width, APP_GLsizei height, APP_GLint border, APP_GLenum format, APP_GLenum type, void const* pixels);
-    void (APP_GLCALLTYPE* ClearColor) (APP_GLfloat red, APP_GLfloat green, APP_GLfloat blue, APP_GLfloat alpha);
-    void (APP_GLCALLTYPE* Clear) (APP_GLbitfield mask);
-    void (APP_GLCALLTYPE* DrawArrays) (APP_GLenum mode, APP_GLint first, APP_GLsizei count);
-    void (APP_GLCALLTYPE* Viewport) (APP_GLint x, APP_GLint y, APP_GLsizei width, APP_GLsizei height);
-    void (APP_GLCALLTYPE* DeleteShader) (APP_GLuint shader);
-    void (APP_GLCALLTYPE* DeleteProgram) (APP_GLuint program);
-    #ifdef APP_REPORT_SHADER_ERRORS
-        void (APP_GLCALLTYPE* GetShaderInfoLog) (APP_GLuint shader, APP_GLsizei bufSize, APP_GLsizei *length, APP_GLchar *infoLog);
-    #endif
+	APP_GLuint (APP_GLCALLTYPE* CreateShader) (APP_GLenum type);
+	void (APP_GLCALLTYPE* ShaderSource) (APP_GLuint shader, APP_GLsizei count, APP_GLchar const* const* string, APP_GLint const* length);
+	void (APP_GLCALLTYPE* CompileShader) (APP_GLuint shader);
+	void (APP_GLCALLTYPE* GetShaderiv) (APP_GLuint shader, APP_GLenum pname, APP_GLint *params);
+	APP_GLuint (APP_GLCALLTYPE* CreateProgram) (void);
+	void (APP_GLCALLTYPE* AttachShader) (APP_GLuint program, APP_GLuint shader);
+	void (APP_GLCALLTYPE* BindAttribLocation) (APP_GLuint program, APP_GLuint index, APP_GLchar const* name);
+	void (APP_GLCALLTYPE* LinkProgram) (APP_GLuint program);
+	void (APP_GLCALLTYPE* GetProgramiv) (APP_GLuint program, APP_GLenum pname, APP_GLint *params);
+	void (APP_GLCALLTYPE* GenBuffers) (APP_GLsizei n, APP_GLuint *buffers);
+	void (APP_GLCALLTYPE* BindBuffer) (APP_GLenum target, APP_GLuint buffer);
+	void (APP_GLCALLTYPE* EnableVertexAttribArray) (APP_GLuint index);
+	void (APP_GLCALLTYPE* VertexAttribPointer) (APP_GLuint index, APP_GLint size, APP_GLenum type, APP_GLboolean normalized, APP_GLsizei stride, void const* pointer);
+	void (APP_GLCALLTYPE* GenTextures) (APP_GLsizei n, APP_GLuint* textures);
+	void (APP_GLCALLTYPE* Enable) (APP_GLenum cap);
+	void (APP_GLCALLTYPE* ActiveTexture) (APP_GLenum texture);
+	void (APP_GLCALLTYPE* BindTexture) (APP_GLenum target, APP_GLuint texture);
+	void (APP_GLCALLTYPE* TexParameteri) (APP_GLenum target, APP_GLenum pname, APP_GLint param);
+	void (APP_GLCALLTYPE* DeleteBuffers) (APP_GLsizei n, APP_GLuint const* buffers);
+	void (APP_GLCALLTYPE* DeleteTextures) (APP_GLsizei n, APP_GLuint const* textures);
+	void (APP_GLCALLTYPE* BufferData) (APP_GLenum target, APP_GLsizeiptr size, void const *data, APP_GLenum usage);
+	void (APP_GLCALLTYPE* UseProgram) (APP_GLuint program);
+	void (APP_GLCALLTYPE* Uniform1i) (APP_GLint location, APP_GLint v0);
+	void (APP_GLCALLTYPE* Uniform3f) (APP_GLint location, APP_GLfloat v0, APP_GLfloat v1, APP_GLfloat v2);
+	APP_GLint (APP_GLCALLTYPE* GetUniformLocation) (APP_GLuint program, APP_GLchar const* name);
+	void (APP_GLCALLTYPE* TexImage2D) (APP_GLenum target, APP_GLint level, APP_GLint internalformat, APP_GLsizei width, APP_GLsizei height, APP_GLint border, APP_GLenum format, APP_GLenum type, void const* pixels);
+	void (APP_GLCALLTYPE* ClearColor) (APP_GLfloat red, APP_GLfloat green, APP_GLfloat blue, APP_GLfloat alpha);
+	void (APP_GLCALLTYPE* Clear) (APP_GLbitfield mask);
+	void (APP_GLCALLTYPE* DrawArrays) (APP_GLenum mode, APP_GLint first, APP_GLsizei count);
+	void (APP_GLCALLTYPE* Viewport) (APP_GLint x, APP_GLint y, APP_GLsizei width, APP_GLsizei height);
+	void (APP_GLCALLTYPE* DeleteShader) (APP_GLuint shader);
+	void (APP_GLCALLTYPE* DeleteProgram) (APP_GLuint program);
+	#ifdef APP_REPORT_SHADER_ERRORS
+		void (APP_GLCALLTYPE* GetShaderInfoLog) (APP_GLuint shader, APP_GLsizei bufSize, APP_GLsizei *length, APP_GLchar *infoLog);
+	#endif
 
-    app_interpolation_t interpolation;
-    int window_width;
-    int window_height;
+	glBeginProc Begin;
+	glEndProc End;
+	glTexCoord2fProc TexCoord2f;
+	glVertex2fProc Vertex2f;
+	glDisableProc Disable;
+	glOrthoProc Ortho;
+	glMatrixModeProc MatrixMode;
+	glLoadIdentityProc LoadIdentity;
+	glColor3fProc Color3f;
+	glTexEnviProc TexEnvi;
 
-    APP_GLuint vertexbuffer;
-    APP_GLuint texture;
-    APP_GLuint shader;
-    };
+	app_interpolation_t interpolation;
+	int window_width;
+	int window_height;
 
-
-static int app_internal_opengl_init( app_t* app, struct app_internal_opengl_t* gl, app_interpolation_t interpolation,
-    int window_width, int window_height )
-    {
-    (void) app;
-    gl->interpolation = interpolation;
-    gl->window_width = window_width;
-    gl->window_height = window_height;
-
-    char const* vs_source =
-    #ifdef APP_WASM
-        "precision highp float;\n"
-    #else
-        "#version 120\n"
-    #endif
-        "attribute vec4 pos;"
-        "varying vec2 uv;"
-        ""
-        "void main( void )"
-        "    {"
-        "    gl_Position = vec4( pos.xy, 0.0, 1.0 );"
-        "    uv = pos.zw;"
-        "    }"
-        ;
-
-    char const* fs_source =
-    #ifdef APP_WASM
-        "precision highp float;\n"
-    #else
-        "#version 120\n"
-    #endif
-        "varying vec2 uv;"
-        ""
-        "uniform sampler2D texture;"
-        "uniform vec3 modulate;"
-        ""
-        "void main(void)"
-        "    {"
-        "    gl_FragColor = texture2D( texture, uv ) * vec4( modulate, 1.0 );"
-        "    }"
-        ;
-
-    #ifdef APP_REPORT_SHADER_ERRORS
-        char error_message[ 1024 ];
-    #endif
-
-    APP_GLuint vs = gl->CreateShader( APP_GL_VERTEX_SHADER );
-    gl->ShaderSource( vs, 1, (char const**) &vs_source, NULL );
-    gl->CompileShader( vs );
-    APP_GLint vs_compiled;
-    gl->GetShaderiv( vs, APP_GL_COMPILE_STATUS, &vs_compiled );
-    if( !vs_compiled )
-        {
-        #ifdef APP_REPORT_SHADER_ERRORS
-            char const* prefix = "Vertex Shader Error: ";
-            memcpy( error_message, prefix, strlen( prefix ) + 1 );
-            int len = 0, written = 0;
-            gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
-            gl->GetShaderInfoLog( vs, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
-                error_message + strlen( prefix ) );
-            app_fatal_error( app, error_message );
-        #endif
-        return 0;
-        }
-
-    APP_GLuint fs = gl->CreateShader( APP_GL_FRAGMENT_SHADER );
-    gl->ShaderSource( fs, 1, (char const**) &fs_source, NULL );
-    gl->CompileShader( fs );
-    APP_GLint fs_compiled;
-    gl->GetShaderiv( fs, APP_GL_COMPILE_STATUS, &fs_compiled );
-    if( !fs_compiled )
-        {
-        #ifdef APP_REPORT_SHADER_ERRORS
-            char const* prefix = "Fragment Shader Error: ";
-            memcpy( error_message, prefix, strlen( prefix ) + 1 );
-            int len = 0, written = 0;
-            gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
-            gl->GetShaderInfoLog( fs, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
-                error_message + strlen( prefix ) );
-            app_fatal_error( app, error_message );
-        #endif
-        return 0;
-        }
+	APP_GLuint vertexbuffer;
+	APP_GLuint texture;
+	APP_GLuint shader;
+	};
 
 
-    APP_GLuint prg = gl->CreateProgram();
-    gl->AttachShader( prg, fs );
-    gl->AttachShader( prg, vs );
-    gl->BindAttribLocation( prg, 0, "pos" );
-    gl->LinkProgram( prg );
+	static int app_internal_opengl_init(app_t* app, struct app_internal_opengl_t* gl, app_interpolation_t interpolation,
+		int window_width, int window_height)
+	{
+		(void)app;
+		gl->interpolation = interpolation;
+		gl->window_width = window_width;
+		gl->window_height = window_height;
+		if(gl->CreateShader)
+		{
+			char const* vs_source =
+			#ifdef APP_WASM
+				"precision highp float;\n"
+			#else
+				"#version 120\n"
+			#endif
+				"attribute vec4 pos;"
+				"varying vec2 uv;"
+				""
+				"void main( void )"
+				"    {"
+				"    gl_Position = vec4( pos.xy, 0.0, 1.0 );"
+				"    uv = pos.zw;"
+				"    }"
+				;
 
-    APP_GLint linked;
-    gl->GetProgramiv( prg, APP_GL_LINK_STATUS, &linked );
-    if( !linked )
-        {
-        #ifdef APP_REPORT_SHADER_ERRORS
-            char const* prefix = "Shader Link Error: ";
-            memcpy( error_message, prefix, strlen( prefix ) + 1 );
-            int len = 0, written = 0;
-            gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
-            gl->GetShaderInfoLog( prg, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
-                error_message + strlen( prefix ) );
-            app_fatal_error( app, error_message );
-        #endif
-        return 0;
-        }
+			char const* fs_source =
+			#ifdef APP_WASM
+				"precision highp float;\n"
+			#else
+				"#version 120\n"
+			#endif
+				"varying vec2 uv;"
+				""
+				"uniform sampler2D texture;"
+				"uniform vec3 modulate;"
+				""
+				"void main(void)"
+				"    {"
+				"    gl_FragColor = texture2D( texture, uv ) * vec4( modulate, 1.0 );"
+				"    }"
+				;
 
-    gl->shader = prg;
-    gl->DeleteShader( fs );
-    gl->DeleteShader( vs );
+			#ifdef APP_REPORT_SHADER_ERRORS
+				char error_message[ 1024 ];
+			#endif
 
-    gl->GenBuffers( 1, &gl->vertexbuffer );
-    gl->BindBuffer( APP_GL_ARRAY_BUFFER, gl->vertexbuffer );
-    gl->EnableVertexAttribArray( 0 );
-    gl->VertexAttribPointer( 0, 4, APP_GL_FLOAT, APP_GL_FALSE, 4 * sizeof( APP_GLfloat ), 0 );
+			APP_GLuint vs = gl->CreateShader( APP_GL_VERTEX_SHADER );
+			gl->ShaderSource( vs, 1, (char const**) &vs_source, NULL );
+			gl->CompileShader( vs );
+			APP_GLint vs_compiled;
+			gl->GetShaderiv( vs, APP_GL_COMPILE_STATUS, &vs_compiled );
+			if( !vs_compiled )
+				{
+				#ifdef APP_REPORT_SHADER_ERRORS
+					char const* prefix = "Vertex Shader Error: ";
+					memcpy( error_message, prefix, strlen( prefix ) + 1 );
+					int len = 0, written = 0;
+					gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
+					gl->GetShaderInfoLog( vs, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
+						error_message + strlen( prefix ) );
+					app_fatal_error( app, error_message );
+				#endif
+				return 0;
+				}
 
-    gl->GenTextures( 1, &gl->texture );
-    #ifndef APP_WASM
-        // This enable call is not necessary when using fragment shaders, avoid logged warnings in WebGL
-        gl->Enable( APP_GL_TEXTURE_2D );
-    #endif
-    gl->ActiveTexture( APP_GL_TEXTURE0 );
-    gl->BindTexture( APP_GL_TEXTURE_2D, gl->texture );
-    gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST );
-    gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST );
-    gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_S, APP_GL_CLAMP );
-    gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_T, APP_GL_CLAMP );
+			APP_GLuint fs = gl->CreateShader( APP_GL_FRAGMENT_SHADER );
+			gl->ShaderSource( fs, 1, (char const**) &fs_source, NULL );
+			gl->CompileShader( fs );
+			APP_GLint fs_compiled;
+			gl->GetShaderiv( fs, APP_GL_COMPILE_STATUS, &fs_compiled );
+			if( !fs_compiled )
+				{
+				#ifdef APP_REPORT_SHADER_ERRORS
+					char const* prefix = "Fragment Shader Error: ";
+					memcpy( error_message, prefix, strlen( prefix ) + 1 );
+					int len = 0, written = 0;
+					gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
+					gl->GetShaderInfoLog( fs, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
+						error_message + strlen( prefix ) );
+					app_fatal_error( app, error_message );
+				#endif
+				return 0;
+				}
 
-    return 1;
-    }
 
+			APP_GLuint prg = gl->CreateProgram();
+			gl->AttachShader( prg, fs );
+			gl->AttachShader( prg, vs );
+			gl->BindAttribLocation( prg, 0, "pos" );
+			gl->LinkProgram( prg );
+
+			APP_GLint linked;
+			gl->GetProgramiv( prg, APP_GL_LINK_STATUS, &linked );
+			if( !linked )
+				{
+				#ifdef APP_REPORT_SHADER_ERRORS
+					char const* prefix = "Shader Link Error: ";
+					memcpy( error_message, prefix, strlen( prefix ) + 1 );
+					int len = 0, written = 0;
+					gl->GetShaderiv( vs, APP_GL_INFO_LOG_LENGTH, &len );
+					gl->GetShaderInfoLog( prg, (APP_GLsizei)( sizeof( error_message ) - strlen( prefix ) ), &written,
+						error_message + strlen( prefix ) );
+					app_fatal_error( app, error_message );
+				#endif
+				return 0;
+				}
+
+			gl->shader = prg;
+			gl->DeleteShader( fs );
+			gl->DeleteShader( vs );
+
+			gl->GenBuffers( 1, &gl->vertexbuffer );
+			gl->BindBuffer( APP_GL_ARRAY_BUFFER, gl->vertexbuffer );
+			gl->EnableVertexAttribArray( 0 );
+			gl->VertexAttribPointer( 0, 4, APP_GL_FLOAT, APP_GL_FALSE, 4 * sizeof( APP_GLfloat ), 0 );
+
+			gl->GenTextures( 1, &gl->texture );
+			#ifndef APP_WASM
+				// This enable call is not necessary when using fragment shaders, avoid logged warnings in WebGL
+				gl->Enable( APP_GL_TEXTURE_2D );
+			#endif
+			gl->ActiveTexture( APP_GL_TEXTURE0 );
+			gl->BindTexture( APP_GL_TEXTURE_2D, gl->texture );
+			gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST );
+			gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST );
+			gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_S, APP_GL_CLAMP );
+			gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_T, APP_GL_CLAMP );
+		}
+		else
+		{
+			// Enable 2D texturing
+			gl->Enable(APP_GL_TEXTURE_2D);
+
+			// Set texture parameters
+			gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST);
+			gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST);
+			gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_S, APP_GL_CLAMP);
+			gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_WRAP_T, APP_GL_CLAMP);
+			gl->TexEnvi(APP_GL_TEXTURE_ENV, APP_GL_TEXTURE_ENV_MODE, APP_GL_MODULATE);
+		}
+
+		return 1;
+	}
 
 static int app_internal_opengl_term( struct app_internal_opengl_t* gl )
     {
-    gl->DeleteProgram( gl->shader );
-    gl->DeleteBuffers( 1, &gl->vertexbuffer);
-    gl->DeleteTextures( 1, &gl->texture );
+	if(gl->CreateShader)
+	{
+		gl->DeleteProgram( gl->shader );
+		gl->DeleteBuffers( 1, &gl->vertexbuffer);
+		gl->DeleteTextures( 1, &gl->texture );
+	}
     return 1;
     }
 
+	static int app_internal_opengl_present(struct app_internal_opengl_t* gl, APP_U32 const* pixels_xbgr, int width,
+		int height, APP_U32 mod_xbgr, APP_U32 border_xbgr)
+	{
+		float x1 = 0.0f, y1 = 0.0f, x2 = (float)gl->window_width, y2 = (float)gl->window_height;
 
-static int app_internal_opengl_present( struct app_internal_opengl_t* gl, APP_U32 const* pixels_xbgr, int width,
-    int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
-    {
-    float x1 = 0.0f, y1 = 0.0f, x2 = (float) gl->window_width, y2 = (float) gl->window_height;
+		if (gl->interpolation == APP_INTERPOLATION_LINEAR)
+		{
+			float hscale = gl->window_width / (float)width;
+			float vscale = gl->window_height / (float)height;
+			float pixel_scale = hscale < vscale ? hscale : vscale;
 
-    if( gl->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = gl->window_width / (float) width;
-        float vscale = gl->window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
+			float hborder = (gl->window_width - pixel_scale * width) / 2.0f;
+			float vborder = (gl->window_height - pixel_scale * height) / 2.0f;
+			x1 = hborder;
+			y1 = vborder;
+			x2 = x1 + pixel_scale * width;
+			y2 = y1 + pixel_scale * height;
+		}
+		else
+		{
+			int hscale = gl->window_width / width;
+			int vscale = gl->window_height / height;
+			int pixel_scale = hscale < vscale ? hscale : vscale;
+			pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
 
-        float hborder = ( gl->window_width - pixel_scale * width ) / 2.0f;
-        float vborder = ( gl->window_height - pixel_scale * height ) / 2.0f;
-        x1 = hborder;
-        y1 = vborder;
-        x2 = x1 + pixel_scale * width;
-        y2 = y1 + pixel_scale * height;
-        }
-    else
-        {
-        int hscale = gl->window_width / width;
-        int vscale = gl->window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+			int hborder = (gl->window_width - pixel_scale * width) / 2;
+			int vborder = (gl->window_height - pixel_scale * height) / 2;
+			x1 = (float)hborder;
+			y1 = (float)vborder;
+			x2 = x1 + (float)(pixel_scale * width);
+			y2 = y1 + (float)(pixel_scale * height);
+		}
 
-        int hborder = ( gl->window_width - pixel_scale * width ) / 2;
-        int vborder = ( gl->window_height - pixel_scale * height ) / 2;
-        x1 = (float) hborder;
-        y1 = (float) vborder;
-        x2 = x1 + (float) ( pixel_scale * width );
-        y2 = y1 + (float) ( pixel_scale * height );
-        }
+		if(gl->CreateShader)
+		{
+			x1 = ( x1 / gl->window_width ) * 2.0f - 1.0f;
+			x2 = ( x2 / gl->window_width ) * 2.0f - 1.0f;
+			y1 = ( y1 / gl->window_height ) * 2.0f - 1.0f;
+			y2 = ( y2 / gl->window_height ) * 2.0f - 1.0f;
 
-    x1 = ( x1 / gl->window_width ) * 2.0f - 1.0f;
-    x2 = ( x2 / gl->window_width ) * 2.0f - 1.0f;
-    y1 = ( y1 / gl->window_height ) * 2.0f - 1.0f;
-    y2 = ( y2 / gl->window_height ) * 2.0f - 1.0f;
+			APP_GLfloat vertices[ 16 ];
+			vertices[  0 ] = x1;
+			vertices[  1 ] = y1;
+			vertices[  2 ] = 0.0f;
+			vertices[  3 ] = 1.0f;
 
-    APP_GLfloat vertices[ 16 ];
-    vertices[  0 ] = x1;
-    vertices[  1 ] = y1;
-    vertices[  2 ] = 0.0f;
-    vertices[  3 ] = 1.0f;
+			vertices[  4 ] = x2;
+			vertices[  5 ] = y1;
+			vertices[  6 ] = 1.0f;
+			vertices[  7 ] = 1.0f;
 
-    vertices[  4 ] = x2;
-    vertices[  5 ] = y1;
-    vertices[  6 ] = 1.0f;
-    vertices[  7 ] = 1.0f;
+			vertices[  8 ] = x2;
+			vertices[  9 ] = y2;
+			vertices[ 10 ] = 1.0f;
+			vertices[ 11 ] = 0.0f;
 
-    vertices[  8 ] = x2;
-    vertices[  9 ] = y2;
-    vertices[ 10 ] = 1.0f;
-    vertices[ 11 ] = 0.0f;
+			vertices[ 12 ] = x1;
+			vertices[ 13 ] = y2;
+			vertices[ 14 ] = 0.0f;
+			vertices[ 15 ] = 0.0f;
 
-    vertices[ 12 ] = x1;
-    vertices[ 13 ] = y2;
-    vertices[ 14 ] = 0.0f;
-    vertices[ 15 ] = 0.0f;
+			gl->BindBuffer( APP_GL_ARRAY_BUFFER, gl->vertexbuffer );
+			gl->BufferData( APP_GL_ARRAY_BUFFER, 4 * 4 * sizeof( APP_GLfloat ), vertices, APP_GL_STATIC_DRAW );
+			gl->VertexAttribPointer( 0, 4, APP_GL_FLOAT, APP_GL_FALSE, 4 * sizeof( APP_GLfloat ), 0 );
 
-    gl->BindBuffer( APP_GL_ARRAY_BUFFER, gl->vertexbuffer );
-    gl->BufferData( APP_GL_ARRAY_BUFFER, 4 * 4 * sizeof( APP_GLfloat ), vertices, APP_GL_STATIC_DRAW );
-    gl->VertexAttribPointer( 0, 4, APP_GL_FLOAT, APP_GL_FALSE, 4 * sizeof( APP_GLfloat ), 0 );
+			float mod_r = ( ( mod_xbgr >> 16 ) & 0xff ) / 255.0f;
+			float mod_g = ( ( mod_xbgr >> 8  ) & 0xff ) / 255.0f;
+			float mod_b = ( ( mod_xbgr       ) & 0xff ) / 255.0f;
 
-    float mod_r = ( ( mod_xbgr >> 16 ) & 0xff ) / 255.0f;
-    float mod_g = ( ( mod_xbgr >> 8  ) & 0xff ) / 255.0f;
-    float mod_b = ( ( mod_xbgr       ) & 0xff ) / 255.0f;
+			gl->UseProgram( gl->shader );
+			gl->Uniform1i( gl->GetUniformLocation( gl->shader, "texture" ), 0 );
+			gl->Uniform3f( gl->GetUniformLocation( gl->shader, "modulate" ), mod_r, mod_g, mod_b );
 
-    gl->UseProgram( gl->shader );
-    gl->Uniform1i( gl->GetUniformLocation( gl->shader, "texture" ), 0 );
-    gl->Uniform3f( gl->GetUniformLocation( gl->shader, "modulate" ), mod_r, mod_g, mod_b );
+			gl->ActiveTexture( APP_GL_TEXTURE0 );
+			gl->BindTexture( APP_GL_TEXTURE_2D, gl->texture );
+			gl->TexImage2D( APP_GL_TEXTURE_2D, 0, APP_GL_RGBA, width, height, 0, APP_GL_RGBA, APP_GL_UNSIGNED_BYTE, pixels_xbgr );
 
-    gl->ActiveTexture( APP_GL_TEXTURE0 );
-    gl->BindTexture( APP_GL_TEXTURE_2D, gl->texture );
-    gl->TexImage2D( APP_GL_TEXTURE_2D, 0, APP_GL_RGBA, width, height, 0, APP_GL_RGBA, APP_GL_UNSIGNED_BYTE, pixels_xbgr );
+			if( gl->interpolation == APP_INTERPOLATION_LINEAR )
+				{
+				gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_LINEAR );
+				gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_LINEAR );
+				}
+			else
+				{
+				gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST );
+				gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST );
+				}
 
-    if( gl->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_LINEAR );
-        gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_LINEAR );
-        }
-    else
-        {
-        gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST );
-        gl->TexParameteri( APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST );
-        }
+			float r = ( ( border_xbgr >> 16 ) & 0xff ) / 255.0f;
+			float g = ( ( border_xbgr >> 8  ) & 0xff ) / 255.0f;
+			float b = ( ( border_xbgr       ) & 0xff ) / 255.0f;
+			gl->ClearColor( r, g, b, 1.0f );
+			gl->Clear( APP_GL_COLOR_BUFFER_BIT );
+			gl->DrawArrays( APP_GL_TRIANGLE_FAN, 0, 4 );
+		}
+		else
+		{
+			// Set up orthographic projection
+			gl->MatrixMode(APP_GL_PROJECTION);
+			gl->LoadIdentity();
+			gl->Ortho(0.0, gl->window_width, gl->window_height, 0.0, -1.0, 1.0);
+			gl->MatrixMode(APP_GL_MODELVIEW);
+			gl->LoadIdentity();
 
-    float r = ( ( border_xbgr >> 16 ) & 0xff ) / 255.0f;
-    float g = ( ( border_xbgr >> 8  ) & 0xff ) / 255.0f;
-    float b = ( ( border_xbgr       ) & 0xff ) / 255.0f;
-    gl->ClearColor( r, g, b, 1.0f );
-    gl->Clear( APP_GL_COLOR_BUFFER_BIT );
-    gl->DrawArrays( APP_GL_TRIANGLE_FAN, 0, 4 );
+			// Set up viewport
+			gl->Viewport(0, 0, gl->window_width, gl->window_height);
 
-    return 1;
-    }
+			// Enable 2D texturing
+			gl->Enable(APP_GL_TEXTURE_2D);
+
+			// Set texture filtering
+			if (gl->interpolation == APP_INTERPOLATION_LINEAR)
+			{
+				gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_LINEAR);
+				gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_LINEAR);
+			}
+			else
+			{
+				gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MIN_FILTER, APP_GL_NEAREST);
+				gl->TexParameteri(APP_GL_TEXTURE_2D, APP_GL_TEXTURE_MAG_FILTER, APP_GL_NEAREST);
+			}
+
+			// Load texture data directly (no texture objects)
+			gl->TexImage2D(APP_GL_TEXTURE_2D, 0, APP_GL_RGBA, width, height, 0, APP_GL_RGBA, APP_GL_UNSIGNED_BYTE, pixels_xbgr);
+
+			// Set modulation color
+			float mod_r = ((mod_xbgr >> 16) & 0xff) / 255.0f;
+			float mod_g = ((mod_xbgr >> 8) & 0xff) / 255.0f;
+			float mod_b = (mod_xbgr & 0xff) / 255.0f;
+			gl->Color3f(mod_r, mod_g, mod_b);
+
+			// Clear the background
+			float r = ((border_xbgr >> 16) & 0xff) / 255.0f;
+			float g = ((border_xbgr >> 8) & 0xff) / 255.0f;
+			float b = (border_xbgr & 0xff) / 255.0f;
+			gl->ClearColor(r, g, b, 1.0f);
+			gl->Clear(APP_GL_COLOR_BUFFER_BIT);
+
+			// Draw textured quad using immediate mode
+			gl->Begin(APP_GL_QUADS);
+			gl->TexCoord2f(0.0f, 1.0f); gl->Vertex2f(x1, y1);
+			gl->TexCoord2f(1.0f, 1.0f); gl->Vertex2f(x2, y1);
+			gl->TexCoord2f(1.0f, 0.0f); gl->Vertex2f(x2, y2);
+			gl->TexCoord2f(0.0f, 0.0f); gl->Vertex2f(x1, y2);
+			gl->End();
+
+			gl->Disable(APP_GL_TEXTURE_2D);
+		}
+		return 1;
+	}
+
+	static void app_internal_opengl_resize(struct app_internal_opengl_t* gl, int width, int height)
+	{
+		if(!gl->Viewport) return;
+		gl->Viewport(0, 0, width, height);
+		gl->window_width = width;
+		gl->window_height = height;
+	}
+
+	static void app_internal_opengl_interpolation(struct app_internal_opengl_t* gl, app_interpolation_t interpolation)
+	{
+		gl->interpolation = interpolation;
+	}
 
 
-static void app_internal_opengl_resize( struct app_internal_opengl_t* gl, int width, int height )
-    {
-    gl->Viewport( 0, 0, width, height );
-    gl->window_width = width;
-    gl->window_height = height;
-    }
-
-
-static void app_internal_opengl_interpolation( struct app_internal_opengl_t* gl, app_interpolation_t interpolation )
-    {
-    gl->interpolation = interpolation;
-    }
 
 
 #endif // #ifndef APP_NULL
@@ -1179,6 +1311,1955 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    WS
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#elif defined( APP_WS )
+
+
+#ifndef APP_MALLOC
+	#include <stdlib.h>
+	#if defined(__cplusplus)
+		#define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
+	#else
+		#define APP_MALLOC( ctx, size ) ( malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( free( ptr ) )
+	#endif
+#endif
+
+#include <string.h>
+#include <stdio.h>
+
+#define GUI_IMPLEMENTATION
+#include "gui.h"
+#define WSDISPLAY_IMPLEMENTATION
+#include "display.h"
+#define GLCONTEXT_IMPLEMENTATION
+#define HAVE_EGL
+#include "glcontext.h"
+#define STOPWATCH_IMPLEMENTATION
+#include "stopwatch.h"
+#define WSAUDIO_IMPLEMENTATION
+#if !defined(WSAUDIODSOPT)
+	#define WSAUDIODSOPT
+#endif
+#undef WSAUDIOALSAOPT
+#include "audio.h"
+
+#ifndef APP_FATAL_ERROR
+	#define APP_FATAL_ERROR( ctx, message ) { \
+			WSMessageBox( NULL, "Fatal Error!", message, WSMESSAGEBOX_ICONSTOP ); exit( 0xff ); }
+#endif
+#if defined(_WIN32)
+	#include <Windows.h>
+
+	void SetDPIAware()
+	{
+	#if defined(WSDISPLAY_NOWINXP)
+		SetProcessDPIAware();
+	#else
+		typedef BOOL(WINAPI* SETPROCESSWSDPIAWAREOPTPROC) ();
+		HINSTANCE user32 = LoadLibraryA("user32.dll");
+		SETPROCESSWSDPIAWAREOPTPROC lpSetProcessDPIAware;
+		lpSetProcessDPIAware =
+			(SETPROCESSWSDPIAWAREOPTPROC)GetProcAddress(
+				user32, "SetProcessDPIAware");
+		if (lpSetProcessDPIAware)
+			(*lpSetProcessDPIAware)();
+		FreeLibrary(user32);
+	#endif
+	}
+#else
+	#define SetDPIAware()
+#endif
+
+
+struct app_t
+	{
+	void* memctx;
+	void* logctx;
+	void* fatalctx;
+	struct app_internal_opengl_t gl;
+	int initialized;
+	int exit_requested;
+	int has_focus;
+	app_interpolation_t interpolation;
+	app_screenmode_t screenmode;
+
+	GLCONTEXT glcontext;
+	WSWINDOW window;
+	WSWNDCLASS wndclass;
+	WSAPP app;
+	WSEVENTLOOP evloop;
+	WSCURSORCLIPPER cursclipper;
+	WSSTOPWATCH stopwatch;
+	WSRECT nonfullscreenrect;
+
+	WSAUDIO sound_device;
+	int volume;
+	wsbool isaudiocreated;
+
+	HANDLE sound_notifications[ 2 ];
+	HMODULE dsound_dll;
+	struct IDirectSound8* dsound;
+	struct IDirectSoundBuffer8* dsoundbuf;
+	HANDLE sound_thread_handle;
+	volatile LONG exit_sound_thread;
+	int sample_pairs_count;
+	int sound_level;
+
+	void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
+	void* sound_user_data;
+
+
+	app_input_event_t input_events[ 1024 ];
+	int input_count;
+
+	int display_count;
+	app_display_t displays[ 16 ];
+
+#if defined(_WIN32)
+	HDC hdc;
+	HMODULE gl_dll;
+	HGLRC gl_context;
+	PROC (APP_GLCALLTYPE* wglGetProcAddress) (LPCSTR);
+	HGLRC (APP_GLCALLTYPE* wglCreateContext) (HDC);
+	BOOL (APP_GLCALLTYPE* wglDeleteContext) (HGLRC);
+	BOOL (APP_GLCALLTYPE* wglMakeCurrent) (HDC, HGLRC);
+	BOOL (APP_GLCALLTYPE* wglSwapIntervalEXT) (int);
+#endif
+};
+
+static app_key_t app_internal_scancode_to_appkey( app_t* app, int scancode );
+static void app_internal_add_input_event( app_t* app, app_input_event_t* event );
+
+char WSKeyCodeToChar(int key, int isShiftDown, int isCapsLockOn)
+{
+	char baseChar = 0;
+	switch (key)
+	{
+		case WSKEY_0: baseChar = '0'; break;
+		case WSKEY_1: baseChar = '1'; break;
+		case WSKEY_2: baseChar = '2'; break;
+		case WSKEY_3: baseChar = '3'; break;
+		case WSKEY_4: baseChar = '4'; break;
+		case WSKEY_5: baseChar = '5'; break;
+		case WSKEY_6: baseChar = '6'; break;
+		case WSKEY_7: baseChar = '7'; break;
+		case WSKEY_8: baseChar = '8'; break;
+		case WSKEY_9: baseChar = '9'; break;
+		case WSKEY_A: baseChar = 'a'; break;
+		case WSKEY_B: baseChar = 'b'; break;
+		case WSKEY_C: baseChar = 'c'; break;
+		case WSKEY_D: baseChar = 'd'; break;
+		case WSKEY_E: baseChar = 'e'; break;
+		case WSKEY_F: baseChar = 'f'; break;
+		case WSKEY_G: baseChar = 'g'; break;
+		case WSKEY_H: baseChar = 'h'; break;
+		case WSKEY_I: baseChar = 'i'; break;
+		case WSKEY_J: baseChar = 'j'; break;
+		case WSKEY_K: baseChar = 'k'; break;
+		case WSKEY_L: baseChar = 'l'; break;
+		case WSKEY_M: baseChar = 'm'; break;
+		case WSKEY_N: baseChar = 'n'; break;
+		case WSKEY_O: baseChar = 'o'; break;
+		case WSKEY_P: baseChar = 'p'; break;
+		case WSKEY_Q: baseChar = 'q'; break;
+		case WSKEY_R: baseChar = 'r'; break;
+		case WSKEY_S: baseChar = 's'; break;
+		case WSKEY_T: baseChar = 't'; break;
+		case WSKEY_U: baseChar = 'u'; break;
+		case WSKEY_V: baseChar = 'v'; break;
+		case WSKEY_W: baseChar = 'w'; break;
+		case WSKEY_X: baseChar = 'x'; break;
+		case WSKEY_Y: baseChar = 'y'; break;
+		case WSKEY_Z: baseChar = 'z'; break;
+#if defined(WSKEY_a)
+		case WSKEY_a: baseChar = 'a'; break;
+		case WSKEY_b: baseChar = 'b'; break;
+		case WSKEY_c: baseChar = 'c'; break;
+		case WSKEY_d: baseChar = 'd'; break;
+		case WSKEY_e: baseChar = 'e'; break;
+		case WSKEY_f: baseChar = 'f'; break;
+		case WSKEY_g: baseChar = 'g'; break;
+		case WSKEY_h: baseChar = 'h'; break;
+		case WSKEY_i: baseChar = 'i'; break;
+		case WSKEY_j: baseChar = 'j'; break;
+		case WSKEY_k: baseChar = 'k'; break;
+		case WSKEY_l: baseChar = 'l'; break;
+		case WSKEY_m: baseChar = 'm'; break;
+		case WSKEY_n: baseChar = 'n'; break;
+		case WSKEY_o: baseChar = 'o'; break;
+		case WSKEY_p: baseChar = 'p'; break;
+		case WSKEY_q: baseChar = 'q'; break;
+		case WSKEY_r: baseChar = 'r'; break;
+		case WSKEY_s: baseChar = 's'; break;
+		case WSKEY_t: baseChar = 't'; break;
+		case WSKEY_u: baseChar = 'u'; break;
+		case WSKEY_v: baseChar = 'v'; break;
+		case WSKEY_w: baseChar = 'w'; break;
+		case WSKEY_x: baseChar = 'x'; break;
+		case WSKEY_y: baseChar = 'y'; break;
+		case WSKEY_z: baseChar = 'z'; break;
+#endif
+		case WSKEY_APOSTROPHE: baseChar = '\''; break;
+		case WSKEY_BACKSLASH: baseChar = '\\'; break;
+		case WSKEY_BRACKETLEFT: baseChar = '['; break;
+		case WSKEY_BRACKETRIGHT: baseChar = ']'; break;
+		case WSKEY_COMMA: baseChar = ','; break;
+		case WSKEY_EQUAL: baseChar = '='; break;
+		case WSKEY_MINUS: baseChar = '-'; break;
+		case WSKEY_PERIOD: baseChar = '.'; break;
+		case WSKEY_SEMICOLON: baseChar = ';'; break;
+		case WSKEY_SLASH: baseChar = '/'; break;
+		case WSKEY_SPACE: baseChar = ' '; break;
+		case WSKEY_TILDE: baseChar = '~'; break;
+		case WSKEY_ENTER: baseChar = '\n'; break;
+		case WSKEY_RETURN: baseChar = '\r'; break;
+		default: baseChar = 0; break;
+	}
+
+	// Adjust case based on Shift and Caps Lock
+	if (baseChar >= 'a' && baseChar <= 'z')
+	{
+		if (isShiftDown || isCapsLockOn)
+		{
+			baseChar -= 32; // Convert to uppercase
+		}
+	}
+	else if (baseChar >= 'A' && baseChar <= 'Z')
+	{
+		if (isShiftDown && isCapsLockOn)
+		{
+			baseChar += 32; // Convert to lowercase
+		}
+	}
+	else
+	{
+		if (isShiftDown)
+		{
+			switch (baseChar)
+			{
+				case '1': baseChar = '!'; break;
+				case '2': baseChar = '@'; break;
+				case '3': baseChar = '#'; break;
+				case '4': baseChar = '$'; break;
+				case '5': baseChar = '%'; break;
+				case '6': baseChar = '^'; break;
+				case '7': baseChar = '&'; break;
+				case '8': baseChar = '*'; break;
+				case '9': baseChar = '('; break;
+				case '0': baseChar = ')'; break;
+				case '-': baseChar = '_'; break;
+				case '=': baseChar = '+'; break;
+				case '[': baseChar = '{'; break;
+				case ']': baseChar = '}'; break;
+				case '\\': baseChar = '|'; break;
+				case ';': baseChar = ':'; break;
+				case '\'': baseChar = '"'; break;
+				case ',': baseChar = '<'; break;
+				case '.': baseChar = '>'; break;
+				case '/': baseChar = '?'; break;
+				case '`': baseChar = '~'; break;
+				default: break;
+			}
+		}
+	}
+
+	return baseChar;
+}
+
+
+WSSIZEEVENT_CALLBACK(AppOnSize)
+{
+	int w, h;
+	WSRECT cr;
+	WSSIZEEVENT ev;
+	WSWINDOW* pWindow;
+	app_t* app;
+	WSSizeEvent_Construct(&ev);
+	pWindow = WSSizeEvent_GetWindow(&ev);
+	app = (app_t*)WSSizeEvent_GetWindowCon(&ev);
+	WSWindow_GetClientRect(pWindow, &cr);
+	w = WSRect_GetWidth(&cr);
+	h = WSRect_GetHeight(&cr);
+	GLContext_ResizeDrawable(&app->glcontext, w, h);
+	if( w != app->gl.window_width || h != app->gl.window_height )
+		{
+		app_internal_opengl_resize( &app->gl, w, h );
+		}
+	return WSSIZEEVENT_UNHANDLED;
+}
+
+WSPAINTEVENT_CALLBACK(AppOnPaint)
+{
+	WSPAINTEVENT ev;
+	WSWINDOW* pWindow;
+	app_t* pApp;
+	WSPAINTDC dc;
+	WSPaintEvent_Construct(&ev);
+	pWindow = WSPaintEvent_GetWindow(&ev);
+	pApp = (app_t*)
+		WSPaintEvent_GetWindowCon(&ev);
+
+	WSPaintDC_Create(&dc, pWindow);
+	WSPaintDC_Destroy(&dc, pWindow);
+	return WSPAINTEVENT_UNHANDLED;
+}
+WSKEYEVENT_CALLBACK(AppOnKeyDown)
+{
+	app_input_event_t input_event;
+	WSKEYEVENT ev;
+	app_t* app;
+	char charcode;
+	WSKeyEvent_Construct(&ev);
+	app = (app_t*)
+		WSKeyEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_KEY_DOWN;
+	input_event.data.key = app_internal_scancode_to_appkey( app, WSKeyEvent_GetKey(&ev) );
+	app_internal_add_input_event( app, &input_event );
+	/* Fixme - this is a hack to get the char code for the key down event */
+	charcode = WSKeyCodeToChar(WSKeyEvent_GetKey(&ev), WSKeyEventGetState(WSKEY_SHIFT),
+		WSKeyEventGetState(WSKEY_CAPITAL));
+	if(charcode)
+	{
+		input_event.type = APP_INPUT_CHAR;
+		input_event.data.char_code = charcode;
+		app_internal_add_input_event( app, &input_event );
+	}
+	return WSKEYEVENT_UNHANDLED;
+}
+WSKEYEVENT_CALLBACK(AppOnKeyUp)
+{
+	app_input_event_t input_event;
+	WSKEYEVENT ev;
+	app_t* app;
+	WSKeyEvent_Construct(&ev);
+	app = (app_t*)
+		WSKeyEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_KEY_UP;
+	input_event.data.key = app_internal_scancode_to_appkey( app, WSKeyEvent_GetKey(&ev) );
+	app_internal_add_input_event( app, &input_event );
+	return WSKEYEVENT_UNHANDLED;
+}
+
+WSFOCUSEVENT_CALLBACK(AppOnSetFocus)
+{
+	app_input_event_t input_event;
+	WSFOCUSEVENT ev;
+	app_t* app;
+	WSFocusEvent_Construct(&ev);
+	app = (app_t*)
+		WSFocusEvent_GetWindowCon(&ev);
+	app->has_focus = 1;
+	return WSFOCUSEVENT_UNHANDLED;
+}
+
+WSFOCUSEVENT_CALLBACK(AppOnKillFocus)
+{
+	app_input_event_t input_event;
+	WSFOCUSEVENT ev;
+	app_t* app;
+	WSFocusEvent_Construct(&ev);
+	app = (app_t*)
+		WSFocusEvent_GetWindowCon(&ev);
+	app->has_focus = 0;
+	return WSFOCUSEVENT_UNHANDLED;
+}
+
+WSCLOSEEVENT_CALLBACK(AppOnClose)
+{
+	app_input_event_t input_event;
+	WSCLOSEEVENT ev;
+	app_t* app;
+	WSCloseEvent_Construct(&ev);
+	app = (app_t*)
+		WSCloseEvent_GetWindowCon(&ev);
+	app->exit_requested = 1;
+	return WSCLOSEEVENT_UNHANDLED;
+}
+
+WSMOUSEMOVEEVENT_CALLBACK(AppOnMouseMove)
+{
+	app_input_event_t input_event;
+	WSMOUSEMOVEEVENT ev;
+	app_t* app;
+	WSMouseMoveEvent_Construct(&ev);
+	app = (app_t*)
+		WSMouseMoveEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_MOUSE_MOVE;
+	input_event.data.mouse_pos.x = WSMouseMoveEvent_GetX(&ev);
+	input_event.data.mouse_pos.y = WSMouseMoveEvent_GetY(&ev);
+	app_internal_add_input_event( app, &input_event );
+	WSCursorClipper_Process(&app->cursclipper,
+		input_event.data.mouse_pos.x, input_event.data.mouse_pos.y);
+	return WSMOUSEEVENT_UNHANDLED;
+}
+
+WSMOUSEEVENT_CALLBACK(AppOnMouseDown)
+{
+	app_input_event_t input_event;
+	WSMOUSEEVENT ev;
+	app_t* app;
+	WSMouseEvent_Construct(&ev);
+	app = (app_t*)
+		WSMouseEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_KEY_DOWN;
+	if(WSMouseEvent_IsLButton(&ev))
+		input_event.data.key = APP_KEY_LBUTTON;
+	else if(WSMouseEvent_IsRButton(&ev))
+		input_event.data.key = APP_KEY_RBUTTON;
+	else if(WSMouseEvent_IsMButton(&ev))
+		input_event.data.key = APP_KEY_MBUTTON;
+	else if(WSMouseEvent_IsX1Button(&ev))
+		input_event.data.key = APP_KEY_XBUTTON1;
+	else if(WSMouseEvent_IsX2Button(&ev))
+		input_event.data.key = APP_KEY_XBUTTON2;
+	app_internal_add_input_event( app, &input_event );
+	return WSMOUSEEVENT_UNHANDLED;
+}
+
+WSMOUSEEVENT_CALLBACK(AppOnMouseUp)
+{
+	app_input_event_t input_event;
+	WSMOUSEEVENT ev;
+	app_t* app;
+	WSMouseEvent_Construct(&ev);
+	app = (app_t*)
+		WSMouseEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_KEY_UP;
+	if(WSMouseEvent_IsLButton(&ev))
+		input_event.data.key = APP_KEY_LBUTTON;
+	else if(WSMouseEvent_IsRButton(&ev))
+		input_event.data.key = APP_KEY_RBUTTON;
+	else if(WSMouseEvent_IsMButton(&ev))
+		input_event.data.key = APP_KEY_MBUTTON;
+	else if(WSMouseEvent_IsX1Button(&ev))
+		input_event.data.key = APP_KEY_XBUTTON1;
+	else if(WSMouseEvent_IsX2Button(&ev))
+		input_event.data.key = APP_KEY_XBUTTON2;
+	app_internal_add_input_event( app, &input_event );
+	return WSMOUSEEVENT_UNHANDLED;
+}
+
+WSMOUSEWHEELEVENT_CALLBACK(AppOnMouseWheel)
+{
+	float const microsoft_mouse_wheel_constant = 120.0f;
+	float wheel_delta;
+	app_input_event_t input_event;
+	WSMOUSEWHEELEVENT ev;
+	app_t* app;
+	WSMouseWheelEvent_Construct(&ev);
+	app = (app_t*)
+		WSMouseWheelEvent_GetWindowCon(&ev);
+	input_event.type = APP_INPUT_KEY_UP;
+	app_internal_add_input_event( app, &input_event );
+	wheel_delta = ( (float) WSMouseWheelEvent_GetY(&ev) )
+		/ microsoft_mouse_wheel_constant;
+	if( app->input_count > 0
+				&& app->input_events[ app->input_count - 1 ].type
+					== APP_INPUT_SCROLL_WHEEL )
+		{
+		app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
+		event->data.wheel_delta += wheel_delta;
+		}
+	else
+		{
+		app_input_event_t input_event;
+		input_event.type = APP_INPUT_SCROLL_WHEEL;
+		input_event.data.wheel_delta = wheel_delta;
+		app_internal_add_input_event( app, &input_event );
+		}
+	return WSMOUSEWHEELEVENT_UNHANDLED;
+}
+
+BEGIN_ALL_MENU_MESSAGES
+	BEGIN_MENU_MESSAGES(AppMenuMessages)
+	END_MENU_MESSAGES(AppMenuMessages)
+END_ALL_MENU_MESSAGES
+BEGIN_ALL_WINDOW_MESSAGES
+	BEGIN_WINDOW_MESSAGES(AppWindowMessages)
+		IMPLEMENT_MENU_WINDOW_MESSAGES(AppMenuMessages)
+		IMPLEMENT_SIZE_CHANGED_MESSAGE(AppOnSize)
+		IMPLEMENT_CLOSE_MESSAGE(AppOnClose)
+		IMPLEMENT_PAINT_MESSAGE(AppOnPaint)
+		IMPLEMENT_KEYDOWN_MESSAGE(AppOnKeyDown)
+		IMPLEMENT_KEYUP_MESSAGE(AppOnKeyUp)
+		IMPLEMENT_MOUSEDOWN_MESSAGE(AppOnMouseDown)
+		IMPLEMENT_MOUSEUP_MESSAGE(AppOnMouseUp)
+		IMPLEMENT_MOUSEMOVE_MESSAGE(AppOnMouseMove)
+		IMPLEMENT_MOUSEWHEEL_MESSAGE(AppOnMouseWheel)
+		IMPLEMENT_SETFOCUS_MESSAGE(AppOnSetFocus)
+		IMPLEMENT_KILLFOCUS_MESSAGE(AppOnKillFocus)
+	END_WINDOW_MESSAGES(AppWindowMessages)
+END_ALL_WINDOW_MESSAGES
+
+typedef struct app_userdata_context_t {
+	int argc;
+	char** argv;
+} app_userdata_context_t;
+#if 0
+
+		#include <GL/gl.h> /* has to be caps */
+		#include <GL/glu.h> /* has to be caps */
+
+void drawCube() {
+	// Draw front face
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 0.0f, 0.0f); // Red
+	glVertex3f(-0.5f, -0.5f, 0.5f);
+	glVertex3f(0.5f, -0.5f, 0.5f);
+	glVertex3f(0.5f, 0.5f, 0.5f);
+	glVertex3f(-0.5f, 0.5f, 0.5f);
+	glEnd();
+
+	// Draw back face
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 1.0f, 0.0f); // Green
+	glVertex3f(-0.5f, -0.5f, -0.5f);
+	glVertex3f(0.5f, -0.5f, -0.5f);
+	glVertex3f(0.5f, 0.5f, -0.5f);
+	glVertex3f(-0.5f, 0.5f, -0.5f);
+	glEnd();
+
+	// Draw top face
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 0.0f, 1.0f); // Blue
+	glVertex3f(-0.5f, 0.5f, -0.5f);
+	glVertex3f(0.5f, 0.5f, -0.5f);
+	glVertex3f(0.5f, 0.5f, 0.5f);
+	glVertex3f(-0.5f, 0.5f, 0.5f);
+	glEnd();
+
+	// Draw bottom face
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 1.0f, 0.0f); // Yellow
+	glVertex3f(-0.5f, -0.5f, -0.5f);
+	glVertex3f(0.5f, -0.5f, -0.5f);
+	glVertex3f(0.5f, -0.5f, 0.5f);
+	glVertex3f(-0.5f, -0.5f, 0.5f);
+	glEnd();
+
+	// Draw right face
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 0.0f, 1.0f); // Magenta
+	glVertex3f(0.5f, -0.5f, -0.5f);
+	glVertex3f(0.5f, 0.5f, -0.5f);
+	glVertex3f(0.5f, 0.5f, 0.5f);
+	glVertex3f(0.5f, -0.5f, 0.5f);
+	glEnd();
+
+	// Draw left face
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 1.0f, 1.0f); // Cyan
+	glVertex3f(-0.5f, -0.5f, -0.5f);
+	glVertex3f(-0.5f, 0.5f, -0.5f);
+	glVertex3f(-0.5f, 0.5f, 0.5f);
+	glVertex3f(-0.5f, -0.5f, 0.5f);
+	glEnd();
+}
+void drawCubev2() {
+	glBegin(GL_QUADS);
+	// Front face
+	glColor3f(1.0, 0.0, 0.0); // Red
+	glVertex3f(-0.5, -0.5, 0.5);
+	glVertex3f(0.5, -0.5, 0.5);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+
+	// Back face
+	glColor3f(0.0, 1.0, 0.0); // Green
+	glVertex3f(-0.5, -0.5, -0.5);
+	glVertex3f(-0.5, 0.5, -0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+	glVertex3f(0.5, -0.5, -0.5);
+
+	// Top face
+	glColor3f(0.0, 0.0, 1.0); // Blue
+	glVertex3f(-0.5, 0.5, -0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+
+	// Bottom face
+	glColor3f(1.0, 1.0, 0.0); // Yellow
+	glVertex3f(-0.5, -0.5, -0.5);
+	glVertex3f(0.5, -0.5, -0.5);
+	glVertex3f(0.5, -0.5, 0.5);
+	glVertex3f(-0.5, -0.5, 0.5);
+
+	// Right face
+	glColor3f(1.0, 0.0, 1.0); // Magenta
+	glVertex3f(0.5, -0.5, -0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(0.5, -0.5, 0.5);
+
+	// Left face
+	glColor3f(0.0, 1.0, 1.0); // Cyan
+	glVertex3f(-0.5, -0.5, -0.5);
+	glVertex3f(-0.5, -0.5, 0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+	glVertex3f(-0.5, 0.5, -0.5);
+	glEnd();
+}
+float rotationAngle = 0.0; // Global variable to store the current rotation angle
+
+void drawRubiksCube() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0, 1.0, 0.1, 100.0); // Set up a perspective projection
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(5.0, 5.0, 5.0, // Camera is now placed at an angle
+			  0.0, 0.0, 0.0, // Looking at the origin
+			  0.0, 1.0, 0.0); // Up is in the positive Y direction
+
+	glRotatef(rotationAngle, 0.0f, 1.0f, 0.0f); // Apply rotation around the y-axis
+
+	float offset = 1.025f; // Offset to separate the individual cubes slightly
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			for (int z = -1; z <= 1; z++) {
+				glPushMatrix();
+				glTranslatef(x * offset, y * offset, z * offset); // Move the cube to the correct position
+				drawCubev2(); // Draw the individual cube
+				glPopMatrix();
+			}
+		}
+	}
+}
+void update() {
+	rotationAngle += 2.0f; // Increase the angle by 2 degrees
+	if (rotationAngle > 360.0f) {
+		rotationAngle -= 360.0f; // Keep the angle within 0-360 degrees
+	}
+}
+void drawscene(GLCONTEXT* glc)
+{
+#if 0
+			glClear(GL_COLOR_BUFFER_BIT);
+			glBegin(GL_TRIANGLES);
+			glColor3f(1.0, 0.0, 0.0);
+			glVertex2f(0.0, 1.0);
+			glColor3f(0.0, 1.0, 0.0);
+			glVertex2f(-1.0, -1.0);
+			glColor3f(0.0, 0.0, 1.0);
+			glVertex2f(1.0, -1.0);
+			glEnd();
+#else
+			drawRubiksCube();
+#endif
+			glFlush();
+			if(glc)
+				GLContext_SwapBuffers(glc);
+}
+bool shouldnotbegindrawscene = false;
+void begindrawscene(GLCONTEXT* glc)
+{
+	if(!shouldnotbegindrawscene)
+	{
+			glEnable(GL_CULL_FACE);
+		   glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LESS);
+			shouldnotbegindrawscene = true;
+	}
+			drawscene(glc);
+}
+void app_test3( app_t* app )
+	{
+	return;
+	WSWindow_Show(&app->window);
+	WSSTOPWATCH sw;
+	size_t curval, lastupdate = 0;
+	WSStopWatch_Construct(&sw);
+	begindrawscene(&app->glcontext);
+		while((curval = WSStopWatch_Value(&sw)) < 500)
+		{
+			if(curval > lastupdate + 15)
+			{
+				update();
+				drawscene(&app->glcontext);
+				lastupdate = curval;
+			}
+		}
+	WSStopWatch_Destruct(&sw);
+}
+#endif
+int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
+	{
+	app_userdata_context_t* uctx = (app_userdata_context_t*)user_data;
+	WSDISPLAY d;
+	WSDISPLAYITERATOR dit;
+	GLPIXELATTRIBUTES pa;
+	size_t i;
+	int result = 0xff;
+	int display_count;
+	int glres;
+	WSRECT bounds = { WSDEFAULTPOSITION, WSDEFAULTPOSITION, 640, 480 };
+	app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
+	memset( app, 0, (int)sizeof( app_t ) );
+	app->memctx = memctx;
+	app->logctx = logctx;
+	app->fatalctx = fatalctx;
+	app->interpolation = APP_INTERPOLATION_LINEAR;
+	app->screenmode = APP_SCREENMODE_FULLSCREEN;
+
+	/* Basic GUI before GL */
+	#if defined(_WIN32)
+	app->app.mhInstance = WSWinGetExeHMODULE();
+	#else
+	app->app.mArgc = 0;//__argc;
+	app->app.mArgv = NULL;//__argv;
+	#endif
+	#if !defined(_WIN32)
+		//setenv("GDK_BACKEND", "x11", 1);
+	#endif
+	if(!WSApp_Create(&app->app))
+		{
+		APP_FATAL_ERROR( app, "Failed to create app" );
+		return 0;
+		}
+	WSWndClass_Create(&app->wndclass, &app->app, NULL,
+		AppWindowMessages, "app_t");
+	WSWindow_Create(&app->window, &app->app, &bounds, "",
+		NULL, &app->wndclass);
+	WSWindow_SetCon(&app->window, app);
+	WSEventLoop_Create(&app->evloop);
+	WSStopWatch_Construct(&app->stopwatch);
+
+	/* GL */
+	SetDPIAware(); /* Otherwise the gl coordinates are wrong */
+
+	GLPixelAttributes_Create(&pa);
+	GLPixelAttributes_PlatformDefaults(&pa);
+	GLPixelAttributes_Stencil(&pa, 8);
+	GLPixelAttributes_Depth(&pa, 24);
+	GLPixelAttributes_BufferSize(&pa, 32);
+	GLPixelAttributes_DoubleBuffer(&pa);
+	GLPixelAttributes_RGBA(&pa);
+	GLPixelAttributes_EndList(&pa);
+	if(!GLContext_CreateWithWindow(&app->glcontext,
+		(GLWINDOWHANDLE)WSWindow_GetGLHandle(&app->window),
+		//NULL,
+		NULL, &pa))
+	{
+		app_fatal_error( app, "GLContext_Create fail" );
+		WSStopWatch_Destruct(&app->stopwatch);
+		WSEventLoop_Destroy(&app->evloop);
+		WSWindow_Destroy(&app->window);
+		WSWndClass_Destroy(&app->wndclass, &app->app);
+		WSApp_Destroy(&app->app);
+		APP_FREE( memctx, app );
+		return 0;
+	}
+	GLContext_ResizeDrawable(&app->glcontext, 640, 480);
+	GLContext_SetCurrent(&app->glcontext);
+	GLContext_SetSwapInterval( &app->glcontext, 1 );
+	#if !defined(_WIN32)
+		glewInit();
+	#endif
+
+    #if defined(_WIN32)
+        // Attempt to bind opengl functions using GetProcAddress
+        app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glCreateShader" );
+        app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glShaderSource" );
+        app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glCompileShader" );
+        app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGetShaderiv" );
+        app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glCreateProgram" );
+        app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glAttachShader" );
+        app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glBindAttribLocation" );
+        app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glLinkProgram" );
+        app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGetProgramiv" );
+        app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGenBuffers" );
+        app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glBindBuffer" );
+        app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glEnableVertexAttribArray" );
+        app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glVertexAttribPointer" );
+        app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGenTextures" );
+        app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glEnable" );
+        app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glActiveTexture" );
+        app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glBindTexture" );
+        app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glTexParameteri" );
+        app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glDeleteBuffers" );
+        app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glDeleteTextures" );
+        app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glBufferData" );
+        app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glUseProgram" );
+        app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glUniform1i" );
+        app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glUniform3f" );
+        app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGetUniformLocation" );
+        app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glTexImage2D" );
+        app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glClearColor" );
+        app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glClear" );
+        app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glDrawArrays" );
+        app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glViewport" );
+        app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glDeleteShader" );
+        app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glDeleteProgram" );
+        #ifdef APP_REPORT_SHADER_ERRORS
+            app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) GLContext_GetProc( &app->glcontext, "glGetShaderInfoLog" );
+        #endif
+		app->gl.Begin = (glBeginProc) (uintptr_t) GLContext_GetProc( &app->glcontext, "glBegin" );
+		app->gl.End = (glEndProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glEnd" );
+		app->gl.TexCoord2f = (glTexCoord2fProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glTexCoord2f" );
+		app->gl.Vertex2f = (glVertex2fProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glVertex2f" );
+		app->gl.Disable = (glDisableProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glDisable" );
+		app->gl.Ortho = (glOrthoProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glOrtho" );
+		app->gl.MatrixMode = (glMatrixModeProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glMatrixMode" );
+		app->gl.LoadIdentity = (glLoadIdentityProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glLoadIdentity" );
+		app->gl.Color3f = (glColor3fProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glColor3f" );
+		app->gl.TexEnvi = (glTexEnviProc)  (uintptr_t) GLContext_GetProc( &app->glcontext, "glTexEnvi" );
+
+
+        // Any opengl functions which didn't bind, try binding them using wglGetProcAddrss
+        if( !app->gl.CreateShader ) app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glCreateShader" );
+        if( !app->gl.ShaderSource ) app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glShaderSource" );
+        if( !app->gl.CompileShader ) app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glCompileShader" );
+        if( !app->gl.GetShaderiv ) app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGetShaderiv" );
+        if( !app->gl.CreateProgram ) app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glCreateProgram" );
+        if( !app->gl.AttachShader ) app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glAttachShader" );
+        if( !app->gl.BindAttribLocation ) app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glBindAttribLocation" );
+        if( !app->gl.LinkProgram ) app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glLinkProgram" );
+        if( !app->gl.GetProgramiv ) app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGetProgramiv" );
+        if( !app->gl.GenBuffers ) app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGenBuffers" );
+        if( !app->gl.BindBuffer ) app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glBindBuffer" );
+        if( !app->gl.EnableVertexAttribArray ) app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glEnableVertexAttribArray" );
+        if( !app->gl.VertexAttribPointer ) app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glVertexAttribPointer" );
+        if( !app->gl.GenTextures ) app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGenTextures" );
+        if( !app->gl.Enable ) app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glEnable" );
+        if( !app->gl.ActiveTexture ) app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glActiveTexture" );
+        if( !app->gl.BindTexture ) app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glBindTexture" );
+        if( !app->gl.TexParameteri ) app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glTexParameteri" );
+        if( !app->gl.DeleteBuffers ) app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDeleteBuffers" );
+        if( !app->gl.DeleteTextures ) app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDeleteTextures" );
+        if( !app->gl.BufferData ) app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glBufferData" );
+        if( !app->gl.UseProgram ) app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glUseProgram" );
+        if( !app->gl.Uniform1i ) app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glUniform1i" );
+        if( !app->gl.Uniform3f ) app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glUniform3f" );
+        if( !app->gl.GetUniformLocation ) app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGetUniformLocation" );
+        if( !app->gl.TexImage2D ) app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glTexImage2D" );
+        if( !app->gl.ClearColor ) app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glClearColor" );
+        if( !app->gl.Clear ) app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glClear" );
+        if( !app->gl.DrawArrays ) app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDrawArrays" );
+        if( !app->gl.Viewport ) app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glViewport" );
+        if( !app->gl.DeleteShader ) app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDeleteShader" );
+        if( !app->gl.DeleteProgram ) app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDeleteProgram" );
+        #ifdef APP_REPORT_SHADER_ERRORS
+            if( !app->gl.GetShaderInfoLog ) app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glGetShaderInfoLog" );
+        #endif
+
+		if(!app->gl.Begin) app->gl.Begin = (glBeginProc) (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glBegin" );
+		if(!app->gl.End) app->gl.End = (glEndProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glEnd" );
+		if(!app->gl.TexCoord2f) app->gl.TexCoord2f = (glTexCoord2fProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glTexCoord2f" );
+		if(!app->gl.Vertex2f) app->gl.Vertex2f = (glVertex2fProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glVertex2f" );
+		if(!app->gl.Disable) app->gl.Disable = (glDisableProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glDisable" );
+		if(!app->gl.Ortho) app->gl.Ortho = (glOrthoProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glOrtho" );
+		if(!app->gl.MatrixMode) app->gl.MatrixMode = (glMatrixModeProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glMatrixMode" );
+		if(!app->gl.LoadIdentity) app->gl.LoadIdentity = (glLoadIdentityProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glLoadIdentity" );
+		if(!app->gl.Color3f) app->gl.Color3f = (glColor3fProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glColor3f" );
+		if(!app->gl.TexEnvi) app->gl.TexEnvi = (glTexEnviProc)  (uintptr_t) GLContext_GLGetProc( &app->glcontext, "glTexEnvi" );
+
+	#else /* not _WIN32 */
+        app->gl.CreateShader = glCreateShader;
+        app->gl.ShaderSource = glShaderSource;
+        app->gl.CompileShader = glCompileShader;
+        app->gl.GetShaderiv = glGetShaderiv;
+        app->gl.CreateProgram = glCreateProgram;
+        app->gl.AttachShader = glAttachShader;
+        app->gl.BindAttribLocation = glBindAttribLocation;
+        app->gl.LinkProgram = glLinkProgram;
+        app->gl.GetProgramiv = glGetProgramiv;
+        app->gl.GenBuffers = glGenBuffers;
+        app->gl.BindBuffer = glBindBuffer;
+        app->gl.EnableVertexAttribArray = glEnableVertexAttribArray;
+        app->gl.VertexAttribPointer = glVertexAttribPointer;
+        app->gl.GenTextures = glGenTextures;
+        app->gl.Enable = glEnable;
+        app->gl.ActiveTexture = glActiveTexture;
+        app->gl.BindTexture = glBindTexture;
+        app->gl.TexParameteri = glTexParameteri;
+        app->gl.DeleteBuffers = glDeleteBuffers;
+        app->gl.DeleteTextures = glDeleteTextures;
+        app->gl.BufferData = glBufferData;
+        app->gl.UseProgram = glUseProgram;
+        app->gl.Uniform1i = glUniform1i;
+        app->gl.Uniform3f = glUniform3f;
+        app->gl.GetUniformLocation = glGetUniformLocation;
+        app->gl.TexImage2D = glTexImage2D;
+        app->gl.ClearColor = glClearColor;
+        app->gl.Clear = glClear;
+        app->gl.DrawArrays = glDrawArrays;
+        app->gl.Viewport = glViewport;
+        app->gl.DeleteShader = glDeleteShader;
+        app->gl.DeleteProgram = glDeleteProgram;
+		app->gl.Begin = glBegin;
+		app->gl.End = glEnd;
+		app->gl.TexCoord2f = glTexCoord2f;
+		app->gl.Vertex2f = glVertex2f;
+		app->gl.Disable = glDisable;
+		app->gl.Ortho = glOrtho;
+		app->gl.MatrixMode = glMatrixMode;
+		app->gl.LoadIdentity = glLoadIdentity;
+		app->gl.Color3f = glColor3f;
+		app->gl.TexEnvi = glTexEnvi;
+        #ifdef APP_REPORT_SHADER_ERRORS
+            app->gl.GetShaderInfoLog = glGetShaderInfoLog;
+        #endif
+    #endif /* not _WIN32 */
+
+	glres = app_internal_opengl_init( app, &app->gl, app->interpolation, 640, 400 );
+	if( !glres )
+	{
+		app_fatal_error( app, "OpenGL init fail" );
+		WSStopWatch_Destruct(&app->stopwatch);
+		WSEventLoop_Destroy(&app->evloop);
+		WSWindow_Destroy(&app->window);
+		WSWndClass_Destroy(&app->wndclass, &app->app);
+		WSApp_Destroy(&app->app);
+		APP_FREE( memctx, app );
+	}
+
+	app->has_focus = 1;
+	app->volume = 256;
+
+	/* displays */
+	app->display_count = 0;
+	WSDisplayBegin(&dit);
+	for(i = 0; !WSDisplayIsEnd(&dit); WSDisplayIterator_Iterate(&dit),
+			++app->display_count, ++i)
+	{
+		WSDisplayIterator_Value(&dit, &d);
+		WSDisplay_GetGeometry(&d, &bounds);
+		app_display_t appd;
+		sprintf( appd.id, "DISPLAY%zu", i );
+		appd.x = WSRect_GetX(&bounds);
+		appd.y = WSRect_GetY(&bounds);
+		appd.width = WSRect_GetWidth(&bounds);
+		appd.height = WSRect_GetHeight(&bounds);
+		app->displays[ i ] = appd;
+		WSDisplay_Destroy(&d);
+	}
+	WSDisplayIterator_Destroy(&dit);
+
+#if defined(DSTEST)
+   app->sound_notifications[ 0 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
+	app->sound_notifications[ 1 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
+
+
+	app->dsound_dll = LoadLibraryA( "dsound.dll" );
+	if( !app->dsound_dll ) app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't load dsound.dll. Sound disabled." );
+
+	if( app->dsound_dll )
+		{
+		HRESULT (WINAPI *DirectSoundCreate8Ptr)(LPCGUID,struct IDirectSound8**,void*) = ( HRESULT (WINAPI*)(LPCGUID,struct IDirectSound8**,void*) )
+			(uintptr_t) GetProcAddress( (HMODULE) app->dsound_dll, "DirectSoundCreate8" );
+		if( !DirectSoundCreate8Ptr )
+			{
+			app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't find DirectSoundCreate. Sound disabled." );
+			FreeLibrary( app->dsound_dll );
+			app->dsound_dll = 0;
+			}
+		if( DirectSoundCreate8Ptr )
+			{
+			HRESULT hr = DirectSoundCreate8Ptr( NULL, &app->dsound, NULL );
+			if( FAILED( hr ) || !app->dsound )
+				{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't create DirectSound object. Sound disabled." );
+				DirectSoundCreate8Ptr = 0;
+				FreeLibrary( app->dsound_dll );
+				app->dsound_dll = 0;
+				}
+			else
+				{
+				hr = IDirectSound8_SetCooperativeLevel( app->dsound, WSWindow_GetHandle(&app->window), DSSCL_NORMAL);
+				if( FAILED( hr ) )
+					{
+					app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't set cooperative level for DirectSound object. Sound disabled." );
+					IDirectSound8_Release( app->dsound );
+					app->dsound = 0;
+					DirectSoundCreate8Ptr = 0;
+					FreeLibrary( app->dsound_dll );
+					app->dsound_dll = 0;
+					}
+				}
+			}
+		}
+	app->sound_thread_handle = INVALID_HANDLE_VALUE;
+#endif
+	/* init done. Go! */
+	//WSWindow_Show(&app->window);
+	result = app_proc( app, user_data );
+	return result;
+	}
+
+
+static void app_internal_add_input_event( app_t* app, app_input_event_t* event )
+	{
+	if( app->has_focus )
+		{
+		if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+			app->input_events[ app->input_count++ ] = *event;
+		}
+	}
+
+static app_key_t app_internal_scancode_to_appkey( app_t* app, int scancode )
+
+	{
+		app_key_t app_key;
+		switch (scancode)
+		{
+			case WSKEY_SPACE:
+				app_key = APP_KEY_SPACE;
+				break;
+			case WSKEY_CONTROL:
+				app_key = APP_KEY_CONTROL;
+				break;
+			case WSKEY_HOME:
+				app_key = APP_KEY_HOME;
+				break;
+			case WSKEY_ENTER:
+				app_key = APP_KEY_RETURN;
+				break;
+			case WSKEY_END:
+				app_key = APP_KEY_END;
+				break;
+			case WSKEY_HELP:
+				app_key = APP_KEY_HELP;
+				break;
+			case WSKEY_BACKSPACE:
+				app_key = APP_KEY_BACK;
+				break;
+			case WSKEY_TAB:
+				app_key = APP_KEY_TAB;
+				break;
+			case WSKEY_PRIOR:
+				app_key = APP_KEY_PRIOR;
+				break;
+			case WSKEY_NEXT:
+				app_key = APP_KEY_NEXT;
+				break;
+			case WSKEY_RETURN:
+				app_key = APP_KEY_RETURN;
+				break;
+			case WSKEY_ESCAPE:
+				app_key = APP_KEY_ESCAPE;
+				break;
+			case WSKEY_LEFT:
+				app_key = APP_KEY_LEFT;
+				break;
+			case WSKEY_RIGHT:
+				app_key = APP_KEY_RIGHT;
+				break;
+			case WSKEY_UP:
+				app_key = APP_KEY_UP;
+				break;
+			case WSKEY_DOWN:
+				app_key = APP_KEY_DOWN;
+				break;
+			case WSKEY_DELETE:
+				app_key = APP_KEY_DELETE;
+				break;
+			case WSKEY_F1:
+				app_key = APP_KEY_F1;
+				break;
+			case WSKEY_F2:
+				app_key = APP_KEY_F2;
+				break;
+			case WSKEY_F3:
+				app_key = APP_KEY_F3;
+				break;
+			case WSKEY_F4:
+				app_key = APP_KEY_F4;
+				break;
+			case WSKEY_F5:
+				app_key = APP_KEY_F5;
+				break;
+			case WSKEY_F6:
+				app_key = APP_KEY_F6;
+				break;
+			case WSKEY_F7:
+				app_key = APP_KEY_F7;
+				break;
+			case WSKEY_F8:
+				app_key = APP_KEY_F8;
+				break;
+			case WSKEY_F9:
+				app_key = APP_KEY_F9;
+				break;
+			case WSKEY_F10:
+				app_key = APP_KEY_F10;
+				break;
+			case WSKEY_F11:
+				app_key = APP_KEY_F11;
+				break;
+			case WSKEY_F12:
+				app_key = APP_KEY_F12;
+				break;
+			case WSKEY_F13:
+				app_key = APP_KEY_F13;
+				break;
+			case WSKEY_F14:
+				app_key = APP_KEY_F14;
+				break;
+			case WSKEY_F15:
+				app_key = APP_KEY_F15;
+				break;
+			case WSKEY_0:
+				app_key = APP_KEY_0;
+				break;
+			case WSKEY_1:
+				app_key = APP_KEY_1;
+				break;
+			case WSKEY_2:
+				app_key = APP_KEY_2;
+				break;
+			case WSKEY_3:
+				app_key = APP_KEY_3;
+				break;
+			case WSKEY_4:
+				app_key = APP_KEY_4;
+				break;
+			case WSKEY_5:
+				app_key = APP_KEY_5;
+				break;
+			case WSKEY_6:
+				app_key = APP_KEY_6;
+				break;
+			case WSKEY_7:
+				app_key = APP_KEY_7;
+				break;
+			case WSKEY_8:
+				app_key = APP_KEY_8;
+				break;
+			case WSKEY_9:
+				app_key = APP_KEY_9;
+				break;
+			case WSKEY_A:
+			#if defined(WSKEY_a)
+			case WSKEY_a:
+			#endif
+				app_key = APP_KEY_A;
+				break;
+			case WSKEY_B:
+			#if defined(WSKEY_b)
+			case WSKEY_b:
+			#endif
+				app_key = APP_KEY_B;
+				break;
+			case WSKEY_C:
+			#if defined(WSKEY_c)
+			case WSKEY_c:
+			#endif
+				app_key = APP_KEY_C;
+				break;
+			case WSKEY_D:
+			#if defined(WSKEY_d)
+			case WSKEY_d:
+			#endif
+				app_key = APP_KEY_D;
+				break;
+			case WSKEY_E:
+			#if defined(WSKEY_e)
+			case WSKEY_e:
+			#endif
+				app_key = APP_KEY_E;
+				break;
+			case WSKEY_F:
+			#if defined(WSKEY_f)
+			case WSKEY_f:
+			#endif
+				app_key = APP_KEY_F;
+				break;
+			case WSKEY_G:
+			#if defined(WSKEY_g)
+			case WSKEY_g:
+			#endif
+				app_key = APP_KEY_G;
+				break;
+			case WSKEY_H:
+			#if defined(WSKEY_h)
+			case WSKEY_h:
+			#endif
+				app_key = APP_KEY_H;
+				break;
+			case WSKEY_I:
+			#if defined(WSKEY_i)
+			case WSKEY_i:
+			#endif
+				app_key = APP_KEY_I;
+				break;
+			case WSKEY_J:
+			#if defined(WSKEY_j)
+			case WSKEY_j:
+			#endif
+				app_key = APP_KEY_J;
+				break;
+			case WSKEY_K:
+			#if defined(WSKEY_k)
+			case WSKEY_k:
+			#endif
+				app_key = APP_KEY_K;
+				break;
+			case WSKEY_L:
+			#if defined(WSKEY_l)
+			case WSKEY_l:
+			#endif
+				app_key = APP_KEY_L;
+				break;
+			case WSKEY_M:
+			#if defined(WSKEY_m)
+			case WSKEY_m:
+			#endif
+				app_key = APP_KEY_M;
+				break;
+			case WSKEY_N:
+			#if defined(WSKEY_n)
+			case WSKEY_n:
+			#endif
+				app_key = APP_KEY_N;
+				break;
+			case WSKEY_O:
+			#if defined(WSKEY_o)
+			case WSKEY_o:
+			#endif
+				app_key = APP_KEY_O;
+				break;
+			case WSKEY_P:
+			#if defined(WSKEY_p)
+			case WSKEY_p:
+			#endif
+				app_key = APP_KEY_P;
+				break;
+			case WSKEY_Q:
+			#if defined(WSKEY_q)
+			case WSKEY_q:
+			#endif
+				app_key = APP_KEY_Q;
+				break;
+			case WSKEY_R:
+			#if defined(WSKEY_r)
+			case WSKEY_r:
+			#endif
+				app_key = APP_KEY_R;
+				break;
+			case WSKEY_S:
+			#if defined(WSKEY_s)
+			case WSKEY_s:
+			#endif
+				app_key = APP_KEY_S;
+				break;
+			case WSKEY_T:
+			#if defined(WSKEY_t)
+			case WSKEY_t:
+			#endif
+				app_key = APP_KEY_T;
+				break;
+			case WSKEY_U:
+			#if defined(WSKEY_u)
+			case WSKEY_u:
+			#endif
+				app_key = APP_KEY_U;
+				break;
+			case WSKEY_V:
+			#if defined(WSKEY_v)
+			case WSKEY_v:
+			#endif
+				app_key = APP_KEY_V;
+				break;
+			case WSKEY_W:
+			#if defined(WSKEY_w)
+			case WSKEY_w:
+			#endif
+				app_key = APP_KEY_W;
+				break;
+			case WSKEY_X:
+			#if defined(WSKEY_x)
+			case WSKEY_x:
+			#endif
+				app_key = APP_KEY_X;
+				break;
+			case WSKEY_Y:
+			#if defined(WSKEY_y)
+			case WSKEY_y:
+			#endif
+				app_key = APP_KEY_Y;
+				break;
+			case WSKEY_Z:
+			#if defined(WSKEY_z)
+			case WSKEY_z:
+			#endif
+				app_key = APP_KEY_Z;
+				break;
+			default:
+				app_key = APP_KEY_INVALID;
+				break;
+		}
+
+		return app_key;
+	}
+
+app_state_t app_yield( app_t* app )
+	{
+	if( !app->initialized )
+		{
+		app->initialized = 1;
+		if( app->screenmode == APP_SCREENMODE_FULLSCREEN )
+		{
+			WSWindow_GetRect( &app->window, &app->nonfullscreenrect);
+			WSWindow_FullScreen( &app->window );
+		}
+		WSWindow_Show( &app->window );
+		WSRECT cr;
+		int w = app->gl.window_width;
+		int h = app->gl.window_height;
+		WSWindow_GetClientRect( &app->window, &cr );
+		w = WSRect_GetWidth(&cr);
+		h = WSRect_GetHeight(&cr);
+		app_internal_opengl_resize( &app->gl, w, h );
+		}
+
+	while(WSEventLoop_RunSingle(&app->evloop))
+	{
+#if !defined(DSTEST)
+		//WSAudio_Process(&app->sound_device);
+#endif
+	}
+#if !defined(DSTEST)
+	//WSAudio_Process(&app->sound_device);
+#endif
+
+
+	return app->exit_requested ? APP_STATE_EXIT_REQUESTED : APP_STATE_NORMAL;
+	}
+
+
+void app_cancel_exit( app_t* app )
+	{
+	app->exit_requested = 0;
+	}
+
+
+void app_title( app_t* app, char const* title )
+	{
+	WSWindow_SetTitle( &app->window, title );
+	}
+
+
+char const* app_cmdline( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
+char const* app_filename( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
+char const* app_userdata( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
+char const* app_appdata( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
+
+
+APP_U64 app_time_count( app_t* app )
+	{
+	return WSStopWatch_Value(&app->stopwatch);
+	}
+
+
+APP_U64 app_time_freq( app_t* app )
+	{
+	return 1000;
+	}
+
+
+void app_log( app_t* app, app_log_level_t level, char const* message ) { /* NOT IMPLEMENTED */ }
+
+
+void app_fatal_error( app_t* app, char const* message )
+	{
+	APP_FATAL_ERROR( app->fatalctx, message );
+	}
+
+
+void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
+	{
+	WSCursorSetData( (void*)pixels_abgr, width, height, hotspot_x, hotspot_y,
+		32, 4 * width, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000 );
+	}
+
+
+void app_pointer_default( app_t* app, int* width, int* height, APP_U32* pixels_abgr, int* hotspot_x, int* hotspot_y )
+	{
+		guipos_t wswidth, wsheight, wshotx, wshoty;
+		int depth, pitch;
+		uint32_t rmask, bmask, gmask, amask;
+		if(WSCursorGetDataDefault(&wswidth, &wsheight, pixels_abgr, &wshotx, &wshoty, &depth,
+				&pitch, &rmask, &bmask, &gmask, &amask))
+		{
+			if(width)
+				*width = wswidth;
+			if(height)
+				*height = wsheight;
+			if(hotspot_x)
+				*hotspot_x = wshotx;
+			if(hotspot_y)
+				*hotspot_y = wshoty;
+			if(pixels_abgr)
+			{
+				int redShift = 0, greenShift = 0, blueShift = 0, alphaShift = 0;
+				guipos_t x, y;
+				uint8_t* data = (uint8_t*) APP_MALLOC( memctx, (wswidth * wsheight) * (depth / 8));
+				memcpy(data, pixels_abgr, (wswidth * wsheight) * (depth / 8));
+
+				while ((rmask >> redShift) & 1 == 0) ++redShift;
+				while ((gmask >> greenShift) & 1 == 0) ++greenShift;
+				while ((bmask >> blueShift) & 1 == 0) ++blueShift;
+				while ((amask >> alphaShift) & 1 == 0) ++alphaShift;
+
+				for (y = 0; y < wsheight; ++y)
+				{
+					for (x = 0; x < wswidth; ++x)
+					{
+						uint32_t *src_pixel =
+							(uint32_t *)(data + y * pitch + x * (depth / 8));
+						uint32_t pixel = *src_pixel;
+
+						// Extract components using masks
+						uint8_t r = (pixel & rmask) >> redShift;
+						uint8_t g = (pixel & gmask) >> greenShift;
+						uint8_t b = (pixel & bmask) >> blueShift;
+						uint8_t a = (pixel & amask) >> alphaShift;
+
+						// Reassemble in ABGR format
+						uint32_t abgr = (a << 24) | (b << 16) | (g << 8) | r;
+
+						// Store in pixels_abgr
+						pixels_abgr[y * wswidth + x] = abgr;					}
+				}
+				APP_FREE( memctx, data);
+			}
+		}
+	}
+
+
+void app_pointer_pos( app_t* app, int x, int y )
+	{
+	WSCursorWarp( x, y );
+	}
+
+
+int app_pointer_x( app_t* app )
+	{
+	guipos_t x = 0;
+	WSMouseEventGetPosition( &x, NULL );
+	return x;
+	}
+
+
+int app_pointer_y( app_t* app )
+	{
+	guipos_t y = 0;
+	WSMouseEventGetPosition( NULL, &y );
+	return y;
+	}
+
+
+void app_pointer_limit( app_t* app, int x, int y, int width, int height )
+	{
+		WSRECT r;
+		WSRect_SetX(&r, x); WSRect_SetY(&r, y);
+		WSRect_SetWidth(&r, width); WSRect_SetHeight(&r, height);
+		WSCursorClipper_Create(&app->cursclipper, &r);
+	}
+void app_pointer_limit_off( app_t* app ) { WSCursorClipper_Create(&app->cursclipper, NULL); }
+
+void app_interpolation( app_t* app, app_interpolation_t interpolation )
+	{
+	if( interpolation == app->interpolation ) return;
+	app->interpolation = interpolation;
+
+	guipos_t mouse_x;
+	guipos_t mouse_y;
+	WSMouseEventGetPosition( &mouse_x, &mouse_y );
+
+	app_input_event_t input_event;
+	input_event.type = APP_INPUT_MOUSE_MOVE;
+	input_event.data.mouse_pos.x = mouse_x;
+	input_event.data.mouse_pos.y = mouse_y;
+	app_internal_add_input_event( app, &input_event );
+
+	app_internal_opengl_interpolation( &app->gl, interpolation );
+	}
+
+
+void app_screenmode( app_t* app, app_screenmode_t screenmode )
+	{
+	if( screenmode != app->screenmode )
+		{
+		app->screenmode = screenmode;
+		if(screenmode == APP_SCREENMODE_FULLSCREEN)
+		{
+			WSWindow_GetRect( &app->window, &app->nonfullscreenrect);
+			WSWindow_FullScreen(&app->window);
+		}
+		else
+			WSWindow_UnFullScreen(&app->window, &app->nonfullscreenrect);
+		}
+	}
+
+
+void app_window_size( app_t* app, int width, int height )
+	{
+		WSWindow_SetSize( &app->window, width, height );
+	}
+
+
+int app_window_width( app_t* app )
+	{
+	WSRECT cr;
+	WSWindow_GetClientRect(&app->window, &cr);
+	return WSRect_GetWidth(&cr);
+	}
+
+
+int app_window_height( app_t* app )
+	{
+	WSRECT cr;
+	WSWindow_GetClientRect(&app->window, &cr);
+	return WSRect_GetHeight(&cr);
+	}
+
+
+void app_window_pos( app_t* app, int x, int y )
+	{
+	WSWindow_SetPos( &app->window, x, y );
+	}
+
+
+int app_window_x( app_t* app )
+	{
+	WSRECT r;
+	WSWindow_GetRect( &app->window, &r );
+	return WSRect_GetX(&r);
+	}
+
+
+int app_window_y( app_t* app )
+	{
+	WSRECT r;
+	WSWindow_GetRect( &app->window, &r );
+	return WSRect_GetY(&r);
+	}
+
+
+app_displays_t app_displays( app_t* app )
+	{
+	app_displays_t displays;
+	displays.count = app->display_count;
+	displays.displays = app->displays;
+	return displays;
+	}
+
+void app_setcurrent( app_t* app )
+	{
+	GLContext_SetCurrent(&app->glcontext); /* GTK4 needs or white screen */
+	}
+
+void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
+	{
+	if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
+	GLContext_SwapBuffers( &app->glcontext );
+	}
+
+#if !defined(DSTEST)
+static void app_internal_sound_callback( void* userdata, uint8_t* stream, size_t len )
+	{
+	app_t* app = (app_t*) userdata;
+	if( app->sound_callback )
+		{
+		app->sound_callback( (APP_S16*) stream, len / ( 2 * sizeof( APP_S16 ) ), app->sound_user_data );
+		/*if( app->volume < 256 )
+			{
+			APP_S16* samples = (APP_S16*) stream;
+			for( int i = 0; i < len / sizeof( APP_S16 ); ++i )
+				{
+				int s = (int)(*samples);
+				s = ( s * app->volume ) >> 8;
+				*samples++ = (APP_S16) s;
+				}
+			}*/
+		}
+	}
+
+static DWORD WINAPI app_sound_thread_proc( LPVOID lpThreadParameter )
+{
+	app_t* app = (app_t*) lpThreadParameter;
+	while(1)
+		WSAudio_Process(&app->sound_device);
+	return 0;
+}
+void app_sound( app_t* app, int sample_pairs_count, void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data )
+	{
+	if( app->isaudiocreated )
+		{
+		WSAudio_Destroy(&app->sound_device);
+		app->sound_callback = NULL;
+		app->sound_user_data = NULL;
+		app->isaudiocreated = FALSE;
+		}
+	if( sample_pairs_count > 0 && sound_callback )
+		{
+		int channels = 2;
+		int bits_per_sample = 16;
+		int val = channels * ( bits_per_sample / 8 ) * sample_pairs_count;
+		WSAUDIOSPEC spec;
+		spec.flags = 0;
+		WSAudioFormat_Construct(&spec.format.mSuper, 2, 16, 44100);
+		spec.format.dwBufferSize = WSAudioFormat_SamplesToBytes(&spec.format.mSuper,
+			sample_pairs_count); // 8192 def
+		spec.proc = app_internal_sound_callback;
+		spec.procuserdata = app;
+		if( !WSAudio_Create(&app->sound_device, &spec) ) return;
+
+		app->sound_callback = sound_callback;
+		app->sound_user_data = user_data;
+		WSAudio_Play( &app->sound_device );
+		app->isaudiocreated = TRUE;
+
+		app->sound_thread_handle = CreateThread( NULL, 0U, app_sound_thread_proc, app, 0, NULL );
+			SetThreadPriority( app->sound_thread_handle, THREAD_PRIORITY_HIGHEST );
+
+
+		}
+	}
+
+
+void app_sound_volume( app_t* app, float volume )
+	{
+	int v = (int) ( volume * 256.0f );
+	app->volume = v < 0 ? 0 : v > 256 ? 256 : v;
+	}
+#else
+static void app_sound_write( app_t* app, int sample_pairs_offset, int sample_pairs_count )
+	{
+	int offset = sample_pairs_offset * 2 * ( 16 / 8 );
+	int length = sample_pairs_count * 2 * ( 16 / 8 );
+
+	// Obtain memory address of write block. This will be in two parts if the block wraps around.
+	LPVOID lpvPtr1;
+	DWORD dwBytes1;
+	LPVOID lpvPtr2;
+	DWORD dwBytes2;
+	HRESULT hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
+		NULL, 0,
+		//&lpvPtr2, &dwBytes2,
+		0 );
+
+	// If DSERR_BUFFERLOST is returned, restore and retry lock.
+	if( hr == DSERR_BUFFERLOST )
+		{
+		IDirectSoundBuffer8_Restore( app->dsoundbuf );
+		hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
+			//&lpvPtr2, &dwBytes2,
+			NULL, NULL, 0 );
+		}
+	if( FAILED( hr) )
+		{
+		app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't lock sound buffer" );
+		//IDirectSound8_Release( app->dsound );
+		//app->dsound = 0;
+		return;
+		}
+
+	// Write to pointers.
+	app->sound_callback( (APP_S16*) lpvPtr1, (int) dwBytes1 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
+	//if( lpvPtr2 ) app->sound_callback( (APP_S16*) lpvPtr2, (int) dwBytes2 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
+
+	// Release the data back to DirectSound.
+	hr = IDirectSoundBuffer8_Unlock( app->dsoundbuf, lpvPtr1, dwBytes1,
+	//	lpvPtr2, dwBytes2
+	NULL, 0
+	);
+	if( FAILED( hr) )
+		{
+		app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't unlock sound buffer" );
+		IDirectSound8_Release( app->dsound );
+		app->dsound = 0;
+		return;
+		}
+	}
+
+
+static DWORD WINAPI app_sound_thread_proc( LPVOID lpThreadParameter )
+	{
+	app_t* app = (app_t*) lpThreadParameter;
+	int mid_point = app->sample_pairs_count / 2;
+	int half_size = mid_point;
+	int prev_pos = 0;
+	while( InterlockedCompareExchange( &app->exit_sound_thread, 0, 0 ) == 0 )
+	{
+		WaitForMultipleObjectsEx( 2, app->sound_notifications, FALSE, 100, FALSE );
+		DWORD position = 0;
+		IDirectSoundBuffer8_GetCurrentPosition( app->dsoundbuf, &position, 0 );
+		int pos = ( (int) position )/( 2 * ( 16 / 8 ) );
+
+		if( prev_pos >= mid_point && pos < mid_point )
+			app_sound_write( app, mid_point, half_size );
+		else if( prev_pos < mid_point && pos >= mid_point )
+			app_sound_write( app, 0, half_size );
+
+		prev_pos = pos;
+		}
+
+	return 0;
+	}
+
+
+void app_sound( app_t* app, int sample_pairs_count, void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data )
+	{
+	if( !app->dsound ) return;
+
+	if( !sound_callback || !sample_pairs_count )
+		{
+		if( app->sound_thread_handle != INVALID_HANDLE_VALUE )
+			{
+			InterlockedExchange( &app->exit_sound_thread, 1 );
+			WaitForSingleObject( app->sound_thread_handle, INFINITE );
+			CloseHandle( app->sound_thread_handle );
+			app->sound_thread_handle = INVALID_HANDLE_VALUE;
+			}
+		if( app->dsoundbuf )
+			{
+			IDirectSoundBuffer8_Release( app->dsoundbuf );
+			app->dsoundbuf = NULL;
+			}
+		app->sample_pairs_count = 0;
+		app->sound_callback = NULL;
+		app->sound_user_data = NULL;
+		return;
+		}
+
+	if( app->sample_pairs_count != sample_pairs_count )
+		{
+	app->sample_pairs_count = sample_pairs_count;
+
+	if( app->dsoundbuf )
+		{
+			IDirectSoundBuffer8_Release( app->dsoundbuf );
+		app->dsoundbuf = 0;
+		}
+
+	if( sample_pairs_count > 0 )
+		{
+		int const channels = 2;
+		int const frequency = 44100;
+		int const bits_per_sample = 16;
+
+		WORD const DSOUND_WAVE_FORMAT_PCM = 1;
+		DSOUND_WAVEFORMATEX format;
+		memset( &format, 0, sizeof( DSOUND_WAVEFORMATEX ) );
+		format.wFormatTag = DSOUND_WAVE_FORMAT_PCM;
+		format.nChannels = (WORD) channels;
+		format.nSamplesPerSec = (DWORD) frequency;
+		format.nBlockAlign = (WORD) ( ( channels * bits_per_sample ) / 8 );
+		format.nAvgBytesPerSec = (DWORD) ( frequency * format.nBlockAlign );
+		format.wBitsPerSample = (WORD) bits_per_sample;
+		format.cbSize = 0;
+
+		DSBUFFERDESC dsbdesc;
+		memset( &dsbdesc, 0, sizeof( DSBUFFERDESC ) );
+		dsbdesc.dwSize = sizeof( DSBUFFERDESC );
+
+			dsbdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY ;
+
+		int size = channels * ( bits_per_sample / 8 ) * sample_pairs_count;
+		dsbdesc.dwBufferBytes = (DWORD) size;
+		dsbdesc.lpwfxFormat = &format;
+
+			struct IDirectSoundBuffer8* soundbuf = NULL;
+			HRESULT hr = IDirectSound8_CreateSoundBuffer( app->dsound, &dsbdesc, &soundbuf, NULL );
+			if( FAILED( hr ) || !soundbuf )
+			{
+			app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSound8_Release( app->dsound );
+			app->dsound = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+			return;
+			}
+
+			GUID const GUID_IDirectSoundBuffer8 = { 0x6825a449, 0x7524, 0x4d82, { 0x92, 0x0f, 0x50, 0xe3, 0x6a, 0xb3, 0xab, 0x1e } };
+			#ifdef __cplusplus
+				GUID const& ref_GUID_IDirectSoundBuffer8 = GUID_IDirectSoundBuffer8;
+			#else
+				GUID const* ref_GUID_IDirectSoundBuffer8 = &GUID_IDirectSoundBuffer8;
+			#endif
+			hr = IDirectSoundBuffer8_QueryInterface( soundbuf, ref_GUID_IDirectSoundBuffer8, (void**) &app->dsoundbuf );
+			IDirectSoundBuffer8_Release( soundbuf );
+
+			if( FAILED( hr ) || !app->dsoundbuf )
+	{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSound8_Release( app->dsound );
+				app->dsound = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+				return;
+	}
+
+			struct IDirectSoundNotify* notify = NULL;
+			GUID const GUID_IDirectSoundNotify8 = { 0xb0210783, 0x89cd, 0x11d0, { 0xaf, 0x8, 0x0, 0xa0, 0xc9, 0x25, 0xcd, 0x16 } };
+			#ifdef __cplusplus
+				GUID const& ref_GUID_IDirectSoundNotify8 = GUID_IDirectSoundNotify8;
+			#else
+				GUID const* ref_GUID_IDirectSoundNotify8 = &GUID_IDirectSoundNotify8;
+			#endif
+			hr = IDirectSoundBuffer8_QueryInterface( app->dsoundbuf, ref_GUID_IDirectSoundNotify8, (void**) &notify );
+			if( FAILED( hr ) || !notify )
+			{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSoundBuffer8_Release( app->dsoundbuf );
+				IDirectSound8_Release( app->dsound );
+				app->dsound = 0;
+				app->dsoundbuf = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+				return;
+				}
+
+			DSBPOSITIONNOTIFY notify_positions[ 2 ];
+			notify_positions[ 0 ].dwOffset = 0;
+			notify_positions[ 0 ].hEventNotify = app->sound_notifications[ 0 ];
+			notify_positions[ 1 ].dwOffset = (DWORD)( size / 2 );
+			notify_positions[ 1 ].hEventNotify = app->sound_notifications[ 1 ];
+
+			IDirectSoundNotify_SetNotificationPositions( notify, 2, notify_positions );
+			IDirectSoundNotify_Release( notify );
+
+			InterlockedExchange( &app->exit_sound_thread, 0 );
+			app->sound_thread_handle = CreateThread( NULL, 0U, app_sound_thread_proc, app, 0, NULL );
+			SetThreadPriority( app->sound_thread_handle, THREAD_PRIORITY_HIGHEST );
+
+			IDirectSoundBuffer8_Play( app->dsoundbuf, 0, 0, DSBPLAY_LOOPING );
+		}
+		}
+
+	app->sound_callback = sound_callback;
+	app->sound_user_data = user_data;
+		}
+
+
+void app_sound_volume( app_t* app, float volume )
+	{
+	if( !app->dsound ) return;
+	if( !app->dsoundbuf ) return;
+
+	int level = volume < 0.000015f ? DSBVOLUME_MIN : (int) ( 2000.0f * (float) log10( (double ) volume ) );
+	if( app->sound_level == level ) return;
+	app->sound_level = level;
+
+	IDirectSoundBuffer8_SetVolume( app->dsoundbuf, level );
+	}
+#endif
+
+app_input_t app_input( app_t* app )
+	{
+	app_input_t input;
+	input.events = app->input_events;
+	input.count = app->input_count;
+	app->input_count = 0;
+	return input;
+	}
+
+
+void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
+	{
+	if( width == 0 || height == 0 ) return;
+	int window_width;
+	int window_height;
+	WSRECT cr;
+	WSWindow_GetClientRect( &app->window, &cr );
+	window_width = WSRect_GetWidth(&cr);
+	window_height = WSRect_GetHeight(&cr);
+
+
+
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x -= (int)( hborder );
+			*y -= (int)( vborder );
+			*x = (int)( *x / pixel_scale );
+			*y = (int)( *y / pixel_scale );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x -= (int)( hborder );
+		*y -= (int)( vborder );
+		*x = (int)( *x / pixel_scale );
+		*y = (int)( *y / pixel_scale );
+		}
+	}
+
+
+void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
+	{
+	int window_width;
+	int window_height;
+	WSRECT cr;
+	WSWindow_GetClientRect( &app->window, &cr );
+	window_width = WSRect_GetWidth(&cr);
+	window_height = WSRect_GetHeight(&cr);
+
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x = (int)( *x * pixel_scale );
+			*y = (int)( *y * pixel_scale );
+			*x += (int)( hborder );
+			*y += (int)( vborder );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x = (int)( *x * pixel_scale );
+		*y = (int)( *y * pixel_scale );
+		*x += (int)( hborder );
+		*y += (int)( vborder );
+		}
+	}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    WINDOWS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1191,7 +3272,7 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 
 #if !defined( _WIN32_WINNT ) || _WIN32_WINNT < 0x0601
 #undef _WIN32_WINNT
-    #define _WIN32_WINNT 0x0601// requires Windows 7 minimum
+	#define _WIN32_WINNT 0x0601// requires Windows 7 minimum
 #endif
 // 0x0400=Windows NT 4.0, 0x0500=Windows 2000, 0x0501=Windows XP, 0x0502=Windows Server 2003, 0x0600=Windows Vista,
 // 0x0601=Windows 7, 0x0602=Windows 8, 0x0603=Windows 8.1, 0x0A00=Windows 10,
@@ -1222,52 +3303,52 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 #pragma warning( pop )
 
 #ifndef APP_MALLOC
-    #include <stdlib.h>
-    #if defined(__cplusplus)
-        #define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
-    #else
-        #define APP_MALLOC( ctx, size ) ( malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( free( ptr ) )
-    #endif
+	#include <stdlib.h>
+	#if defined(__cplusplus)
+		#define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
+	#else
+		#define APP_MALLOC( ctx, size ) ( malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( free( ptr ) )
+	#endif
 #endif
 
 #ifndef APP_LOG
-    #if defined(__cplusplus)
-        #define APP_LOG( ctx, level, message ) ::printf( "%s\n", message )
-    #else
-        #define APP_LOG( ctx, level, message ) printf( "%s\n", message )
-    #endif
+	#if defined(__cplusplus)
+		#define APP_LOG( ctx, level, message ) ::printf( "%s\n", message )
+	#else
+		#define APP_LOG( ctx, level, message ) printf( "%s\n", message )
+	#endif
 #endif
 
 #ifndef APP_FATAL_ERROR
-    #if defined(__cplusplus)
-        #define APP_FATAL_ERROR( ctx, message ) { ::printf( "FATAL ERROR: %s\n", message ); \
-            ::MessageBoxA( 0, message, "Fatal Error!", MB_OK | MB_ICONSTOP ); ::_flushall(); ::_exit( 0xff ); }
-    #else
-        #define APP_FATAL_ERROR( ctx, message ) { printf( "FATAL ERROR: %s\n", message ); \
-            MessageBoxA( 0, message, "Fatal Error!", MB_OK | MB_ICONSTOP ); _flushall(); _exit( 0xff ); }
-    #endif
+	#if defined(__cplusplus)
+		#define APP_FATAL_ERROR( ctx, message ) { ::printf( "FATAL ERROR: %s\n", message ); \
+			::MessageBoxA( 0, message, "Fatal Error!", MB_OK | MB_ICONSTOP ); ::_flushall(); ::_exit( 0xff ); }
+	#else
+		#define APP_FATAL_ERROR( ctx, message ) { printf( "FATAL ERROR: %s\n", message ); \
+			MessageBoxA( 0, message, "Fatal Error!", MB_OK | MB_ICONSTOP ); _flushall(); _exit( 0xff ); }
+	#endif
 #endif
 
 
 #ifndef APP_WINDOWED_WS_STYLE
-    #define APP_WINDOWED_WS_STYLE WS_OVERLAPPEDWINDOW
+	#define APP_WINDOWED_WS_STYLE WS_OVERLAPPEDWINDOW
 #endif
 
 #ifndef APP_WINDOWED_WS_EX_STYLE
-    #define APP_WINDOWED_WS_EX_STYLE 0
+	#define APP_WINDOWED_WS_EX_STYLE 0
 #endif
 
 
 typedef struct APP_LOGCONTEXTA
-    {
-    char lcName[ 40 ]; UINT lcOptions; UINT lcStatus; UINT lcLocks; UINT lcMsgBase; UINT lcDevice; UINT lcPktRate;
-    DWORD lcPktData; DWORD lcPktMode; DWORD lcMoveMask; DWORD lcBtnDnMask; DWORD lcBtnUpMask; LONG lcInOrgX;
-    LONG lcInOrgY; LONG lcInOrgZ; LONG lcInExtX; LONG lcInExtY; LONG lcInExtZ; LONG lcOutOrgX; LONG lcOutOrgY;
-    LONG lcOutOrgZ; LONG lcOutExtX; LONG lcOutExtY; LONG lcOutExtZ; DWORD lcSensX; DWORD lcSensY; DWORD lcSensZ;
-    BOOL lcSysMode; int lcSysOrgX; int lcSysOrgY; int lcSysExtX; int lcSysExtY; DWORD lcSysSensX; DWORD lcSysSensY;
-    } APP_LOGCONTEXTA;
+	{
+	char lcName[ 40 ]; UINT lcOptions; UINT lcStatus; UINT lcLocks; UINT lcMsgBase; UINT lcDevice; UINT lcPktRate;
+	DWORD lcPktData; DWORD lcPktMode; DWORD lcMoveMask; DWORD lcBtnDnMask; DWORD lcBtnUpMask; LONG lcInOrgX;
+	LONG lcInOrgY; LONG lcInOrgZ; LONG lcInExtX; LONG lcInExtY; LONG lcInExtZ; LONG lcOutOrgX; LONG lcOutOrgY;
+	LONG lcOutOrgZ; LONG lcOutExtX; LONG lcOutExtY; LONG lcOutExtZ; DWORD lcSensX; DWORD lcSensY; DWORD lcSensZ;
+	BOOL lcSysMode; int lcSysOrgX; int lcSysOrgY; int lcSysExtX; int lcSysExtY; DWORD lcSysSensX; DWORD lcSysSensY;
+	} APP_LOGCONTEXTA;
 typedef struct APP_AXIS { LONG axMin; LONG axMax; UINT axUnits; DWORD axResolution; } APP_AXIS;
 typedef struct APP_PACKET { DWORD pkButtons; LONG pkX; LONG pkY; UINT pkNormalPressure; } APP_PACKET;
 DECLARE_HANDLE( APP_HMGR );
@@ -1294,30 +3375,30 @@ extern "C" {
 
 
 typedef struct _DSOUND_WAVEFORMATEX
-    {
-    WORD        wFormatTag;
-    WORD        nChannels;
-    DWORD       nSamplesPerSec;
-    DWORD       nAvgBytesPerSec;
-    WORD        nBlockAlign;
-    WORD        wBitsPerSample;
-    WORD        cbSize;
-    } DSOUND_WAVEFORMATEX;
+	{
+	WORD        wFormatTag;
+	WORD        nChannels;
+	DWORD       nSamplesPerSec;
+	DWORD       nAvgBytesPerSec;
+	WORD        nBlockAlign;
+	WORD        wBitsPerSample;
+	WORD        cbSize;
+	} DSOUND_WAVEFORMATEX;
 
 typedef struct _DSBUFFERDESC
-    {
-    DWORD           dwSize;
-    DWORD           dwFlags;
-    DWORD           dwBufferBytes;
-    DWORD           dwReserved;
-    DSOUND_WAVEFORMATEX*  lpwfxFormat;
-    } DSBUFFERDESC;
+	{
+	DWORD           dwSize;
+	DWORD           dwFlags;
+	DWORD           dwBufferBytes;
+	DWORD           dwReserved;
+	DSOUND_WAVEFORMATEX*  lpwfxFormat;
+	} DSBUFFERDESC;
 
 typedef struct _DSBPOSITIONNOTIFY
-    {
-    DWORD           dwOffset;
-    HANDLE          hEventNotify;
-    } DSBPOSITIONNOTIFY;
+	{
+	DWORD           dwOffset;
+	HANDLE          hEventNotify;
+	} DSBPOSITIONNOTIFY;
 
 
 typedef struct _DSCAPS DSCAPS;
@@ -1330,35 +3411,35 @@ typedef struct IDirectSoundBuffer8Vtbl IDirectSoundBuffer8Vtbl;
 
 struct IDirectSoundBuffer8Vtbl
 {
-    // IUnknown methods
-    HRESULT (STDMETHODCALLTYPE *QueryInterface)       (IDirectSoundBuffer8*, REFIID, LPVOID*);
-    ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSoundBuffer8*);
-    ULONG (STDMETHODCALLTYPE *Release)       (IDirectSoundBuffer8*);
+	// IUnknown methods
+	HRESULT (STDMETHODCALLTYPE *QueryInterface)       (IDirectSoundBuffer8*, REFIID, LPVOID*);
+	ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSoundBuffer8*);
+	ULONG (STDMETHODCALLTYPE *Release)       (IDirectSoundBuffer8*);
 
-    // IDirectSoundBuffer methods
-    HRESULT (STDMETHODCALLTYPE *GetCaps)              (IDirectSoundBuffer8*, DSBCAPS* pDSBufferCaps);
-    HRESULT (STDMETHODCALLTYPE *GetCurrentPosition)   (IDirectSoundBuffer8*, LPDWORD pdwCurrentPlayCursor, LPDWORD pdwCurrentWriteCursor);
-    HRESULT (STDMETHODCALLTYPE *GetFormat)            (IDirectSoundBuffer8*, DSOUND_WAVEFORMATEX* pwfxFormat, DWORD dwSizeAllocated, LPDWORD pdwSizeWritten);
-    HRESULT (STDMETHODCALLTYPE *GetVolume)            (IDirectSoundBuffer8*, LPLONG plVolume);
-    HRESULT (STDMETHODCALLTYPE *GetPan)               (IDirectSoundBuffer8*, LPLONG plPan);
-    HRESULT (STDMETHODCALLTYPE *GetFrequency)         (IDirectSoundBuffer8*, LPDWORD pdwFrequency);
-    HRESULT (STDMETHODCALLTYPE *GetStatus)            (IDirectSoundBuffer8*, LPDWORD pdwStatus);
-    HRESULT (STDMETHODCALLTYPE *Initialize)           (IDirectSoundBuffer8*, struct IDirectSound8* pDirectSound, DSBUFFERDESC* pcDSBufferDesc);
-    HRESULT (STDMETHODCALLTYPE *Lock)                 (IDirectSoundBuffer8*, DWORD dwOffset, DWORD dwBytes, LPVOID *ppvAudioPtr1, LPDWORD pdwAudioBytes1, LPVOID *ppvAudioPtr2, LPDWORD pdwAudioBytes2, DWORD dwFlags);
-    HRESULT (STDMETHODCALLTYPE *Play)                 (IDirectSoundBuffer8*, DWORD dwReserved1, DWORD dwPriority, DWORD dwFlags);
-    HRESULT (STDMETHODCALLTYPE *SetCurrentPosition)   (IDirectSoundBuffer8*, DWORD dwNewPosition);
-    HRESULT (STDMETHODCALLTYPE *SetFormat)            (IDirectSoundBuffer8*, DSOUND_WAVEFORMATEX* pcfxFormat);
-    HRESULT (STDMETHODCALLTYPE *SetVolume)            (IDirectSoundBuffer8*, LONG lVolume);
-    HRESULT (STDMETHODCALLTYPE *SetPan)               (IDirectSoundBuffer8*, LONG lPan);
-    HRESULT (STDMETHODCALLTYPE *SetFrequency)         (IDirectSoundBuffer8*, DWORD dwFrequency);
-    HRESULT (STDMETHODCALLTYPE *Stop)                 (IDirectSoundBuffer8*);
-    HRESULT (STDMETHODCALLTYPE *Unlock)               (IDirectSoundBuffer8*, LPVOID pvAudioPtr1, DWORD dwAudioBytes1, LPVOID pvAudioPtr2, DWORD dwAudioBytes2);
-    HRESULT (STDMETHODCALLTYPE *Restore)              (IDirectSoundBuffer8*);
+	// IDirectSoundBuffer methods
+	HRESULT (STDMETHODCALLTYPE *GetCaps)              (IDirectSoundBuffer8*, DSBCAPS* pDSBufferCaps);
+	HRESULT (STDMETHODCALLTYPE *GetCurrentPosition)   (IDirectSoundBuffer8*, LPDWORD pdwCurrentPlayCursor, LPDWORD pdwCurrentWriteCursor);
+	HRESULT (STDMETHODCALLTYPE *GetFormat)            (IDirectSoundBuffer8*, DSOUND_WAVEFORMATEX* pwfxFormat, DWORD dwSizeAllocated, LPDWORD pdwSizeWritten);
+	HRESULT (STDMETHODCALLTYPE *GetVolume)            (IDirectSoundBuffer8*, LPLONG plVolume);
+	HRESULT (STDMETHODCALLTYPE *GetPan)               (IDirectSoundBuffer8*, LPLONG plPan);
+	HRESULT (STDMETHODCALLTYPE *GetFrequency)         (IDirectSoundBuffer8*, LPDWORD pdwFrequency);
+	HRESULT (STDMETHODCALLTYPE *GetStatus)            (IDirectSoundBuffer8*, LPDWORD pdwStatus);
+	HRESULT (STDMETHODCALLTYPE *Initialize)           (IDirectSoundBuffer8*, struct IDirectSound8* pDirectSound, DSBUFFERDESC* pcDSBufferDesc);
+	HRESULT (STDMETHODCALLTYPE *Lock)                 (IDirectSoundBuffer8*, DWORD dwOffset, DWORD dwBytes, LPVOID *ppvAudioPtr1, LPDWORD pdwAudioBytes1, LPVOID *ppvAudioPtr2, LPDWORD pdwAudioBytes2, DWORD dwFlags);
+	HRESULT (STDMETHODCALLTYPE *Play)                 (IDirectSoundBuffer8*, DWORD dwReserved1, DWORD dwPriority, DWORD dwFlags);
+	HRESULT (STDMETHODCALLTYPE *SetCurrentPosition)   (IDirectSoundBuffer8*, DWORD dwNewPosition);
+	HRESULT (STDMETHODCALLTYPE *SetFormat)            (IDirectSoundBuffer8*, DSOUND_WAVEFORMATEX* pcfxFormat);
+	HRESULT (STDMETHODCALLTYPE *SetVolume)            (IDirectSoundBuffer8*, LONG lVolume);
+	HRESULT (STDMETHODCALLTYPE *SetPan)               (IDirectSoundBuffer8*, LONG lPan);
+	HRESULT (STDMETHODCALLTYPE *SetFrequency)         (IDirectSoundBuffer8*, DWORD dwFrequency);
+	HRESULT (STDMETHODCALLTYPE *Stop)                 (IDirectSoundBuffer8*);
+	HRESULT (STDMETHODCALLTYPE *Unlock)               (IDirectSoundBuffer8*, LPVOID pvAudioPtr1, DWORD dwAudioBytes1, LPVOID pvAudioPtr2, DWORD dwAudioBytes2);
+	HRESULT (STDMETHODCALLTYPE *Restore)              (IDirectSoundBuffer8*);
 
-    // IDirectSoundBuffer8 methods
-    HRESULT (STDMETHODCALLTYPE *SetFX)                (IDirectSoundBuffer8*, DWORD dwEffectsCount, DSEFFECTDESC* pDSFXDesc, LPDWORD pdwResultCodes);
-    HRESULT (STDMETHODCALLTYPE *AcquireResources)     (IDirectSoundBuffer8*, DWORD dwFlags, DWORD dwEffectsCount, LPDWORD pdwResultCodes);
-    HRESULT (STDMETHODCALLTYPE *GetObjectInPath)      (IDirectSoundBuffer8*, REFGUID rguidObject, DWORD dwIndex, REFGUID rguidInterface, LPVOID *ppObject);
+	// IDirectSoundBuffer8 methods
+	HRESULT (STDMETHODCALLTYPE *SetFX)                (IDirectSoundBuffer8*, DWORD dwEffectsCount, DSEFFECTDESC* pDSFXDesc, LPDWORD pdwResultCodes);
+	HRESULT (STDMETHODCALLTYPE *AcquireResources)     (IDirectSoundBuffer8*, DWORD dwFlags, DWORD dwEffectsCount, LPDWORD pdwResultCodes);
+	HRESULT (STDMETHODCALLTYPE *GetObjectInPath)      (IDirectSoundBuffer8*, REFGUID rguidObject, DWORD dwIndex, REFGUID rguidInterface, LPVOID *ppObject);
 };
 
 #define IDirectSoundBuffer8_QueryInterface(p,a,b)        (p)->lpVtbl->QueryInterface(p,a,b)
@@ -1376,23 +3457,23 @@ typedef struct IDirectSound8Vtbl IDirectSound8Vtbl;
 
 struct IDirectSound8Vtbl
 {
-    // IUnknown methods
-    HRESULT (STDMETHODCALLTYPE *QueryInterface)(IDirectSound8*, REFIID, LPVOID*);
-    ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSound8*);
-    ULONG (STDMETHODCALLTYPE *Release)       (IDirectSound8*);
+	// IUnknown methods
+	HRESULT (STDMETHODCALLTYPE *QueryInterface)(IDirectSound8*, REFIID, LPVOID*);
+	ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSound8*);
+	ULONG (STDMETHODCALLTYPE *Release)       (IDirectSound8*);
 
-    // IDirectSound methods
-    HRESULT (STDMETHODCALLTYPE *CreateSoundBuffer)    (IDirectSound8*, DSBUFFERDESC* pcDSBufferDesc, struct IDirectSoundBuffer8** ppDSBuffer, void* pUnkOuter);
-    HRESULT (STDMETHODCALLTYPE *GetCaps)              (IDirectSound8*, DSCAPS* pDSCaps);
-    HRESULT (STDMETHODCALLTYPE *DuplicateSoundBuffer) (IDirectSound8*, struct IDirectSoundBuffer8* pDSBufferOriginal, struct IDirectSoundBuffer8* *ppDSBufferDuplicate);
-    HRESULT (STDMETHODCALLTYPE *SetCooperativeLevel)  (IDirectSound8*, HWND hwnd, DWORD dwLevel);
-    HRESULT (STDMETHODCALLTYPE *Compact)              (IDirectSound8*);
-    HRESULT (STDMETHODCALLTYPE *GetSpeakerConfig)     (IDirectSound8*, LPDWORD pdwSpeakerConfig);
-    HRESULT (STDMETHODCALLTYPE *SetSpeakerConfig)     (IDirectSound8*, DWORD dwSpeakerConfig);
-    HRESULT (STDMETHODCALLTYPE *Initialize)           (IDirectSound8*, LPCGUID pcGuidDevice);
+	// IDirectSound methods
+	HRESULT (STDMETHODCALLTYPE *CreateSoundBuffer)    (IDirectSound8*, DSBUFFERDESC* pcDSBufferDesc, struct IDirectSoundBuffer8** ppDSBuffer, void* pUnkOuter);
+	HRESULT (STDMETHODCALLTYPE *GetCaps)              (IDirectSound8*, DSCAPS* pDSCaps);
+	HRESULT (STDMETHODCALLTYPE *DuplicateSoundBuffer) (IDirectSound8*, struct IDirectSoundBuffer8* pDSBufferOriginal, struct IDirectSoundBuffer8* *ppDSBufferDuplicate);
+	HRESULT (STDMETHODCALLTYPE *SetCooperativeLevel)  (IDirectSound8*, HWND hwnd, DWORD dwLevel);
+	HRESULT (STDMETHODCALLTYPE *Compact)              (IDirectSound8*);
+	HRESULT (STDMETHODCALLTYPE *GetSpeakerConfig)     (IDirectSound8*, LPDWORD pdwSpeakerConfig);
+	HRESULT (STDMETHODCALLTYPE *SetSpeakerConfig)     (IDirectSound8*, DWORD dwSpeakerConfig);
+	HRESULT (STDMETHODCALLTYPE *Initialize)           (IDirectSound8*, LPCGUID pcGuidDevice);
 
-    // IDirectSound8 methods
-    HRESULT (STDMETHODCALLTYPE *VerifyCertification)  (IDirectSound8*, LPDWORD pdwCertified);
+	// IDirectSound8 methods
+	HRESULT (STDMETHODCALLTYPE *VerifyCertification)  (IDirectSound8*, LPDWORD pdwCertified);
 };
 
 #define IDirectSound8_Release(p)                  (p)->lpVtbl->Release(p)
@@ -1405,10 +3486,10 @@ typedef struct IDirectSoundNotifyVtbl IDirectSoundNotifyVtbl;
 
 struct IDirectSoundNotifyVtbl
 {
-    HRESULT (STDMETHODCALLTYPE *QueryInterface)(IDirectSoundNotify*, REFIID, LPVOID*);
-    ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSoundNotify*);
-    ULONG (STDMETHODCALLTYPE *Release)       (IDirectSoundNotify*);
-    HRESULT (STDMETHODCALLTYPE *SetNotificationPositions) (IDirectSoundNotify*, DWORD dwPositionNotifies, DSBPOSITIONNOTIFY* pcPositionNotifies);
+	HRESULT (STDMETHODCALLTYPE *QueryInterface)(IDirectSoundNotify*, REFIID, LPVOID*);
+	ULONG (STDMETHODCALLTYPE *AddRef)        (IDirectSoundNotify*);
+	ULONG (STDMETHODCALLTYPE *Release)       (IDirectSoundNotify*);
+	HRESULT (STDMETHODCALLTYPE *SetNotificationPositions) (IDirectSoundNotify*, DWORD dwPositionNotifies, DSBPOSITIONNOTIFY* pcPositionNotifies);
 };
 
 #define IDirectSoundNotify_Release(p)                       (p)->lpVtbl->Release(p)
@@ -1436,1883 +3517,1883 @@ struct IDirectSoundNotifyVtbl
 
 
 struct app_t
-    {
-    void* memctx;
-    void* logctx;
-    void* fatalctx;
-    app_interpolation_t interpolation;
-    app_screenmode_t screenmode;
+	{
+	void* memctx;
+	void* logctx;
+	void* fatalctx;
+	app_interpolation_t interpolation;
+	app_screenmode_t screenmode;
 
-    BOOL initialized;
-    BOOL closed;
+	BOOL initialized;
+	BOOL closed;
 
-    char exe_path[ 260 ];
-    char userdata_path[ 260 ];
-    char appdata_path[ 260 ];
-    char const* cmdline;
+	char exe_path[ 260 ];
+	char userdata_path[ 260 ];
+	char appdata_path[ 260 ];
+	char const* cmdline;
 
-    HINSTANCE hinstance;
-    HWND hwnd;
-    LRESULT (CALLBACK *user_wndproc)( app_t*, HWND, UINT, WPARAM, LPARAM );
+	HINSTANCE hinstance;
+	HWND hwnd;
+	LRESULT (CALLBACK *user_wndproc)( app_t*, HWND, UINT, WPARAM, LPARAM );
 
-    HDC hdc;
-    HICON icon;
-    BOOL has_focus;
-    BOOL is_minimized;
+	HDC hdc;
+	HICON icon;
+	BOOL has_focus;
+	BOOL is_minimized;
 
-    struct app_internal_opengl_t gl;
-    HMODULE gl_dll;
-    HGLRC gl_context;
-    PROC (APP_GLCALLTYPE* wglGetProcAddress) (LPCSTR);
-    HGLRC (APP_GLCALLTYPE* wglCreateContext) (HDC);
-    BOOL (APP_GLCALLTYPE* wglDeleteContext) (HGLRC);
-    BOOL (APP_GLCALLTYPE* wglMakeCurrent) (HDC, HGLRC);
-    BOOL (APP_GLCALLTYPE* wglSwapIntervalEXT) (int);
+	struct app_internal_opengl_t gl;
+	HMODULE gl_dll;
+	HGLRC gl_context;
+	PROC (APP_GLCALLTYPE* wglGetProcAddress) (LPCSTR);
+	HGLRC (APP_GLCALLTYPE* wglCreateContext) (HDC);
+	BOOL (APP_GLCALLTYPE* wglDeleteContext) (HGLRC);
+	BOOL (APP_GLCALLTYPE* wglMakeCurrent) (HDC, HGLRC);
+	BOOL (APP_GLCALLTYPE* wglSwapIntervalEXT) (int);
 
-    UINT (WINAPI *GetRawInputDataPtr)( HRAWINPUT, UINT, LPVOID, PUINT, UINT );
+	UINT (WINAPI *GetRawInputDataPtr)( HRAWINPUT, UINT, LPVOID, PUINT, UINT );
 
-    HANDLE sound_notifications[ 2 ];
-    HMODULE dsound_dll;
-    struct IDirectSound8* dsound;
-    struct IDirectSoundBuffer8* dsoundbuf;
-    HANDLE sound_thread_handle;
-    volatile LONG exit_sound_thread;
-    int sample_pairs_count;
-    int sound_level;
-    void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
-    void* sound_user_data;
+	HANDLE sound_notifications[ 2 ];
+	HMODULE dsound_dll;
+	struct IDirectSound8* dsound;
+	struct IDirectSoundBuffer8* dsoundbuf;
+	HANDLE sound_thread_handle;
+	volatile LONG exit_sound_thread;
+	int sample_pairs_count;
+	int sound_level;
+	void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
+	void* sound_user_data;
 
-    HCURSOR current_pointer;
+	HCURSOR current_pointer;
 
-    BOOL clip_cursor;
-    RECT clip_rect;
+	BOOL clip_cursor;
+	RECT clip_rect;
 
-    app_input_event_t input_events[ 1024 ];
-    int input_count;
+	app_input_event_t input_events[ 1024 ];
+	int input_count;
 
-    int windowed_x;
-    int windowed_y;
-    int windowed_h;
-    int windowed_w;
-    int fullscreen_width;
-    int fullscreen_height;
+	int windowed_x;
+	int windowed_y;
+	int windowed_h;
+	int windowed_w;
+	int fullscreen_width;
+	int fullscreen_height;
 
-    int display_count;
-    app_display_t displays[ 16 ];
-    HMONITOR displays_hmonitor[ 16 ];
+	int display_count;
+	app_display_t displays[ 16 ];
+	HMONITOR displays_hmonitor[ 16 ];
 
-    struct
-        {
-        HMODULE wintab_dll;
-        APP_HCTX context;
-        int max_pressure;
+	struct
+		{
+		HMODULE wintab_dll;
+		APP_HCTX context;
+		int max_pressure;
 
-        UINT (WINAPI *WTInfo)( UINT, UINT, LPVOID );
-        APP_HCTX (WINAPI *WTOpen)( HWND, APP_LOGCONTEXTA*, BOOL );
-        BOOL (WINAPI *WTClose)( APP_HCTX );
-        BOOL (WINAPI *WTEnable)( APP_HCTX, BOOL );
-        BOOL (WINAPI *WTPacket)( APP_HCTX, UINT, LPVOID );
-        } tablet;
-    };
+		UINT (WINAPI *WTInfo)( UINT, UINT, LPVOID );
+		APP_HCTX (WINAPI *WTOpen)( HWND, APP_LOGCONTEXTA*, BOOL );
+		BOOL (WINAPI *WTClose)( APP_HCTX );
+		BOOL (WINAPI *WTEnable)( APP_HCTX, BOOL );
+		BOOL (WINAPI *WTPacket)( APP_HCTX, UINT, LPVOID );
+		} tablet;
+	};
 
 
 static app_key_t app_internal_vkcode_to_appkey( app_t* app, int vkcode )
-    {
-    int map[ 256 * 2 ] = { APP_KEY_INVALID, 0x00, APP_KEY_LBUTTON, 0x01, APP_KEY_RBUTTON, 0x02, APP_KEY_CANCEL, 0x03, APP_KEY_MBUTTON, 0x04,
-        APP_KEY_XBUTTON1, 0x05, APP_KEY_XBUTTON2, 0x06, -1, 0x07, APP_KEY_BACK, 0x08, APP_KEY_TAB, 0x09, -1, 0x0A, -1, 0x0B, APP_KEY_CLEAR, 0x0C,
-        APP_KEY_RETURN, 0x0D, -1, 0x0E, -1, 0x0F, APP_KEY_SHIFT, 0x10, APP_KEY_CONTROL, 0x11, APP_KEY_MENU, 0x12, APP_KEY_PAUSE, 0x13,
-        APP_KEY_CAPITAL, 0x14, APP_KEY_KANA, 0x15, -1, 0x16, APP_KEY_JUNJA, 0x17, APP_KEY_FINAL, 0x18, APP_KEY_HANJA, 0x19, -1, 0x1A,
-        APP_KEY_ESCAPE, 0x1B, APP_KEY_CONVERT, 0x1C, APP_KEY_NONCONVERT, 0x1D, APP_KEY_ACCEPT, 0x1E, APP_KEY_MODECHANGE, 0x1F, APP_KEY_SPACE, 0x20,
-        APP_KEY_PRIOR, 0x21, APP_KEY_NEXT, 0x22, APP_KEY_END, 0x23, APP_KEY_HOME, 0x24, APP_KEY_LEFT, 0x25, APP_KEY_UP, 0x26, APP_KEY_RIGHT, 0x27,
-        APP_KEY_DOWN, 0x28, APP_KEY_SELECT, 0x29, APP_KEY_PRINT, 0x2A, APP_KEY_EXEC, 0x2B, APP_KEY_SNAPSHOT, 0x2C, APP_KEY_INSERT, 0x2D,
-        APP_KEY_DELETE, 0x2E, APP_KEY_HELP, 0x2F, APP_KEY_0, 0x30, APP_KEY_1, 0x31, APP_KEY_2, 0x32, APP_KEY_3, 0x33, APP_KEY_4, 0x34,
-        APP_KEY_5, 0x35, APP_KEY_6, 0x36, APP_KEY_7, 0x37, APP_KEY_8, 0x38, APP_KEY_9, 0x39, -1, 0x3A, -1, 0x3B, -1, 0x3C, -1, 0x3D, -1, 0x3E,
-        -1, 0x3F, -1, 0x40, APP_KEY_A, 0x41, APP_KEY_B, 0x42, APP_KEY_C, 0x43, APP_KEY_D, 0x44, APP_KEY_E, 0x45, APP_KEY_F, 0x46, APP_KEY_G, 0x47,
-        APP_KEY_H, 0x48, APP_KEY_I, 0x49, APP_KEY_J, 0x4A, APP_KEY_K, 0x4B, APP_KEY_L, 0x4C, APP_KEY_M, 0x4D, APP_KEY_N, 0x4E, APP_KEY_O, 0x4F,
-        APP_KEY_P, 0x50, APP_KEY_Q, 0x51, APP_KEY_R, 0x52, APP_KEY_S, 0x53, APP_KEY_T, 0x54, APP_KEY_U, 0x55, APP_KEY_V, 0x56, APP_KEY_W, 0x57,
-        APP_KEY_X, 0x58, APP_KEY_Y, 0x59, APP_KEY_Z, 0x5A, APP_KEY_LWIN, 0x5B, APP_KEY_RWIN, 0x5C, APP_KEY_APPS, 0x5D, -1, 0x5E, APP_KEY_SLEEP, 0x5F,
-        APP_KEY_NUMPAD0, 0x60, APP_KEY_NUMPAD1, 0x61, APP_KEY_NUMPAD2, 0x62, APP_KEY_NUMPAD3, 0x63, APP_KEY_NUMPAD4, 0x64, APP_KEY_NUMPAD5, 0x65,
-        APP_KEY_NUMPAD6, 0x66, APP_KEY_NUMPAD7, 0x67, APP_KEY_NUMPAD8, 0x68, APP_KEY_NUMPAD9, 0x69, APP_KEY_MULTIPLY, 0x6A, APP_KEY_ADD, 0x6B,
-        APP_KEY_SEPARATOR, 0x6C, APP_KEY_SUBTRACT, 0x6D, APP_KEY_DECIMAL, 0x6E, APP_KEY_DIVIDE, 0x6F, APP_KEY_F1, 0x70, APP_KEY_F2, 0x71,
-        APP_KEY_F3, 0x72, APP_KEY_F4, 0x73, APP_KEY_F5, 0x74, APP_KEY_F6, 0x75, APP_KEY_F7, 0x76, APP_KEY_F8, 0x77, APP_KEY_F9, 0x78,
-        APP_KEY_F10, 0x79, APP_KEY_F11, 0x7A, APP_KEY_F12, 0x7B, APP_KEY_F13, 0x7C, APP_KEY_F14, 0x7D, APP_KEY_F15, 0x7E, APP_KEY_F16, 0x7F,
-        APP_KEY_F17, 0x80, APP_KEY_F18, 0x81, APP_KEY_F19, 0x82, APP_KEY_F20, 0x83, APP_KEY_F21, 0x84, APP_KEY_F22, 0x85, APP_KEY_F23, 0x86,
-        APP_KEY_F24, 0x87, -1, 0x88, -1, 0x89, -1, 0x8A, -1, 0x8B, -1, 0x8C, -1, 0x8D, -1, 0x8E, -1, 0x8F, APP_KEY_NUMLOCK, 0x90,
-        APP_KEY_SCROLL, 0x91, -1, 0x92, -1, 0x93, -1, 0x94, -1, 0x95, -1, 0x96, -1, 0x97, -1, 0x98, -1, 0x99, -1, 0x9A, -1, 0x9B, -1, 0x9C, -1, 0x9D,
-        -1, 0x9E, -1, 0x9F, APP_KEY_LSHIFT, 0xA0, APP_KEY_RSHIFT, 0xA1, APP_KEY_LCONTROL, 0xA2, APP_KEY_RCONTROL, 0xA3, APP_KEY_LMENU, 0xA4,
-        APP_KEY_RMENU, 0xA5, APP_KEY_BROWSER_BACK, 0xA6, APP_KEY_BROWSER_FORWARD, 0xA7, APP_KEY_BROWSER_REFRESH, 0xA8, APP_KEY_BROWSER_STOP, 0xA9,
-        APP_KEY_BROWSER_SEARCH, 0xAA, APP_KEY_BROWSER_FAVORITES, 0xAB, APP_KEY_BROWSER_HOME, 0xAC, APP_KEY_VOLUME_MUTE, 0xAD,
-        APP_KEY_VOLUME_DOWN, 0xAE, APP_KEY_VOLUME_UP, 0xAF, APP_KEY_MEDIA_NEXT_TRACK, 0xB0, APP_KEY_MEDIA_PREV_TRACK, 0xB1, APP_KEY_MEDIA_STOP, 0xB2,
-        APP_KEY_MEDIA_PLAY_PAUSE, 0xB3, APP_KEY_LAUNCH_MAIL, 0xB4, APP_KEY_LAUNCH_MEDIA_SELECT, 0xB5, APP_KEY_LAUNCH_APP1, 0xB6,
-        APP_KEY_LAUNCH_APP2, 0xB7, -1, 0xB8, -1, 0xB9, APP_KEY_OEM_1, 0xBA, APP_KEY_OEM_PLUS, 0xBB, APP_KEY_OEM_COMMA, 0xBC, APP_KEY_OEM_MINUS, 0xBD,
-        APP_KEY_OEM_PERIOD, 0xBE, APP_KEY_OEM_2, 0xBF, APP_KEY_OEM_3, 0xC0, -1, 0xC1, -1, 0xC2, -1, 0xC3, -1, 0xC4, -1, 0xC5, -1, 0xC6, -1, 0xC7,
-        -1, 0xC8, -1, 0xC9, -1, 0xCA, -1, 0xCB, -1, 0xCC, -1, 0xCD, -1, 0xCE, -1, 0xCF, -1, 0xD0, -1, 0xD1, -1, 0xD2, -1, 0xD3, -1, 0xD4, -1, 0xD5,
-        -1, 0xD6, -1, 0xD7, -1, 0xD8, -1, 0xD9, -1, 0xDA, APP_KEY_OEM_4, 0xDB, APP_KEY_OEM_5, 0xDC, APP_KEY_OEM_6, 0xDD, APP_KEY_OEM_7, 0xDE,
-        APP_KEY_OEM_8, 0xDF, -1, 0xE0, -1, 0xE1, APP_KEY_OEM_102, 0xE2, -1, 0xE3, -1, 0xE4, APP_KEY_PROCESSKEY, 0xE5, -1, 0xE6, -1, 0xE7, -1, 0xE8,
-        -1, 0xE9, -1, 0xEA, -1, 0xEB, -1, 0xEC, -1, 0xED, -1, 0xEE, -1, 0xEF, -1, 0xF0, -1, 0xF1, -1, 0xF2, -1, 0xF3, -1, 0xF4, -1, 0xF5,
-        APP_KEY_ATTN, 0xF6, APP_KEY_CRSEL, 0xF7, APP_KEY_EXSEL, 0xF8, APP_KEY_EREOF, 0xF9, APP_KEY_PLAY, 0xFA, APP_KEY_ZOOM, 0xFB,
-        APP_KEY_NONAME, 0xFC, APP_KEY_PA1, 0xFD, APP_KEY_OEM_CLEAR, 0xFE, -1, 0xFF, };
-    if( vkcode < 0 || vkcode >= sizeof( map ) / ( 2 * sizeof( *map ) ) ) return APP_KEY_INVALID;
-    if( map[ vkcode * 2 + 1 ] != vkcode )
-        {
-        app_log( app, APP_LOG_LEVEL_ERROR, "Keymap definition error" );
-        return APP_KEY_INVALID;
-        }
-    return (app_key_t) map[ vkcode * 2 ];
-    }
+	{
+	int map[ 256 * 2 ] = { APP_KEY_INVALID, 0x00, APP_KEY_LBUTTON, 0x01, APP_KEY_RBUTTON, 0x02, APP_KEY_CANCEL, 0x03, APP_KEY_MBUTTON, 0x04,
+		APP_KEY_XBUTTON1, 0x05, APP_KEY_XBUTTON2, 0x06, -1, 0x07, APP_KEY_BACK, 0x08, APP_KEY_TAB, 0x09, -1, 0x0A, -1, 0x0B, APP_KEY_CLEAR, 0x0C,
+		APP_KEY_RETURN, 0x0D, -1, 0x0E, -1, 0x0F, APP_KEY_SHIFT, 0x10, APP_KEY_CONTROL, 0x11, APP_KEY_MENU, 0x12, APP_KEY_PAUSE, 0x13,
+		APP_KEY_CAPITAL, 0x14, APP_KEY_KANA, 0x15, -1, 0x16, APP_KEY_JUNJA, 0x17, APP_KEY_FINAL, 0x18, APP_KEY_HANJA, 0x19, -1, 0x1A,
+		APP_KEY_ESCAPE, 0x1B, APP_KEY_CONVERT, 0x1C, APP_KEY_NONCONVERT, 0x1D, APP_KEY_ACCEPT, 0x1E, APP_KEY_MODECHANGE, 0x1F, APP_KEY_SPACE, 0x20,
+		APP_KEY_PRIOR, 0x21, APP_KEY_NEXT, 0x22, APP_KEY_END, 0x23, APP_KEY_HOME, 0x24, APP_KEY_LEFT, 0x25, APP_KEY_UP, 0x26, APP_KEY_RIGHT, 0x27,
+		APP_KEY_DOWN, 0x28, APP_KEY_SELECT, 0x29, APP_KEY_PRINT, 0x2A, APP_KEY_EXEC, 0x2B, APP_KEY_SNAPSHOT, 0x2C, APP_KEY_INSERT, 0x2D,
+		APP_KEY_DELETE, 0x2E, APP_KEY_HELP, 0x2F, APP_KEY_0, 0x30, APP_KEY_1, 0x31, APP_KEY_2, 0x32, APP_KEY_3, 0x33, APP_KEY_4, 0x34,
+		APP_KEY_5, 0x35, APP_KEY_6, 0x36, APP_KEY_7, 0x37, APP_KEY_8, 0x38, APP_KEY_9, 0x39, -1, 0x3A, -1, 0x3B, -1, 0x3C, -1, 0x3D, -1, 0x3E,
+		-1, 0x3F, -1, 0x40, APP_KEY_A, 0x41, APP_KEY_B, 0x42, APP_KEY_C, 0x43, APP_KEY_D, 0x44, APP_KEY_E, 0x45, APP_KEY_F, 0x46, APP_KEY_G, 0x47,
+		APP_KEY_H, 0x48, APP_KEY_I, 0x49, APP_KEY_J, 0x4A, APP_KEY_K, 0x4B, APP_KEY_L, 0x4C, APP_KEY_M, 0x4D, APP_KEY_N, 0x4E, APP_KEY_O, 0x4F,
+		APP_KEY_P, 0x50, APP_KEY_Q, 0x51, APP_KEY_R, 0x52, APP_KEY_S, 0x53, APP_KEY_T, 0x54, APP_KEY_U, 0x55, APP_KEY_V, 0x56, APP_KEY_W, 0x57,
+		APP_KEY_X, 0x58, APP_KEY_Y, 0x59, APP_KEY_Z, 0x5A, APP_KEY_LWIN, 0x5B, APP_KEY_RWIN, 0x5C, APP_KEY_APPS, 0x5D, -1, 0x5E, APP_KEY_SLEEP, 0x5F,
+		APP_KEY_NUMPAD0, 0x60, APP_KEY_NUMPAD1, 0x61, APP_KEY_NUMPAD2, 0x62, APP_KEY_NUMPAD3, 0x63, APP_KEY_NUMPAD4, 0x64, APP_KEY_NUMPAD5, 0x65,
+		APP_KEY_NUMPAD6, 0x66, APP_KEY_NUMPAD7, 0x67, APP_KEY_NUMPAD8, 0x68, APP_KEY_NUMPAD9, 0x69, APP_KEY_MULTIPLY, 0x6A, APP_KEY_ADD, 0x6B,
+		APP_KEY_SEPARATOR, 0x6C, APP_KEY_SUBTRACT, 0x6D, APP_KEY_DECIMAL, 0x6E, APP_KEY_DIVIDE, 0x6F, APP_KEY_F1, 0x70, APP_KEY_F2, 0x71,
+		APP_KEY_F3, 0x72, APP_KEY_F4, 0x73, APP_KEY_F5, 0x74, APP_KEY_F6, 0x75, APP_KEY_F7, 0x76, APP_KEY_F8, 0x77, APP_KEY_F9, 0x78,
+		APP_KEY_F10, 0x79, APP_KEY_F11, 0x7A, APP_KEY_F12, 0x7B, APP_KEY_F13, 0x7C, APP_KEY_F14, 0x7D, APP_KEY_F15, 0x7E, APP_KEY_F16, 0x7F,
+		APP_KEY_F17, 0x80, APP_KEY_F18, 0x81, APP_KEY_F19, 0x82, APP_KEY_F20, 0x83, APP_KEY_F21, 0x84, APP_KEY_F22, 0x85, APP_KEY_F23, 0x86,
+		APP_KEY_F24, 0x87, -1, 0x88, -1, 0x89, -1, 0x8A, -1, 0x8B, -1, 0x8C, -1, 0x8D, -1, 0x8E, -1, 0x8F, APP_KEY_NUMLOCK, 0x90,
+		APP_KEY_SCROLL, 0x91, -1, 0x92, -1, 0x93, -1, 0x94, -1, 0x95, -1, 0x96, -1, 0x97, -1, 0x98, -1, 0x99, -1, 0x9A, -1, 0x9B, -1, 0x9C, -1, 0x9D,
+		-1, 0x9E, -1, 0x9F, APP_KEY_LSHIFT, 0xA0, APP_KEY_RSHIFT, 0xA1, APP_KEY_LCONTROL, 0xA2, APP_KEY_RCONTROL, 0xA3, APP_KEY_LMENU, 0xA4,
+		APP_KEY_RMENU, 0xA5, APP_KEY_BROWSER_BACK, 0xA6, APP_KEY_BROWSER_FORWARD, 0xA7, APP_KEY_BROWSER_REFRESH, 0xA8, APP_KEY_BROWSER_STOP, 0xA9,
+		APP_KEY_BROWSER_SEARCH, 0xAA, APP_KEY_BROWSER_FAVORITES, 0xAB, APP_KEY_BROWSER_HOME, 0xAC, APP_KEY_VOLUME_MUTE, 0xAD,
+		APP_KEY_VOLUME_DOWN, 0xAE, APP_KEY_VOLUME_UP, 0xAF, APP_KEY_MEDIA_NEXT_TRACK, 0xB0, APP_KEY_MEDIA_PREV_TRACK, 0xB1, APP_KEY_MEDIA_STOP, 0xB2,
+		APP_KEY_MEDIA_PLAY_PAUSE, 0xB3, APP_KEY_LAUNCH_MAIL, 0xB4, APP_KEY_LAUNCH_MEDIA_SELECT, 0xB5, APP_KEY_LAUNCH_APP1, 0xB6,
+		APP_KEY_LAUNCH_APP2, 0xB7, -1, 0xB8, -1, 0xB9, APP_KEY_OEM_1, 0xBA, APP_KEY_OEM_PLUS, 0xBB, APP_KEY_OEM_COMMA, 0xBC, APP_KEY_OEM_MINUS, 0xBD,
+		APP_KEY_OEM_PERIOD, 0xBE, APP_KEY_OEM_2, 0xBF, APP_KEY_OEM_3, 0xC0, -1, 0xC1, -1, 0xC2, -1, 0xC3, -1, 0xC4, -1, 0xC5, -1, 0xC6, -1, 0xC7,
+		-1, 0xC8, -1, 0xC9, -1, 0xCA, -1, 0xCB, -1, 0xCC, -1, 0xCD, -1, 0xCE, -1, 0xCF, -1, 0xD0, -1, 0xD1, -1, 0xD2, -1, 0xD3, -1, 0xD4, -1, 0xD5,
+		-1, 0xD6, -1, 0xD7, -1, 0xD8, -1, 0xD9, -1, 0xDA, APP_KEY_OEM_4, 0xDB, APP_KEY_OEM_5, 0xDC, APP_KEY_OEM_6, 0xDD, APP_KEY_OEM_7, 0xDE,
+		APP_KEY_OEM_8, 0xDF, -1, 0xE0, -1, 0xE1, APP_KEY_OEM_102, 0xE2, -1, 0xE3, -1, 0xE4, APP_KEY_PROCESSKEY, 0xE5, -1, 0xE6, -1, 0xE7, -1, 0xE8,
+		-1, 0xE9, -1, 0xEA, -1, 0xEB, -1, 0xEC, -1, 0xED, -1, 0xEE, -1, 0xEF, -1, 0xF0, -1, 0xF1, -1, 0xF2, -1, 0xF3, -1, 0xF4, -1, 0xF5,
+		APP_KEY_ATTN, 0xF6, APP_KEY_CRSEL, 0xF7, APP_KEY_EXSEL, 0xF8, APP_KEY_EREOF, 0xF9, APP_KEY_PLAY, 0xFA, APP_KEY_ZOOM, 0xFB,
+		APP_KEY_NONAME, 0xFC, APP_KEY_PA1, 0xFD, APP_KEY_OEM_CLEAR, 0xFE, -1, 0xFF, };
+	if( vkcode < 0 || vkcode >= sizeof( map ) / ( 2 * sizeof( *map ) ) ) return APP_KEY_INVALID;
+	if( map[ vkcode * 2 + 1 ] != vkcode )
+		{
+		app_log( app, APP_LOG_LEVEL_ERROR, "Keymap definition error" );
+		return APP_KEY_INVALID;
+		}
+	return (app_key_t) map[ vkcode * 2 ];
+	}
 
 
 static void app_internal_add_input_event( app_t* app, app_input_event_t* event )
-    {
-    if( app->has_focus )
-        {
-        if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
-            app->input_events[ app->input_count++ ] = *event;
-        }
-    }
+	{
+	if( app->has_focus )
+		{
+		if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+			app->input_events[ app->input_count++ ] = *event;
+		}
+	}
 
 
 static RECT app_internal_rect( int left, int top, int right, int bottom )
-    {
-    RECT r; r.left = left; r.top = top; r.right = right; r.bottom = bottom; return r;
-    }
+	{
+	RECT r; r.left = left; r.top = top; r.right = right; r.bottom = bottom; return r;
+	}
 
 
 static BOOL app_internal_tablet_init( app_t* app )
-    {
-    app->tablet.wintab_dll = LoadLibraryA( "Wintab32.dll" );
-    if( !app->tablet.wintab_dll ) return FALSE;
+	{
+	app->tablet.wintab_dll = LoadLibraryA( "Wintab32.dll" );
+	if( !app->tablet.wintab_dll ) return FALSE;
 
-    app->tablet.WTInfo = ( UINT (WINAPI*)( UINT, UINT, LPVOID ) )
-        (uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTInfoA" );
-    app->tablet.WTOpen = ( APP_HCTX (WINAPI*)( HWND, APP_LOGCONTEXTA*, BOOL ) )
-        (uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTOpenA" );
-    app->tablet.WTClose = ( BOOL (WINAPI*)( APP_HCTX ) )
-        (uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTClose" );
-    app->tablet.WTEnable = ( BOOL (WINAPI*)( APP_HCTX, BOOL ) )
-        (uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTEnable" );
-    app->tablet.WTPacket = ( BOOL (WINAPI*)( APP_HCTX, UINT, LPVOID ) )
-        (uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTPacket" );
+	app->tablet.WTInfo = ( UINT (WINAPI*)( UINT, UINT, LPVOID ) )
+		(uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTInfoA" );
+	app->tablet.WTOpen = ( APP_HCTX (WINAPI*)( HWND, APP_LOGCONTEXTA*, BOOL ) )
+		(uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTOpenA" );
+	app->tablet.WTClose = ( BOOL (WINAPI*)( APP_HCTX ) )
+		(uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTClose" );
+	app->tablet.WTEnable = ( BOOL (WINAPI*)( APP_HCTX, BOOL ) )
+		(uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTEnable" );
+	app->tablet.WTPacket = ( BOOL (WINAPI*)( APP_HCTX, UINT, LPVOID ) )
+		(uintptr_t ) GetProcAddress( app->tablet.wintab_dll, "WTPacket" );
 
-    if( !app->tablet.WTInfo( 0 ,0, NULL ) ) return FALSE; // checks if tablet is present
+	if( !app->tablet.WTInfo( 0 ,0, NULL ) ) return FALSE; // checks if tablet is present
 
-    APP_LOGCONTEXTA log_context;
-    memset( &log_context, 0, sizeof( log_context ) );
-    app->tablet.WTInfo( APP_WTI_DDCTXS, 0, &log_context );
+	APP_LOGCONTEXTA log_context;
+	memset( &log_context, 0, sizeof( log_context ) );
+	app->tablet.WTInfo( APP_WTI_DDCTXS, 0, &log_context );
 
-    APP_AXIS pressure;
-    memset( &pressure, 0, sizeof( pressure ) );
-    app->tablet.WTInfo( APP_WTI_DEVICES, APP_DVC_NPRESSURE, &pressure );
-    app->tablet.max_pressure = pressure.axMax;
+	APP_AXIS pressure;
+	memset( &pressure, 0, sizeof( pressure ) );
+	app->tablet.WTInfo( APP_WTI_DEVICES, APP_DVC_NPRESSURE, &pressure );
+	app->tablet.max_pressure = pressure.axMax;
 
-    log_context.lcPktData = APP_PACKETDATA;
-    log_context.lcOptions |= APP_CXO_MESSAGES;
-    log_context.lcPktMode = APP_PACKETMODE;
-    log_context.lcMoveMask = APP_PACKETDATA;
-    log_context.lcBtnUpMask = log_context.lcBtnDnMask;
-    log_context.lcOutOrgX = 0;
-    log_context.lcOutOrgY = 0;
-    log_context.lcOutExtX = GetSystemMetrics( SM_CXSCREEN) ;
-    log_context.lcOutExtY = -GetSystemMetrics( SM_CYSCREEN );
+	log_context.lcPktData = APP_PACKETDATA;
+	log_context.lcOptions |= APP_CXO_MESSAGES;
+	log_context.lcPktMode = APP_PACKETMODE;
+	log_context.lcMoveMask = APP_PACKETDATA;
+	log_context.lcBtnUpMask = log_context.lcBtnDnMask;
+	log_context.lcOutOrgX = 0;
+	log_context.lcOutOrgY = 0;
+	log_context.lcOutExtX = GetSystemMetrics( SM_CXSCREEN) ;
+	log_context.lcOutExtY = -GetSystemMetrics( SM_CYSCREEN );
 
-    app->tablet.context = app->tablet.WTOpen( app->hwnd, &log_context, FALSE );
-    if( !app->tablet.context ) return FALSE;
-    return TRUE;
+	app->tablet.context = app->tablet.WTOpen( app->hwnd, &log_context, FALSE );
+	if( !app->tablet.context ) return FALSE;
+	return TRUE;
 }
 
 
 static BOOL app_internal_tablet_term( app_t* app )
-    {
-    if( app->tablet.context ) app->tablet.WTClose( app->tablet.context );
-    if( app->tablet.wintab_dll ) FreeLibrary( app->tablet.wintab_dll );
-    return TRUE;
-    }
+	{
+	if( app->tablet.context ) app->tablet.WTClose( app->tablet.context );
+	if( app->tablet.wintab_dll ) FreeLibrary( app->tablet.wintab_dll );
+	return TRUE;
+	}
 
 
 
 static LRESULT CALLBACK app_internal_wndproc( HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
-    {
-    app_t* app = (app_t*)(uintptr_t) GetWindowLongPtr( hwnd, GWLP_USERDATA );
-    if( !app ) return DefWindowProc( hwnd, message, wparam, lparam);
+	{
+	app_t* app = (app_t*)(uintptr_t) GetWindowLongPtr( hwnd, GWLP_USERDATA );
+	if( !app ) return DefWindowProc( hwnd, message, wparam, lparam);
 
-    app_input_event_t input_event;
+	app_input_event_t input_event;
 
-    switch( message )
-        {
-        case WM_CHAR:
-            input_event.type = APP_INPUT_CHAR; input_event.data.char_code = (char) wparam;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_LBUTTONDOWN:
-            input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_LBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_LBUTTONUP:
-            input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_LBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_LBUTTONDBLCLK:
-            input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_LBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_RBUTTONDOWN:
-            input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_RBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_RBUTTONUP:
-            input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_RBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_RBUTTONDBLCLK:
-            input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_RBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_MBUTTONDOWN:
-            input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_MBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_MBUTTONUP:
-            input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_MBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_MBUTTONDBLCLK:
-            input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_MBUTTON;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_XBUTTONDOWN:
-            input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_XBUTTONUP:
-            input_event.type = APP_INPUT_KEY_UP; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_XBUTTONDBLCLK:
-            input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
-            app_internal_add_input_event( app, &input_event );
-            break;
-        case WM_SYSKEYDOWN:
-        case WM_KEYDOWN:
-            {
-            input_event.type = APP_INPUT_KEY_DOWN;
-            WPARAM vkcode = wparam;
-            UINT scancode = (UINT)( ( lparam & 0x00ff0000 ) >> 16 );
-            int extended  = ( lparam & 0x01000000 ) != 0;
-            UINT const maptype = 3; //MAPVK_VSC_TO_VK_EX
-            switch( vkcode )
-                {
-                case VK_SHIFT:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-            app_internal_add_input_event( app, &input_event );
+	switch( message )
+		{
+		case WM_CHAR:
+			input_event.type = APP_INPUT_CHAR; input_event.data.char_code = (char) wparam;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_LBUTTONDOWN:
+			input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_LBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_LBUTTONUP:
+			input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_LBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_LBUTTONDBLCLK:
+			input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_LBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_RBUTTONDOWN:
+			input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_RBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_RBUTTONUP:
+			input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_RBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_RBUTTONDBLCLK:
+			input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_RBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_MBUTTONDOWN:
+			input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = APP_KEY_MBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_MBUTTONUP:
+			input_event.type = APP_INPUT_KEY_UP; input_event.data.key = APP_KEY_MBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_MBUTTONDBLCLK:
+			input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = APP_KEY_MBUTTON;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_XBUTTONDOWN:
+			input_event.type = APP_INPUT_KEY_DOWN; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_XBUTTONUP:
+			input_event.type = APP_INPUT_KEY_UP; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_XBUTTONDBLCLK:
+			input_event.type = APP_INPUT_DOUBLE_CLICK; input_event.data.key = HIWORD( wparam ) == 1 ? APP_KEY_XBUTTON1 :APP_KEY_XBUTTON2;
+			app_internal_add_input_event( app, &input_event );
+			break;
+		case WM_SYSKEYDOWN:
+		case WM_KEYDOWN:
+			{
+			input_event.type = APP_INPUT_KEY_DOWN;
+			WPARAM vkcode = wparam;
+			UINT scancode = (UINT)( ( lparam & 0x00ff0000 ) >> 16 );
+			int extended  = ( lparam & 0x01000000 ) != 0;
+			UINT const maptype = 3; //MAPVK_VSC_TO_VK_EX
+			switch( vkcode )
+				{
+				case VK_SHIFT:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+			app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) MapVirtualKey( scancode, maptype ) );
-                    app_internal_add_input_event( app, &input_event );
-            break;
-                case VK_CONTROL:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-            app_internal_add_input_event( app, &input_event );
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) MapVirtualKey( scancode, maptype ) );
+					app_internal_add_input_event( app, &input_event );
+			break;
+				case VK_CONTROL:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+			app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RCONTROL : VK_LCONTROL );
-                    app_internal_add_input_event( app, &input_event );
-            break;
-                case VK_MENU:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-                    app_internal_add_input_event( app, &input_event );
+					input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RCONTROL : VK_LCONTROL );
+					app_internal_add_input_event( app, &input_event );
+			break;
+				case VK_MENU:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+					app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RMENU : VK_LMENU );
-                    app_internal_add_input_event( app, &input_event );
-                    break;
-                default:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-                    app_internal_add_input_event( app, &input_event );
-                    break;
-                }
-            } break;
+					input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RMENU : VK_LMENU );
+					app_internal_add_input_event( app, &input_event );
+					break;
+				default:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+					app_internal_add_input_event( app, &input_event );
+					break;
+				}
+			} break;
 
-        case WM_HOTKEY:
-            {
-            input_event.type = APP_INPUT_KEY_DOWN;
-            input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-            if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
-                app->input_events[ app->input_count++ ] = input_event;
-            input_event.type = APP_INPUT_KEY_UP;
-            if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
-                app->input_events[ app->input_count++ ] = input_event;
-            } break;
+		case WM_HOTKEY:
+			{
+			input_event.type = APP_INPUT_KEY_DOWN;
+			input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+			if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+				app->input_events[ app->input_count++ ] = input_event;
+			input_event.type = APP_INPUT_KEY_UP;
+			if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+				app->input_events[ app->input_count++ ] = input_event;
+			} break;
 
-        case WM_SYSKEYUP:
-        case WM_KEYUP:
-            {
-            input_event.type = APP_INPUT_KEY_UP;
-            WPARAM vkcode = wparam;
-            UINT scancode = (UINT)( ( lparam & 0x00ff0000 ) >> 16 );
-            int extended  = ( lparam & 0x01000000 ) != 0;
-            UINT const maptype = 3; //MAPVK_VSC_TO_VK_EX
-            switch( vkcode )
-                {
-                case VK_SHIFT:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-                    app_internal_add_input_event( app, &input_event );
+		case WM_SYSKEYUP:
+		case WM_KEYUP:
+			{
+			input_event.type = APP_INPUT_KEY_UP;
+			WPARAM vkcode = wparam;
+			UINT scancode = (UINT)( ( lparam & 0x00ff0000 ) >> 16 );
+			int extended  = ( lparam & 0x01000000 ) != 0;
+			UINT const maptype = 3; //MAPVK_VSC_TO_VK_EX
+			switch( vkcode )
+				{
+				case VK_SHIFT:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+					app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) MapVirtualKey( scancode, maptype ) );
-                    app_internal_add_input_event( app, &input_event );
-                    break;
-                case VK_CONTROL:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-                    app_internal_add_input_event( app, &input_event );
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) MapVirtualKey( scancode, maptype ) );
+					app_internal_add_input_event( app, &input_event );
+					break;
+				case VK_CONTROL:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+					app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RCONTROL : VK_LCONTROL );
-                    app_internal_add_input_event( app, &input_event );
-                    break;
-                case VK_MENU:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-                    app_internal_add_input_event( app, &input_event );
+					input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RCONTROL : VK_LCONTROL );
+					app_internal_add_input_event( app, &input_event );
+					break;
+				case VK_MENU:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+					app_internal_add_input_event( app, &input_event );
 
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RMENU : VK_LMENU );
-            app_internal_add_input_event( app, &input_event );
-            break;
-                default:
-                    input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
-            app_internal_add_input_event( app, &input_event );
-            break;
-                }
-            } break;
+					input_event.data.key = app_internal_vkcode_to_appkey( app, extended ? VK_RMENU : VK_LMENU );
+			app_internal_add_input_event( app, &input_event );
+			break;
+				default:
+					input_event.data.key = app_internal_vkcode_to_appkey( app, (int) wparam );
+			app_internal_add_input_event( app, &input_event );
+			break;
+				}
+			} break;
 
-        /*
-        case WM_GESTURE:
-            printf( "Gesture\n" );
-            if( app->has_focus )
-                {
-                GESTUREINFO gesture_info = { sizeof( gesture_info ) };
-                if( GetGestureInfo( (HGESTUREINFO) lparam, &gesture_info ) )
-                    {
-                    printf( "Gesture Info\n" );
-                    static int prev = 0;
-                    if( gesture_info.dwID == GID_PAN )
-                        {
-                        if( gesture_info.dwFlags & GF_BEGIN )
-                            {
-                            prev = gesture_info.ptsLocation.y;
-                            }
-                        else
-                            {
-                            int dist = gesture_info.ptsLocation.y - prev;
-                            prev = gesture_info.ptsLocation.y;
-                            float wheel_delta = (float)( dist / 200.0f );
-                            printf( "Pan/Inertia: %d\n", dist );
-                            if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
-                                {
-                                app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
-                                event->data.wheel_delta += wheel_delta;
-                                }
-                            else
-                                {
-                                input_event.type = APP_INPUT_SCROLL_WHEEL;
-                                input_event.data.wheel_delta = wheel_delta;
-                                app_internal_add_input_event( app, &input_event );
-                                }
-                            }
-                        }
-                    }
-                }
-            break;
-        */
-        case WM_MOUSEWHEEL:
-            if( app->has_focus )
-                {
-                float const microsoft_mouse_wheel_constant = 120.0f;
-                float wheel_delta = ( (float) GET_WHEEL_DELTA_WPARAM( wparam ) ) / microsoft_mouse_wheel_constant;
-                if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
-                    {
-                    app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
-                    event->data.wheel_delta += wheel_delta;
-                    }
-                else
-                    {
-                    input_event.type = APP_INPUT_SCROLL_WHEEL;
-                    input_event.data.wheel_delta = wheel_delta;
-                    app_internal_add_input_event( app, &input_event );
-                    }
-                }
-            break;
+		/*
+		case WM_GESTURE:
+			printf( "Gesture\n" );
+			if( app->has_focus )
+				{
+				GESTUREINFO gesture_info = { sizeof( gesture_info ) };
+				if( GetGestureInfo( (HGESTUREINFO) lparam, &gesture_info ) )
+					{
+					printf( "Gesture Info\n" );
+					static int prev = 0;
+					if( gesture_info.dwID == GID_PAN )
+						{
+						if( gesture_info.dwFlags & GF_BEGIN )
+							{
+							prev = gesture_info.ptsLocation.y;
+							}
+						else
+							{
+							int dist = gesture_info.ptsLocation.y - prev;
+							prev = gesture_info.ptsLocation.y;
+							float wheel_delta = (float)( dist / 200.0f );
+							printf( "Pan/Inertia: %d\n", dist );
+							if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
+								{
+								app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
+								event->data.wheel_delta += wheel_delta;
+								}
+							else
+								{
+								input_event.type = APP_INPUT_SCROLL_WHEEL;
+								input_event.data.wheel_delta = wheel_delta;
+								app_internal_add_input_event( app, &input_event );
+								}
+							}
+						}
+					}
+				}
+			break;
+		*/
+		case WM_MOUSEWHEEL:
+			if( app->has_focus )
+				{
+				float const microsoft_mouse_wheel_constant = 120.0f;
+				float wheel_delta = ( (float) GET_WHEEL_DELTA_WPARAM( wparam ) ) / microsoft_mouse_wheel_constant;
+				if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
+					{
+					app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
+					event->data.wheel_delta += wheel_delta;
+					}
+				else
+					{
+					input_event.type = APP_INPUT_SCROLL_WHEEL;
+					input_event.data.wheel_delta = wheel_delta;
+					app_internal_add_input_event( app, &input_event );
+					}
+				}
+			break;
 
-        case WM_MOUSEMOVE:
-            if( app->has_focus )
-                {
-                POINT p;
-                GetCursorPos( &p );
-                ScreenToClient( app->hwnd, &p );
-                int mouse_x = p.x;
-                int mouse_y = p.y;
+		case WM_MOUSEMOVE:
+			if( app->has_focus )
+				{
+				POINT p;
+				GetCursorPos( &p );
+				ScreenToClient( app->hwnd, &p );
+				int mouse_x = p.x;
+				int mouse_y = p.y;
 
-                input_event.type = APP_INPUT_MOUSE_MOVE;
-                input_event.data.mouse_pos.x = mouse_x;
-                input_event.data.mouse_pos.y = mouse_y;
-                app_internal_add_input_event( app, &input_event );
-                }
-            break;
+				input_event.type = APP_INPUT_MOUSE_MOVE;
+				input_event.data.mouse_pos.x = mouse_x;
+				input_event.data.mouse_pos.y = mouse_y;
+				app_internal_add_input_event( app, &input_event );
+				}
+			break;
 
-        case WM_INPUT:
-            {
-            if( app->GetRawInputDataPtr )
-                {
-                RAWINPUT raw;
-                UINT size = sizeof( raw );
-                app->GetRawInputDataPtr( (HRAWINPUT) lparam, RID_INPUT, &raw, &size, sizeof( RAWINPUTHEADER ) );
-                if( raw.header.dwType == RIM_TYPEMOUSE )
-                    {
-                    if( ( raw.data.mouse.usFlags & 1 ) == MOUSE_MOVE_RELATIVE) 
-                        {
-                        float dx = (float) raw.data.mouse.lLastX;
-                        float dy = (float) raw.data.mouse.lLastY;
-                        input_event.type = APP_INPUT_MOUSE_DELTA;
-                        input_event.data.mouse_delta.x = dx;
-                        input_event.data.mouse_delta.y = dy;
-                        app_internal_add_input_event( app, &input_event );
-                        }
-                    }
-                }
-            break;
-            }
+		case WM_INPUT:
+			{
+			if( app->GetRawInputDataPtr )
+				{
+				RAWINPUT raw;
+				UINT size = sizeof( raw );
+				app->GetRawInputDataPtr( (HRAWINPUT) lparam, RID_INPUT, &raw, &size, sizeof( RAWINPUTHEADER ) );
+				if( raw.header.dwType == RIM_TYPEMOUSE )
+					{
+					if( ( raw.data.mouse.usFlags & 1 ) == MOUSE_MOVE_RELATIVE)
+						{
+						float dx = (float) raw.data.mouse.lLastX;
+						float dy = (float) raw.data.mouse.lLastY;
+						input_event.type = APP_INPUT_MOUSE_DELTA;
+						input_event.data.mouse_delta.x = dx;
+						input_event.data.mouse_delta.y = dy;
+						app_internal_add_input_event( app, &input_event );
+						}
+					}
+				}
+			break;
+			}
 
-        case APP_WT_PACKET:
-            {
-            APP_PACKET packet;
-            memset( &packet, 0, sizeof( packet ) );
-            if( (APP_HCTX) lparam == app->tablet.context &&
-                app->tablet.WTPacket( app->tablet.context, (UINT) wparam, &packet ) )
-                {
-                POINT p;
-                p.x = packet.pkX;
-                p.y = packet.pkY;
-                ScreenToClient( app->hwnd, &p );
-                int pen_x = p.x;
-                int pen_y = p.y;
+		case APP_WT_PACKET:
+			{
+			APP_PACKET packet;
+			memset( &packet, 0, sizeof( packet ) );
+			if( (APP_HCTX) lparam == app->tablet.context &&
+				app->tablet.WTPacket( app->tablet.context, (UINT) wparam, &packet ) )
+				{
+				POINT p;
+				p.x = packet.pkX;
+				p.y = packet.pkY;
+				ScreenToClient( app->hwnd, &p );
+				int pen_x = p.x;
+				int pen_y = p.y;
 
-                input_event.type = APP_INPUT_TABLET;
-                input_event.data.tablet.x = pen_x;
-                input_event.data.tablet.y = pen_y;
-                input_event.data.tablet.pressure = (float) packet.pkNormalPressure / (float) app->tablet.max_pressure;
-                input_event.data.tablet.tip = ( packet.pkButtons & 1 ) ? APP_PRESSED : APP_NOT_PRESSED;
-                input_event.data.tablet.lower = ( packet.pkButtons & 2 ) ? APP_PRESSED : APP_NOT_PRESSED;
-                input_event.data.tablet.upper = ( packet.pkButtons & 4 ) ? APP_PRESSED : APP_NOT_PRESSED;
-                app_internal_add_input_event( app, &input_event );
-                }
-            } break;
+				input_event.type = APP_INPUT_TABLET;
+				input_event.data.tablet.x = pen_x;
+				input_event.data.tablet.y = pen_y;
+				input_event.data.tablet.pressure = (float) packet.pkNormalPressure / (float) app->tablet.max_pressure;
+				input_event.data.tablet.tip = ( packet.pkButtons & 1 ) ? APP_PRESSED : APP_NOT_PRESSED;
+				input_event.data.tablet.lower = ( packet.pkButtons & 2 ) ? APP_PRESSED : APP_NOT_PRESSED;
+				input_event.data.tablet.upper = ( packet.pkButtons & 4 ) ? APP_PRESSED : APP_NOT_PRESSED;
+				app_internal_add_input_event( app, &input_event );
+				}
+			} break;
 
-        case WM_SETCURSOR:
-            if( LOWORD( lparam ) == HTCLIENT )
-                {
-                SetCursor( app->current_pointer );
-                return 0;
-                }
-            break;
-
-
-        case WM_WINDOWPOSCHANGED:
-            {
-            if( app->screenmode == APP_SCREENMODE_FULLSCREEN )
-                {
-                RECT wr, cr;
-                GetWindowRect( app->hwnd, &wr );
-                GetClientRect( app->hwnd, &cr );
-                if( wr.right - wr.left == cr.right - cr.left && wr.bottom - wr.top == cr.bottom - cr.top )
-                    {
-                    if( cr.right - cr.left != app->fullscreen_width || cr.bottom - cr.top != app->fullscreen_height )
-                        app_screenmode( app, APP_SCREENMODE_WINDOW );
-                    }
-                }
-
-            if( app->clip_cursor )
-                {
-                RECT r = app->clip_rect;
-                ClientToScreen( app->hwnd, (POINT*)&r );
-                ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
-                ClipCursor( &r );
-                }
-
-            } break;
-
-        case WM_SIZE:
-            {
-            if( wparam == SIZE_MAXIMIZED )
-                {
-                WINDOWPLACEMENT placement;
-                placement.length = sizeof( placement );
-                GetWindowPlacement( app->hwnd, &placement );
-                app->windowed_x = placement.rcNormalPosition.left;
-                app->windowed_y = placement.rcNormalPosition.top;
-                app->windowed_w = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
-                app->windowed_h = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
-                }
-
-            RECT r;
-            GetClientRect( app->hwnd, &r );
-            app_internal_opengl_resize( &app->gl, r.right - r.left, r.bottom - r.top );
-            } break;
+		case WM_SETCURSOR:
+			if( LOWORD( lparam ) == HTCLIENT )
+				{
+				SetCursor( app->current_pointer );
+				return 0;
+				}
+			break;
 
 
-        case WM_ACTIVATEAPP:
-            app->has_focus = (BOOL) wparam;
-            if( app->has_focus )
-                {
-                app->is_minimized = FALSE;
-                if( app->clip_cursor )
-                    {
-                    RECT r = app->clip_rect;
-                    ClientToScreen( app->hwnd, (POINT*)&r );
-                    ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
-                    ClipCursor( &r );
-                    }
-                }
-            else
-                {
-                ClipCursor( NULL );
-                }
+		case WM_WINDOWPOSCHANGED:
+			{
+			if( app->screenmode == APP_SCREENMODE_FULLSCREEN )
+				{
+				RECT wr, cr;
+				GetWindowRect( app->hwnd, &wr );
+				GetClientRect( app->hwnd, &cr );
+				if( wr.right - wr.left == cr.right - cr.left && wr.bottom - wr.top == cr.bottom - cr.top )
+					{
+					if( cr.right - cr.left != app->fullscreen_width || cr.bottom - cr.top != app->fullscreen_height )
+						app_screenmode( app, APP_SCREENMODE_WINDOW );
+					}
+				}
 
-            break;
+			if( app->clip_cursor )
+				{
+				RECT r = app->clip_rect;
+				ClientToScreen( app->hwnd, (POINT*)&r );
+				ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
+				ClipCursor( &r );
+				}
 
-        case WM_SYSCOMMAND:
-            if( ( wparam & 0xFFF0 ) == SC_MINIMIZE ) app->is_minimized = TRUE;
-            break;
+			} break;
 
-        case WM_CLOSE:
-            app->closed = TRUE;
-            return 0;
-            break;
+		case WM_SIZE:
+			{
+			if( wparam == SIZE_MAXIMIZED )
+				{
+				WINDOWPLACEMENT placement;
+				placement.length = sizeof( placement );
+				GetWindowPlacement( app->hwnd, &placement );
+				app->windowed_x = placement.rcNormalPosition.left;
+				app->windowed_y = placement.rcNormalPosition.top;
+				app->windowed_w = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
+				app->windowed_h = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
+				}
 
-        }
+			RECT r;
+			GetClientRect( app->hwnd, &r );
+			app_internal_opengl_resize( &app->gl, r.right - r.left, r.bottom - r.top );
+			} break;
 
-    if( app->user_wndproc )
-        return app->user_wndproc( app, hwnd, message, wparam, lparam );
 
-    return DefWindowProc( hwnd, message, wparam, lparam);
-    }
+		case WM_ACTIVATEAPP:
+			app->has_focus = (BOOL) wparam;
+			if( app->has_focus )
+				{
+				app->is_minimized = FALSE;
+				if( app->clip_cursor )
+					{
+					RECT r = app->clip_rect;
+					ClientToScreen( app->hwnd, (POINT*)&r );
+					ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
+					ClipCursor( &r );
+					}
+				}
+			else
+				{
+				ClipCursor( NULL );
+				}
+
+			break;
+
+		case WM_SYSCOMMAND:
+			if( ( wparam & 0xFFF0 ) == SC_MINIMIZE ) app->is_minimized = TRUE;
+			break;
+
+		case WM_CLOSE:
+			app->closed = TRUE;
+			return 0;
+			break;
+
+		}
+
+	if( app->user_wndproc )
+		return app->user_wndproc( app, hwnd, message, wparam, lparam );
+
+	return DefWindowProc( hwnd, message, wparam, lparam);
+	}
 
 
 static BOOL CALLBACK app_internal_monitorenumproc( HMONITOR hmonitor, HDC dc, LPRECT rect, LPARAM data )
-    {
-    (void) dc;
-    app_t* app = (app_t*) data;
+	{
+	(void) dc;
+	app_t* app = (app_t*) data;
 
-    if( app->display_count >= sizeof( app->displays ) / sizeof( *app->displays ) ) return FALSE;
-    app->displays_hmonitor[ app->display_count ] = hmonitor;
-    app_display_t* display = &app->displays[ app->display_count++ ];
+	if( app->display_count >= sizeof( app->displays ) / sizeof( *app->displays ) ) return FALSE;
+	app->displays_hmonitor[ app->display_count ] = hmonitor;
+	app_display_t* display = &app->displays[ app->display_count++ ];
 
-    display->x = rect->left;
-    display->y = rect->top;
-    display->width = rect->right - rect->left;
-    display->height = rect->bottom - rect->top;
+	display->x = rect->left;
+	display->y = rect->top;
+	display->width = rect->right - rect->left;
+	display->height = rect->bottom - rect->top;
 
-    #ifdef __cplusplus
-        MONITORINFOEXA mi = {};
-        mi.cbSize = sizeof( MONITORINFOEXA );
-        BOOL res = GetMonitorInfoA( hmonitor, &mi );
-        if( res && strlen( mi.szDevice ) >= sizeof( display->id ) ) res = FALSE;
-        strcpy( display->id, res ? mi.szDevice : "" ) ;
-    #else
-        MONITORINFOEXA mi = { sizeof( MONITORINFOEXA ) };
-        BOOL res = GetMonitorInfoA( hmonitor, (LPMONITORINFO)&mi );
-        if( res && strlen( mi.szDevice ) >= sizeof( display->id ) ) res = FALSE;
-        strcpy( display->id, res ? mi.szDevice : "" ) ;
-    #endif
+	#ifdef __cplusplus
+		MONITORINFOEXA mi = {};
+		mi.cbSize = sizeof( MONITORINFOEXA );
+		BOOL res = GetMonitorInfoA( hmonitor, &mi );
+		if( res && strlen( mi.szDevice ) >= sizeof( display->id ) ) res = FALSE;
+		strcpy( display->id, res ? mi.szDevice : "" ) ;
+	#else
+		MONITORINFOEXA mi = { sizeof( MONITORINFOEXA ) };
+		BOOL res = GetMonitorInfoA( hmonitor, (LPMONITORINFO)&mi );
+		if( res && strlen( mi.szDevice ) >= sizeof( display->id ) ) res = FALSE;
+		strcpy( display->id, res ? mi.szDevice : "" ) ;
+	#endif
 
-    return TRUE;
-    }
+	return TRUE;
+	}
 
 
 static void app_internal_app_default_cursor( app_t* app )
-    {
-    APP_U32 pointer_pixels[ 256 * 256 ];
-    int pointer_width, pointer_height, pointer_hotspot_x, pointer_hotspot_y;
-    app_pointer_default( app, &pointer_width, &pointer_height, pointer_pixels, &pointer_hotspot_x, &pointer_hotspot_y );
-    app_pointer( app, pointer_width, pointer_height, pointer_pixels, pointer_hotspot_x, pointer_hotspot_y );
-    }
+	{
+	APP_U32 pointer_pixels[ 256 * 256 ];
+	int pointer_width, pointer_height, pointer_hotspot_x, pointer_hotspot_y;
+	app_pointer_default( app, &pointer_width, &pointer_height, pointer_pixels, &pointer_hotspot_x, &pointer_hotspot_y );
+	app_pointer( app, pointer_width, pointer_height, pointer_pixels, pointer_hotspot_x, pointer_hotspot_y );
+	}
 
 
 #pragma warning( push )
 #pragma warning( disable: 4533 ) // initialization of 'wc' is skipped by 'goto init_failed'
 
 int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
-    {
-    int result = 0xff;
-    //SetProcessDPIAware();
+	{
+	int result = 0xff;
+	//SetProcessDPIAware();
 
-    // Init app instance
-    app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
-    memset( app, 0, sizeof( *app ) );
-    app->memctx = memctx;
-    app->logctx = logctx;
-    app->fatalctx = fatalctx;
-    app->interpolation = APP_INTERPOLATION_LINEAR;
-    app->screenmode = APP_SCREENMODE_FULLSCREEN;
+	// Init app instance
+	app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
+	memset( app, 0, sizeof( *app ) );
+	app->memctx = memctx;
+	app->logctx = logctx;
+	app->fatalctx = fatalctx;
+	app->interpolation = APP_INTERPOLATION_LINEAR;
+	app->screenmode = APP_SCREENMODE_FULLSCREEN;
 
-    // Log start message
-    char msg[ 64 ];
-    time_t t = time( NULL );
-    struct tm* start = localtime( &t );
-    sprintf( msg, "Application started %02d:%02d:%02d %04d-%02d-%02d.",
-        start->tm_hour, start->tm_min, start->tm_sec, start->tm_year + 1900, start->tm_mon + 1, start->tm_mday );
-    app_log( app, APP_LOG_LEVEL_INFO, msg );
+	// Log start message
+	char msg[ 64 ];
+	time_t t = time( NULL );
+	struct tm* start = localtime( &t );
+	sprintf( msg, "Application started %02d:%02d:%02d %04d-%02d-%02d.",
+		start->tm_hour, start->tm_min, start->tm_sec, start->tm_year + 1900, start->tm_mon + 1, start->tm_mday );
+	app_log( app, APP_LOG_LEVEL_INFO, msg );
 
-    // Increase timing precision
-    #ifndef __TINYC__
-    TIMECAPS tc;
-    if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
-        timeBeginPeriod( tc.wPeriodMin );
-    #endif
+	// Increase timing precision
+	#ifndef __TINYC__
+	TIMECAPS tc;
+	if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
+		timeBeginPeriod( tc.wPeriodMin );
+	#endif
 
-    // Get instance handle
-    app->hinstance = GetModuleHandle( NULL );
+	// Get instance handle
+	app->hinstance = GetModuleHandle( NULL );
 
-    // Retrieve the path of our executable
-    GetModuleFileNameA( 0, app->exe_path, sizeof( app->exe_path ) );
+	// Retrieve the path of our executable
+	GetModuleFileNameA( 0, app->exe_path, sizeof( app->exe_path ) );
 
-    HMODULE shell32 = LoadLibraryA( "shell32.dll" );
-    if( shell32 )
-        {
-        HRESULT (__stdcall *SHGetFolderPathAPtr)(HWND, int, HANDLE, DWORD, LPSTR ) =
-            (HRESULT (__stdcall*)(HWND, int, HANDLE, DWORD, LPSTR ) ) (uintptr_t)
-                GetProcAddress( shell32, "SHGetFolderPathA" );
+	HMODULE shell32 = LoadLibraryA( "shell32.dll" );
+	if( shell32 )
+		{
+		HRESULT (__stdcall *SHGetFolderPathAPtr)(HWND, int, HANDLE, DWORD, LPSTR ) =
+			(HRESULT (__stdcall*)(HWND, int, HANDLE, DWORD, LPSTR ) ) (uintptr_t)
+				GetProcAddress( shell32, "SHGetFolderPathA" );
 
-        if( SHGetFolderPathAPtr )
-            {
-            #define APP_CSIDL_PERSONAL 0x0005 // My Documents
-            #define APP_CSIDL_COMMON_APPDATA 0x0023 // All Users\Application Data
-            #define APP_CSIDL_FLAG_CREATE 0x8000
+		if( SHGetFolderPathAPtr )
+			{
+			#define APP_CSIDL_PERSONAL 0x0005 // My Documents
+			#define APP_CSIDL_COMMON_APPDATA 0x0023 // All Users\Application Data
+			#define APP_CSIDL_FLAG_CREATE 0x8000
 
-            // Retrieve user data path
-            SHGetFolderPathAPtr( NULL, APP_CSIDL_PERSONAL | APP_CSIDL_FLAG_CREATE, NULL, 0, app->userdata_path );
+			// Retrieve user data path
+			SHGetFolderPathAPtr( NULL, APP_CSIDL_PERSONAL | APP_CSIDL_FLAG_CREATE, NULL, 0, app->userdata_path );
 
-            // Retrieve app data path
-            SHGetFolderPathAPtr( NULL, APP_CSIDL_COMMON_APPDATA | APP_CSIDL_FLAG_CREATE, NULL, 0, app->appdata_path );
+			// Retrieve app data path
+			SHGetFolderPathAPtr( NULL, APP_CSIDL_COMMON_APPDATA | APP_CSIDL_FLAG_CREATE, NULL, 0, app->appdata_path );
 
-            #undef APP_CSIDL_PERSONAL
-            #undef APP_CSIDL_COMMON_APPDATA
-            #undef APP_CSIDL_FLAG_CREATE
-        }
+			#undef APP_CSIDL_PERSONAL
+			#undef APP_CSIDL_COMMON_APPDATA
+			#undef APP_CSIDL_FLAG_CREATE
+		}
 
-        FreeLibrary( shell32 );
-        }
+		FreeLibrary( shell32 );
+		}
 
-    // Get command line string
-    app->cmdline = GetCommandLineA();
+	// Get command line string
+	app->cmdline = GetCommandLineA();
 
-    // Load a default Arrow cursor
-    app_internal_app_default_cursor( app );
+	// Load a default Arrow cursor
+	app_internal_app_default_cursor( app );
 
-    // Load first icon in the exe and use as app icon
-    app->icon = LoadIconA( app->hinstance , MAKEINTRESOURCEA( 1 ) );
+	// Load first icon in the exe and use as app icon
+	app->icon = LoadIconA( app->hinstance , MAKEINTRESOURCEA( 1 ) );
 
-    // List all displays
-    app->display_count = 0;
-    EnumDisplayMonitors( NULL, NULL, app_internal_monitorenumproc, (LPARAM) app );
-    if( app->display_count <= 0 ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to get display info" ); goto init_failed;  }
+	// List all displays
+	app->display_count = 0;
+	EnumDisplayMonitors( NULL, NULL, app_internal_monitorenumproc, (LPARAM) app );
+	if( app->display_count <= 0 ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to get display info" ); goto init_failed;  }
 
-    // Setup the main application window
-    app->windowed_w = app->displays[ 0 ].width - app->displays[ 0 ].width / 6;
-    app->windowed_h = app->displays[ 0 ].height - app->displays[ 0 ].height / 6;
-    app->windowed_x = ( app->displays[ 0 ].width - app->windowed_w ) /  2;
-    app->windowed_y = ( app->displays[ 0 ].height - app->windowed_h ) / 2;
+	// Setup the main application window
+	app->windowed_w = app->displays[ 0 ].width - app->displays[ 0 ].width / 6;
+	app->windowed_h = app->displays[ 0 ].height - app->displays[ 0 ].height / 6;
+	app->windowed_x = ( app->displays[ 0 ].width - app->windowed_w ) /  2;
+	app->windowed_y = ( app->displays[ 0 ].height - app->windowed_h ) / 2;
 
-    app->fullscreen_width = app->displays[ 0 ].width;
-    app->fullscreen_height = app->displays[ 0 ].height;
+	app->fullscreen_width = app->displays[ 0 ].width;
+	app->fullscreen_height = app->displays[ 0 ].height;
 
-    RECT winrect = app_internal_rect( app->windowed_x, app->windowed_y,
-        app->windowed_x + app->windowed_w, app->windowed_y + app->windowed_h );
-    AdjustWindowRect( &winrect, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
+	RECT winrect = app_internal_rect( app->windowed_x, app->windowed_y,
+		app->windowed_x + app->windowed_w, app->windowed_y + app->windowed_h );
+	AdjustWindowRect( &winrect, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
 
-    WNDCLASSEX wc = { sizeof( WNDCLASSEX ), CS_DBLCLKS | CS_OWNDC ,
-        (WNDPROC) app_internal_wndproc, 0, 0, 0, 0, 0, 0, 0, TEXT( "app_wc" ), 0 };
-    wc.hInstance = app->hinstance; wc.hIcon = app->icon; wc.hCursor = app->current_pointer;
-    wc.hbrBackground = (HBRUSH) GetStockObject( BLACK_BRUSH ); wc.hIconSm = app->icon;
-    RegisterClassEx( &wc );
-    app->hwnd = CreateWindowEx( APP_WINDOWED_WS_EX_STYLE, wc.lpszClassName, 0, APP_WINDOWED_WS_STYLE, app->windowed_x, app->windowed_y,
-        winrect.right - winrect.left, winrect.bottom - winrect.top, (HWND) 0, (HMENU) 0, app->hinstance, 0 );
-    if( !app->hwnd ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to create window." ); goto init_failed; }
-    app->hdc = GetDC( app->hwnd );
-    app->has_focus = TRUE;
-    app->is_minimized = FALSE;
+	WNDCLASSEX wc = { sizeof( WNDCLASSEX ), CS_DBLCLKS | CS_OWNDC ,
+		(WNDPROC) app_internal_wndproc, 0, 0, 0, 0, 0, 0, 0, TEXT( "app_wc" ), 0 };
+	wc.hInstance = app->hinstance; wc.hIcon = app->icon; wc.hCursor = app->current_pointer;
+	wc.hbrBackground = (HBRUSH) GetStockObject( BLACK_BRUSH ); wc.hIconSm = app->icon;
+	RegisterClassEx( &wc );
+	app->hwnd = CreateWindowEx( APP_WINDOWED_WS_EX_STYLE, wc.lpszClassName, 0, APP_WINDOWED_WS_STYLE, app->windowed_x, app->windowed_y,
+		winrect.right - winrect.left, winrect.bottom - winrect.top, (HWND) 0, (HMENU) 0, app->hinstance, 0 );
+	if( !app->hwnd ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to create window." ); goto init_failed; }
+	app->hdc = GetDC( app->hwnd );
+	app->has_focus = TRUE;
+	app->is_minimized = FALSE;
 
-    // Store app pointer with window
-    #pragma warning( push )
-    #pragma warning( disable: 4244 ) // conversion from 'LONG_PTR' to 'LONG', possible loss of data
-    SetWindowLongPtr( app->hwnd, GWLP_USERDATA, (LONG_PTR) app );
-    #pragma warning( pop )
-
-
-    #ifdef APP_ENABLE_MEDIA_KEYS
-        int const APP_MOD_NOREPEAT = 0x4000;
-        RegisterHotKey( app->hwnd, VK_VOLUME_MUTE, APP_MOD_NOREPEAT, VK_VOLUME_MUTE );
-        RegisterHotKey( app->hwnd, VK_VOLUME_DOWN, APP_MOD_NOREPEAT, VK_VOLUME_DOWN );
-        RegisterHotKey( app->hwnd, VK_VOLUME_UP, APP_MOD_NOREPEAT, VK_VOLUME_UP );
-        RegisterHotKey( app->hwnd, VK_MEDIA_NEXT_TRACK, APP_MOD_NOREPEAT, VK_MEDIA_NEXT_TRACK );
-        RegisterHotKey( app->hwnd, VK_MEDIA_PREV_TRACK, APP_MOD_NOREPEAT, VK_MEDIA_PREV_TRACK );
-        RegisterHotKey( app->hwnd, VK_MEDIA_STOP, APP_MOD_NOREPEAT, VK_MEDIA_STOP );
-        RegisterHotKey( app->hwnd, VK_MEDIA_PLAY_PAUSE, APP_MOD_NOREPEAT, VK_MEDIA_PLAY_PAUSE );
-    #endif
-
-    ShowWindow( app->hwnd, SW_HIDE );
-    // Windows specific OpenGL initialization
-    app->gl_dll = LoadLibraryA( "opengl32.dll" );
-    if( !app->gl_dll ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to load opengl32.dll" ); goto init_failed; }
-    app->wglGetProcAddress = (PROC(APP_GLCALLTYPE*)(LPCSTR)) (uintptr_t) GetProcAddress( app->gl_dll, "wglGetProcAddress" );
-    if( !app->wglGetProcAddress ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglGetProcAddress" ); goto init_failed; }
-    app->wglCreateContext = (HGLRC(APP_GLCALLTYPE*)(HDC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglCreateContext" );
-    if( !app->wglCreateContext ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglCreateContext" ); goto init_failed; }
-    app->wglDeleteContext = (BOOL(APP_GLCALLTYPE*)(HGLRC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglDeleteContext" );
-    if( !app->wglDeleteContext ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglDeleteContext" ); goto init_failed; }
-    app->wglMakeCurrent = (BOOL(APP_GLCALLTYPE*)(HDC, HGLRC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglMakeCurrent" );
-    if( !app->wglMakeCurrent ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglMakeCurrent" ); goto init_failed; }
-
-    PIXELFORMATDESCRIPTOR pfd;
-    memset( &pfd, 0, sizeof( pfd ) );
-    pfd.nSize = sizeof( PIXELFORMATDESCRIPTOR );
-    pfd.nVersion = 1;
-    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-    pfd.iPixelType = PFD_TYPE_RGBA;
-    pfd.cColorBits = 32;
-    pfd.cDepthBits = 24;
-    pfd.cStencilBits = 8;
-    pfd.iLayerType = PFD_MAIN_PLANE;
-    BOOL res = SetPixelFormat( app->hdc, ChoosePixelFormat( app->hdc, &pfd ), &pfd );
-    if( !res ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to set pixel format" ); goto init_failed; }
-
-    app->gl_context = app->wglCreateContext( app->hdc );
-    if( !app->gl_context ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to create OpenGL context" ); goto init_failed; }
-    res = app->wglMakeCurrent( app->hdc, app->gl_context );
-    if( !res ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to activate OpenGl Context" ); goto init_failed; }
-
-    app->wglSwapIntervalEXT = (BOOL (APP_GLCALLTYPE*)(int)) (uintptr_t) app->wglGetProcAddress( "wglSwapIntervalEXT" );
-    if( app->wglSwapIntervalEXT ) app->wglSwapIntervalEXT( 1 );
-
-    // Attempt to bind opengl functions using GetProcAddress
-    app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCreateShader" );
-    app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glShaderSource" );
-    app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCompileShader" );
-    app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetShaderiv" );
-    app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCreateProgram" );
-    app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glAttachShader" );
-    app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindAttribLocation" );
-    app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glLinkProgram" );
-    app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetProgramiv" );
-    app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGenBuffers" );
-    app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindBuffer" );
-    app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glEnableVertexAttribArray" );
-    app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glVertexAttribPointer" );
-    app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGenTextures" );
-    app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glEnable" );
-    app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glActiveTexture" );
-    app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindTexture" );
-    app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glTexParameteri" );
-    app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteBuffers" );
-    app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteTextures" );
-    app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBufferData" );
-    app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUseProgram" );
-    app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUniform1i" );
-    app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUniform3f" );
-    app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetUniformLocation" );
-    app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glTexImage2D" );
-    app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GetProcAddress( app->gl_dll, "glClearColor" );
-    app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) GetProcAddress( app->gl_dll, "glClear" );
-    app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDrawArrays" );
-    app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) GetProcAddress( app->gl_dll, "glViewport" );
-    app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteShader" );
-    app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteProgram" );
-    #ifdef APP_REPORT_SHADER_ERRORS
-        app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetShaderInfoLog" );
-    #endif
-
-    // Any opengl functions which didn't bind, try binding them using wglGetProcAddrss
-    if( !app->gl.CreateShader ) app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glCreateShader" );
-    if( !app->gl.ShaderSource ) app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) app->wglGetProcAddress( "glShaderSource" );
-    if( !app->gl.CompileShader ) app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glCompileShader" );
-    if( !app->gl.GetShaderiv ) app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) app->wglGetProcAddress( "glGetShaderiv" );
-    if( !app->gl.CreateProgram ) app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) app->wglGetProcAddress( "glCreateProgram" );
-    if( !app->gl.AttachShader ) app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glAttachShader" );
-    if( !app->gl.BindAttribLocation ) app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) app->wglGetProcAddress( "glBindAttribLocation" );
-    if( !app->gl.LinkProgram ) app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glLinkProgram" );
-    if( !app->gl.GetProgramiv ) app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) app->wglGetProcAddress( "glGetProgramiv" );
-    if( !app->gl.GenBuffers ) app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) app->wglGetProcAddress( "glGenBuffers" );
-    if( !app->gl.BindBuffer ) app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glBindBuffer" );
-    if( !app->gl.EnableVertexAttribArray ) app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glEnableVertexAttribArray" );
-    if( !app->gl.VertexAttribPointer ) app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) app->wglGetProcAddress( "glVertexAttribPointer" );
-    if( !app->gl.GenTextures ) app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) app->wglGetProcAddress( "glGenTextures" );
-    if( !app->gl.Enable ) app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glEnable" );
-    if( !app->gl.ActiveTexture ) app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glActiveTexture" );
-    if( !app->gl.BindTexture ) app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glBindTexture" );
-    if( !app->gl.TexParameteri ) app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) app->wglGetProcAddress( "glTexParameteri" );
-    if( !app->gl.DeleteBuffers ) app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) app->wglGetProcAddress( "glDeleteBuffers" );
-    if( !app->gl.DeleteTextures ) app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) app->wglGetProcAddress( "glDeleteTextures" );
-    if( !app->gl.BufferData ) app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glBufferData" );
-    if( !app->gl.UseProgram ) app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glUseProgram" );
-    if( !app->gl.Uniform1i ) app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) app->wglGetProcAddress( "glUniform1i" );
-    if( !app->gl.Uniform3f ) app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) app->wglGetProcAddress( "glUniform3f" );
-    if( !app->gl.GetUniformLocation ) app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) app->wglGetProcAddress( "glGetUniformLocation" );
-    if( !app->gl.TexImage2D ) app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) app->wglGetProcAddress( "glTexImage2D" );
-    if( !app->gl.ClearColor ) app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) app->wglGetProcAddress( "glClearColor" );
-    if( !app->gl.Clear ) app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) app->wglGetProcAddress( "glClear" );
-    if( !app->gl.DrawArrays ) app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) app->wglGetProcAddress( "glDrawArrays" );
-    if( !app->gl.Viewport ) app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) app->wglGetProcAddress( "glViewport" );
-    if( !app->gl.DeleteShader ) app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glDeleteShader" );
-    if( !app->gl.DeleteProgram ) app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glDeleteProgram" );
-    #ifdef APP_REPORT_SHADER_ERRORS
-        if( !app->gl.GetShaderInfoLog ) app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) app->wglGetProcAddress( "glGetShaderInfoLog" );
-    #endif
-
-    // Report error if any gl function was not found.
-    if( !app->gl.CreateShader ) { app_fatal_error( app, "Could not find function CreateShader." ); goto init_failed; }
-    if( !app->gl.ShaderSource ) { app_fatal_error( app, "Could not find function ShaderSource." ); goto init_failed; }
-    if( !app->gl.CompileShader ) { app_fatal_error( app, "Could not find function CompileShader." ); goto init_failed; }
-    if( !app->gl.GetShaderiv ) { app_fatal_error( app, "Could not find function GetShaderiv." ); goto init_failed; }
-    if( !app->gl.CreateProgram ) { app_fatal_error( app, "Could not find function CreateProgram." ); goto init_failed; }
-    if( !app->gl.AttachShader ) { app_fatal_error( app, "Could not find function AttachShader." ); goto init_failed; }
-    if( !app->gl.BindAttribLocation ) { app_fatal_error( app, "Could not find function BindAttribLocation." ); goto init_failed; }
-    if( !app->gl.LinkProgram ) { app_fatal_error( app, "Could not find function LinkProgram." ); goto init_failed; }
-    if( !app->gl.GetProgramiv ) { app_fatal_error( app, "Could not find function GetProgramiv." ); goto init_failed; }
-    if( !app->gl.GenBuffers ) { app_fatal_error( app, "Could not find function GenBuffers." ); goto init_failed; }
-    if( !app->gl.BindBuffer ) { app_fatal_error( app, "Could not find function BindBuffer." ); goto init_failed; }
-    if( !app->gl.EnableVertexAttribArray ) { app_fatal_error( app, "Could not find function EnableVertexAttribArray." ); goto init_failed; }
-    if( !app->gl.VertexAttribPointer ) { app_fatal_error( app, "Could not find function VertexAttribPointer." ); goto init_failed; }
-    if( !app->gl.GenTextures ) { app_fatal_error( app, "Could not find function GenTextures." ); goto init_failed; }
-    if( !app->gl.Enable ) { app_fatal_error( app, "Could not find function Enable." ); goto init_failed; }
-    if( !app->gl.ActiveTexture ) { app_fatal_error( app, "Could not find function ActiveTexture." ); goto init_failed; }
-    if( !app->gl.BindTexture ) { app_fatal_error( app, "Could not find function BindTexture." ); goto init_failed; }
-    if( !app->gl.TexParameteri ) { app_fatal_error( app, "Could not find function TexParameteri." ); goto init_failed; }
-    if( !app->gl.DeleteBuffers ) { app_fatal_error( app, "Could not find function DeleteBuffers." ); goto init_failed; }
-    if( !app->gl.DeleteTextures ) { app_fatal_error( app, "Could not find function DeleteTextures." ); goto init_failed; }
-    if( !app->gl.BufferData ) { app_fatal_error( app, "Could not find function BufferData." ); goto init_failed; }
-    if( !app->gl.UseProgram ) { app_fatal_error( app, "Could not find function UseProgram." ); goto init_failed; }
-    if( !app->gl.Uniform1i ) { app_fatal_error( app, "Could not find function Uniform1i." ); goto init_failed; }
-    if( !app->gl.Uniform3f ) { app_fatal_error( app, "Could not find function Uniform3f." ); goto init_failed; }
-    if( !app->gl.GetUniformLocation ) { app_fatal_error( app, "Could not find function GetUniformLocation." ); goto init_failed; }
-    if( !app->gl.TexImage2D ) { app_fatal_error( app, "Could not find function TexImage2D." ); goto init_failed; }
-    if( !app->gl.ClearColor ) { app_fatal_error( app, "Could not find function ClearColor." ); goto init_failed; }
-    if( !app->gl.Clear ) { app_fatal_error( app, "Could not find function Clear." ); goto init_failed; }
-    if( !app->gl.DrawArrays ) { app_fatal_error( app, "Could not find function DrawArrays." ); goto init_failed; }
-    if( !app->gl.Viewport ) { app_fatal_error( app, "Could not find function Viewport." ); goto init_failed; }
-    if( !app->gl.DeleteShader ) { app_fatal_error( app, "Could not find function DeleteShader." ); goto init_failed; }
-    if( !app->gl.DeleteProgram ) { app_fatal_error( app, "Could not find function DeleteProgram." ); goto init_failed; }
-    #ifdef APP_REPORT_SHADER_ERRORS
-        if( !app->gl.GetShaderInfoLog ) { app_fatal_error( app, "Could not find function GetShaderInfoLog." ); goto init_failed; }
-    #endif
-
-    // Platform independent OpenGL initialization
-    int width = app->screenmode == APP_SCREENMODE_FULLSCREEN ? app->fullscreen_width : app->windowed_w;
-    int height = app->screenmode == APP_SCREENMODE_FULLSCREEN ? app->fullscreen_height: app->windowed_h;
-    if( !app_internal_opengl_init( app, &app->gl, app->interpolation, width, height ) )
-        {
-        app_log( app, APP_LOG_LEVEL_ERROR, "Failed to initialize OpenGL" );
-        goto init_failed;
-        }
-
-    app->sound_notifications[ 0 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
-    app->sound_notifications[ 1 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
+	// Store app pointer with window
+	#pragma warning( push )
+	#pragma warning( disable: 4244 ) // conversion from 'LONG_PTR' to 'LONG', possible loss of data
+	SetWindowLongPtr( app->hwnd, GWLP_USERDATA, (LONG_PTR) app );
+	#pragma warning( pop )
 
 
-    app->dsound_dll = LoadLibraryA( "dsound.dll" );
-    if( !app->dsound_dll ) app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't load dsound.dll. Sound disabled." );
+	#ifdef APP_ENABLE_MEDIA_KEYS
+		int const APP_MOD_NOREPEAT = 0x4000;
+		RegisterHotKey( app->hwnd, VK_VOLUME_MUTE, APP_MOD_NOREPEAT, VK_VOLUME_MUTE );
+		RegisterHotKey( app->hwnd, VK_VOLUME_DOWN, APP_MOD_NOREPEAT, VK_VOLUME_DOWN );
+		RegisterHotKey( app->hwnd, VK_VOLUME_UP, APP_MOD_NOREPEAT, VK_VOLUME_UP );
+		RegisterHotKey( app->hwnd, VK_MEDIA_NEXT_TRACK, APP_MOD_NOREPEAT, VK_MEDIA_NEXT_TRACK );
+		RegisterHotKey( app->hwnd, VK_MEDIA_PREV_TRACK, APP_MOD_NOREPEAT, VK_MEDIA_PREV_TRACK );
+		RegisterHotKey( app->hwnd, VK_MEDIA_STOP, APP_MOD_NOREPEAT, VK_MEDIA_STOP );
+		RegisterHotKey( app->hwnd, VK_MEDIA_PLAY_PAUSE, APP_MOD_NOREPEAT, VK_MEDIA_PLAY_PAUSE );
+	#endif
 
-    if( app->dsound_dll )
-        {
-        HRESULT (WINAPI *DirectSoundCreate8Ptr)(LPCGUID,struct IDirectSound8**,void*) = ( HRESULT (WINAPI*)(LPCGUID,struct IDirectSound8**,void*) )
-            (uintptr_t) GetProcAddress( (HMODULE) app->dsound_dll, "DirectSoundCreate8" );
-        if( !DirectSoundCreate8Ptr )
-            {
-            app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't find DirectSoundCreate. Sound disabled." );
-            FreeLibrary( app->dsound_dll );
-            app->dsound_dll = 0;
-            }
-        if( DirectSoundCreate8Ptr )
-            {
-            HRESULT hr = DirectSoundCreate8Ptr( NULL, &app->dsound, NULL );
-            if( FAILED( hr ) || !app->dsound )
-                {
-                app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't create DirectSound object. Sound disabled." );
-                DirectSoundCreate8Ptr = 0;
-                FreeLibrary( app->dsound_dll );
-                app->dsound_dll = 0;
-                }
-            else
-                {
-                hr = IDirectSound8_SetCooperativeLevel( app->dsound, app->hwnd, DSSCL_NORMAL);
-                if( FAILED( hr ) )
-                    {
-                    app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't set cooperative level for DirectSound object. Sound disabled." );
-                    IDirectSound8_Release( app->dsound );
-                    app->dsound = 0;
-                    DirectSoundCreate8Ptr = 0;
-                    FreeLibrary( app->dsound_dll );
-                    app->dsound_dll = 0;
-                    }
-                }
-            }
-        }
-    app->sound_thread_handle = INVALID_HANDLE_VALUE;
+	ShowWindow( app->hwnd, SW_HIDE );
+	// Windows specific OpenGL initialization
+	app->gl_dll = LoadLibraryA( "opengl32.dll" );
+	if( !app->gl_dll ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to load opengl32.dll" ); goto init_failed; }
+	app->wglGetProcAddress = (PROC(APP_GLCALLTYPE*)(LPCSTR)) (uintptr_t) GetProcAddress( app->gl_dll, "wglGetProcAddress" );
+	if( !app->wglGetProcAddress ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglGetProcAddress" ); goto init_failed; }
+	app->wglCreateContext = (HGLRC(APP_GLCALLTYPE*)(HDC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglCreateContext" );
+	if( !app->wglCreateContext ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglCreateContext" ); goto init_failed; }
+	app->wglDeleteContext = (BOOL(APP_GLCALLTYPE*)(HGLRC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglDeleteContext" );
+	if( !app->wglDeleteContext ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglDeleteContext" ); goto init_failed; }
+	app->wglMakeCurrent = (BOOL(APP_GLCALLTYPE*)(HDC, HGLRC)) (uintptr_t) GetProcAddress( app->gl_dll, "wglMakeCurrent" );
+	if( !app->wglMakeCurrent ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to find wglMakeCurrent" ); goto init_failed; }
 
-    HMODULE user32 = LoadLibraryA( "user32.dll" );
-    if( user32 )
-        {
-        BOOL (WINAPI *RegisterRawInputDevicesPtr)( PCRAWINPUTDEVICE, UINT, UINT ) =
-            (BOOL (WINAPI*)( PCRAWINPUTDEVICE, UINT, UINT ) )(uintptr_t) GetProcAddress( user32, "RegisterRawInputDevices" );
+	PIXELFORMATDESCRIPTOR pfd;
+	memset( &pfd, 0, sizeof( pfd ) );
+	pfd.nSize = sizeof( PIXELFORMATDESCRIPTOR );
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.cColorBits = 32;
+	pfd.cDepthBits = 24;
+	pfd.cStencilBits = 8;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+	BOOL res = SetPixelFormat( app->hdc, ChoosePixelFormat( app->hdc, &pfd ), &pfd );
+	if( !res ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to set pixel format" ); goto init_failed; }
 
-        app->GetRawInputDataPtr = (UINT (WINAPI*)( HRAWINPUT, UINT, LPVOID, PUINT, UINT))
-            (uintptr_t) GetProcAddress( user32, "GetRawInputData" );
+	app->gl_context = app->wglCreateContext( app->hdc );
+	if( !app->gl_context ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to create OpenGL context" ); goto init_failed; }
+	res = app->wglMakeCurrent( app->hdc, app->gl_context );
+	if( !res ) { app_log( app, APP_LOG_LEVEL_ERROR, "Failed to activate OpenGl Context" ); goto init_failed; }
 
-        USHORT const USAGE_PAGE_GENERIC = ((USHORT) 0x01);
-        USHORT const USAGE_GENERIC_MOUSE = ((USHORT) 0x02);
+	app->wglSwapIntervalEXT = (BOOL (APP_GLCALLTYPE*)(int)) (uintptr_t) app->wglGetProcAddress( "wglSwapIntervalEXT" );
+	if( app->wglSwapIntervalEXT ) app->wglSwapIntervalEXT( 1 );
 
-        RAWINPUTDEVICE rid[ 1 ];
-        rid[ 0 ].usUsagePage = USAGE_PAGE_GENERIC;
-        rid[ 0 ].usUsage = USAGE_GENERIC_MOUSE;
-        rid[ 0 ].dwFlags = RIDEV_INPUTSINK;
-        rid[ 0 ].hwndTarget = app->hwnd;
-        RegisterRawInputDevicesPtr( rid, 1, sizeof( *rid ) );
+	// Attempt to bind opengl functions using GetProcAddress
+	app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCreateShader" );
+	app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glShaderSource" );
+	app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCompileShader" );
+	app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetShaderiv" );
+	app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) GetProcAddress( app->gl_dll, "glCreateProgram" );
+	app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glAttachShader" );
+	app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindAttribLocation" );
+	app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glLinkProgram" );
+	app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetProgramiv" );
+	app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGenBuffers" );
+	app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindBuffer" );
+	app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glEnableVertexAttribArray" );
+	app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glVertexAttribPointer" );
+	app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGenTextures" );
+	app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glEnable" );
+	app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glActiveTexture" );
+	app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBindTexture" );
+	app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glTexParameteri" );
+	app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteBuffers" );
+	app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteTextures" );
+	app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) GetProcAddress( app->gl_dll, "glBufferData" );
+	app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUseProgram" );
+	app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUniform1i" );
+	app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GetProcAddress( app->gl_dll, "glUniform3f" );
+	app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetUniformLocation" );
+	app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glTexImage2D" );
+	app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) GetProcAddress( app->gl_dll, "glClearColor" );
+	app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) GetProcAddress( app->gl_dll, "glClear" );
+	app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDrawArrays" );
+	app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) GetProcAddress( app->gl_dll, "glViewport" );
+	app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteShader" );
+	app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) GetProcAddress( app->gl_dll, "glDeleteProgram" );
+	#ifdef APP_REPORT_SHADER_ERRORS
+		app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) GetProcAddress( app->gl_dll, "glGetShaderInfoLog" );
+	#endif
 
-        FreeLibrary( user32 );
-        }
+	// Any opengl functions which didn't bind, try binding them using wglGetProcAddrss
+	if( !app->gl.CreateShader ) app->gl.CreateShader = ( APP_GLuint (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glCreateShader" );
+	if( !app->gl.ShaderSource ) app->gl.ShaderSource = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLchar const* const*, APP_GLint const*) ) (uintptr_t) app->wglGetProcAddress( "glShaderSource" );
+	if( !app->gl.CompileShader ) app->gl.CompileShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glCompileShader" );
+	if( !app->gl.GetShaderiv ) app->gl.GetShaderiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) app->wglGetProcAddress( "glGetShaderiv" );
+	if( !app->gl.CreateProgram ) app->gl.CreateProgram = ( APP_GLuint (APP_GLCALLTYPE*) (void) ) (uintptr_t) app->wglGetProcAddress( "glCreateProgram" );
+	if( !app->gl.AttachShader ) app->gl.AttachShader = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glAttachShader" );
+	if( !app->gl.BindAttribLocation ) app->gl.BindAttribLocation = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLuint, APP_GLchar const*) ) (uintptr_t) app->wglGetProcAddress( "glBindAttribLocation" );
+	if( !app->gl.LinkProgram ) app->gl.LinkProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glLinkProgram" );
+	if( !app->gl.GetProgramiv ) app->gl.GetProgramiv = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLenum, APP_GLint*) ) (uintptr_t) app->wglGetProcAddress( "glGetProgramiv" );
+	if( !app->gl.GenBuffers ) app->gl.GenBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) app->wglGetProcAddress( "glGenBuffers" );
+	if( !app->gl.BindBuffer ) app->gl.BindBuffer = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glBindBuffer" );
+	if( !app->gl.EnableVertexAttribArray ) app->gl.EnableVertexAttribArray = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glEnableVertexAttribArray" );
+	if( !app->gl.VertexAttribPointer ) app->gl.VertexAttribPointer = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLint, APP_GLenum, APP_GLboolean, APP_GLsizei, void const*) ) (uintptr_t) app->wglGetProcAddress( "glVertexAttribPointer" );
+	if( !app->gl.GenTextures ) app->gl.GenTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint*) ) (uintptr_t) app->wglGetProcAddress( "glGenTextures" );
+	if( !app->gl.Enable ) app->gl.Enable = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glEnable" );
+	if( !app->gl.ActiveTexture ) app->gl.ActiveTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glActiveTexture" );
+	if( !app->gl.BindTexture ) app->gl.BindTexture = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glBindTexture" );
+	if( !app->gl.TexParameteri ) app->gl.TexParameteri = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLenum, APP_GLint) ) (uintptr_t) app->wglGetProcAddress( "glTexParameteri" );
+	if( !app->gl.DeleteBuffers ) app->gl.DeleteBuffers = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) app->wglGetProcAddress( "glDeleteBuffers" );
+	if( !app->gl.DeleteTextures ) app->gl.DeleteTextures = ( void (APP_GLCALLTYPE*) (APP_GLsizei, APP_GLuint const*) ) (uintptr_t) app->wglGetProcAddress( "glDeleteTextures" );
+	if( !app->gl.BufferData ) app->gl.BufferData = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLsizeiptr, void const *, APP_GLenum) ) (uintptr_t) app->wglGetProcAddress( "glBufferData" );
+	if( !app->gl.UseProgram ) app->gl.UseProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glUseProgram" );
+	if( !app->gl.Uniform1i ) app->gl.Uniform1i = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint) ) (uintptr_t) app->wglGetProcAddress( "glUniform1i" );
+	if( !app->gl.Uniform3f ) app->gl.Uniform3f = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) app->wglGetProcAddress( "glUniform3f" );
+	if( !app->gl.GetUniformLocation ) app->gl.GetUniformLocation = ( APP_GLint (APP_GLCALLTYPE*) (APP_GLuint, APP_GLchar const*) ) (uintptr_t) app->wglGetProcAddress( "glGetUniformLocation" );
+	if( !app->gl.TexImage2D ) app->gl.TexImage2D = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei, APP_GLint, APP_GLenum, APP_GLenum, void const*) ) (uintptr_t) app->wglGetProcAddress( "glTexImage2D" );
+	if( !app->gl.ClearColor ) app->gl.ClearColor = ( void (APP_GLCALLTYPE*) (APP_GLfloat, APP_GLfloat, APP_GLfloat, APP_GLfloat) ) (uintptr_t) app->wglGetProcAddress( "glClearColor" );
+	if( !app->gl.Clear ) app->gl.Clear = ( void (APP_GLCALLTYPE*) (APP_GLbitfield) ) (uintptr_t) app->wglGetProcAddress( "glClear" );
+	if( !app->gl.DrawArrays ) app->gl.DrawArrays = ( void (APP_GLCALLTYPE*) (APP_GLenum, APP_GLint, APP_GLsizei) ) (uintptr_t) app->wglGetProcAddress( "glDrawArrays" );
+	if( !app->gl.Viewport ) app->gl.Viewport = ( void (APP_GLCALLTYPE*) (APP_GLint, APP_GLint, APP_GLsizei, APP_GLsizei) ) (uintptr_t) app->wglGetProcAddress( "glViewport" );
+	if( !app->gl.DeleteShader ) app->gl.DeleteShader = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glDeleteShader" );
+	if( !app->gl.DeleteProgram ) app->gl.DeleteProgram = ( void (APP_GLCALLTYPE*) (APP_GLuint) ) (uintptr_t) app->wglGetProcAddress( "glDeleteProgram" );
+	#ifdef APP_REPORT_SHADER_ERRORS
+		if( !app->gl.GetShaderInfoLog ) app->gl.GetShaderInfoLog = ( void (APP_GLCALLTYPE*) (APP_GLuint, APP_GLsizei, APP_GLsizei*, APP_GLchar*) ) (uintptr_t) app->wglGetProcAddress( "glGetShaderInfoLog" );
+	#endif
 
-    if( !app_internal_tablet_init( app ) ) app_log( app, APP_LOG_LEVEL_WARNING, "WinTab initialization failed - tablet not available" );
+	// Report error if any gl function was not found.
+	if( !app->gl.CreateShader ) { app_fatal_error( app, "Could not find function CreateShader." ); goto init_failed; }
+	if( !app->gl.ShaderSource ) { app_fatal_error( app, "Could not find function ShaderSource." ); goto init_failed; }
+	if( !app->gl.CompileShader ) { app_fatal_error( app, "Could not find function CompileShader." ); goto init_failed; }
+	if( !app->gl.GetShaderiv ) { app_fatal_error( app, "Could not find function GetShaderiv." ); goto init_failed; }
+	if( !app->gl.CreateProgram ) { app_fatal_error( app, "Could not find function CreateProgram." ); goto init_failed; }
+	if( !app->gl.AttachShader ) { app_fatal_error( app, "Could not find function AttachShader." ); goto init_failed; }
+	if( !app->gl.BindAttribLocation ) { app_fatal_error( app, "Could not find function BindAttribLocation." ); goto init_failed; }
+	if( !app->gl.LinkProgram ) { app_fatal_error( app, "Could not find function LinkProgram." ); goto init_failed; }
+	if( !app->gl.GetProgramiv ) { app_fatal_error( app, "Could not find function GetProgramiv." ); goto init_failed; }
+	if( !app->gl.GenBuffers ) { app_fatal_error( app, "Could not find function GenBuffers." ); goto init_failed; }
+	if( !app->gl.BindBuffer ) { app_fatal_error( app, "Could not find function BindBuffer." ); goto init_failed; }
+	if( !app->gl.EnableVertexAttribArray ) { app_fatal_error( app, "Could not find function EnableVertexAttribArray." ); goto init_failed; }
+	if( !app->gl.VertexAttribPointer ) { app_fatal_error( app, "Could not find function VertexAttribPointer." ); goto init_failed; }
+	if( !app->gl.GenTextures ) { app_fatal_error( app, "Could not find function GenTextures." ); goto init_failed; }
+	if( !app->gl.Enable ) { app_fatal_error( app, "Could not find function Enable." ); goto init_failed; }
+	if( !app->gl.ActiveTexture ) { app_fatal_error( app, "Could not find function ActiveTexture." ); goto init_failed; }
+	if( !app->gl.BindTexture ) { app_fatal_error( app, "Could not find function BindTexture." ); goto init_failed; }
+	if( !app->gl.TexParameteri ) { app_fatal_error( app, "Could not find function TexParameteri." ); goto init_failed; }
+	if( !app->gl.DeleteBuffers ) { app_fatal_error( app, "Could not find function DeleteBuffers." ); goto init_failed; }
+	if( !app->gl.DeleteTextures ) { app_fatal_error( app, "Could not find function DeleteTextures." ); goto init_failed; }
+	if( !app->gl.BufferData ) { app_fatal_error( app, "Could not find function BufferData." ); goto init_failed; }
+	if( !app->gl.UseProgram ) { app_fatal_error( app, "Could not find function UseProgram." ); goto init_failed; }
+	if( !app->gl.Uniform1i ) { app_fatal_error( app, "Could not find function Uniform1i." ); goto init_failed; }
+	if( !app->gl.Uniform3f ) { app_fatal_error( app, "Could not find function Uniform3f." ); goto init_failed; }
+	if( !app->gl.GetUniformLocation ) { app_fatal_error( app, "Could not find function GetUniformLocation." ); goto init_failed; }
+	if( !app->gl.TexImage2D ) { app_fatal_error( app, "Could not find function TexImage2D." ); goto init_failed; }
+	if( !app->gl.ClearColor ) { app_fatal_error( app, "Could not find function ClearColor." ); goto init_failed; }
+	if( !app->gl.Clear ) { app_fatal_error( app, "Could not find function Clear." ); goto init_failed; }
+	if( !app->gl.DrawArrays ) { app_fatal_error( app, "Could not find function DrawArrays." ); goto init_failed; }
+	if( !app->gl.Viewport ) { app_fatal_error( app, "Could not find function Viewport." ); goto init_failed; }
+	if( !app->gl.DeleteShader ) { app_fatal_error( app, "Could not find function DeleteShader." ); goto init_failed; }
+	if( !app->gl.DeleteProgram ) { app_fatal_error( app, "Could not find function DeleteProgram." ); goto init_failed; }
+	#ifdef APP_REPORT_SHADER_ERRORS
+		if( !app->gl.GetShaderInfoLog ) { app_fatal_error( app, "Could not find function GetShaderInfoLog." ); goto init_failed; }
+	#endif
 
-    result = app_proc( app, user_data );
+	// Platform independent OpenGL initialization
+	int width = app->screenmode == APP_SCREENMODE_FULLSCREEN ? app->fullscreen_width : app->windowed_w;
+	int height = app->screenmode == APP_SCREENMODE_FULLSCREEN ? app->fullscreen_height: app->windowed_h;
+	if( !app_internal_opengl_init( app, &app->gl, app->interpolation, width, height ) )
+		{
+		app_log( app, APP_LOG_LEVEL_ERROR, "Failed to initialize OpenGL" );
+		goto init_failed;
+		}
+
+	app->sound_notifications[ 0 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
+	app->sound_notifications[ 1 ] = CreateEventA( NULL, FALSE, FALSE, NULL );
+
+
+	app->dsound_dll = LoadLibraryA( "dsound.dll" );
+	if( !app->dsound_dll ) app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't load dsound.dll. Sound disabled." );
+
+	if( app->dsound_dll )
+		{
+		HRESULT (WINAPI *DirectSoundCreate8Ptr)(LPCGUID,struct IDirectSound8**,void*) = ( HRESULT (WINAPI*)(LPCGUID,struct IDirectSound8**,void*) )
+			(uintptr_t) GetProcAddress( (HMODULE) app->dsound_dll, "DirectSoundCreate8" );
+		if( !DirectSoundCreate8Ptr )
+			{
+			app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't find DirectSoundCreate. Sound disabled." );
+			FreeLibrary( app->dsound_dll );
+			app->dsound_dll = 0;
+			}
+		if( DirectSoundCreate8Ptr )
+			{
+			HRESULT hr = DirectSoundCreate8Ptr( NULL, &app->dsound, NULL );
+			if( FAILED( hr ) || !app->dsound )
+				{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't create DirectSound object. Sound disabled." );
+				DirectSoundCreate8Ptr = 0;
+				FreeLibrary( app->dsound_dll );
+				app->dsound_dll = 0;
+				}
+			else
+				{
+				hr = IDirectSound8_SetCooperativeLevel( app->dsound, app->hwnd, DSSCL_NORMAL);
+				if( FAILED( hr ) )
+					{
+					app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't set cooperative level for DirectSound object. Sound disabled." );
+					IDirectSound8_Release( app->dsound );
+					app->dsound = 0;
+					DirectSoundCreate8Ptr = 0;
+					FreeLibrary( app->dsound_dll );
+					app->dsound_dll = 0;
+					}
+				}
+			}
+		}
+	app->sound_thread_handle = INVALID_HANDLE_VALUE;
+
+	HMODULE user32 = LoadLibraryA( "user32.dll" );
+	if( user32 )
+		{
+		BOOL (WINAPI *RegisterRawInputDevicesPtr)( PCRAWINPUTDEVICE, UINT, UINT ) =
+			(BOOL (WINAPI*)( PCRAWINPUTDEVICE, UINT, UINT ) )(uintptr_t) GetProcAddress( user32, "RegisterRawInputDevices" );
+
+		app->GetRawInputDataPtr = (UINT (WINAPI*)( HRAWINPUT, UINT, LPVOID, PUINT, UINT))
+			(uintptr_t) GetProcAddress( user32, "GetRawInputData" );
+
+		USHORT const USAGE_PAGE_GENERIC = ((USHORT) 0x01);
+		USHORT const USAGE_GENERIC_MOUSE = ((USHORT) 0x02);
+
+		RAWINPUTDEVICE rid[ 1 ];
+		rid[ 0 ].usUsagePage = USAGE_PAGE_GENERIC;
+		rid[ 0 ].usUsage = USAGE_GENERIC_MOUSE;
+		rid[ 0 ].dwFlags = RIDEV_INPUTSINK;
+		rid[ 0 ].hwndTarget = app->hwnd;
+		RegisterRawInputDevicesPtr( rid, 1, sizeof( *rid ) );
+
+		FreeLibrary( user32 );
+		}
+
+	if( !app_internal_tablet_init( app ) ) app_log( app, APP_LOG_LEVEL_WARNING, "WinTab initialization failed - tablet not available" );
+
+	result = app_proc( app, user_data );
 
 init_failed:
-    if( !app_internal_tablet_term( app ) ) app_log( app, APP_LOG_LEVEL_WARNING, "WinTab termination failed" );
-    if( app->sound_thread_handle != INVALID_HANDLE_VALUE )
-        {
-        InterlockedExchange( &app->exit_sound_thread, 1 );
-        WaitForSingleObject( app->sound_thread_handle, INFINITE );
-        CloseHandle( app->sound_thread_handle );
-        }
-    if( app->dsoundbuf ) IDirectSoundBuffer8_Release( app->dsoundbuf );
-    if( app->dsound ) IDirectSound8_Release( app->dsound );
-    if( app->dsound_dll ) FreeLibrary( app->dsound_dll );
-    if( app->sound_notifications[ 0 ] ) CloseHandle( app->sound_notifications[ 0 ] );
-    if( app->sound_notifications[ 1 ] ) CloseHandle( app->sound_notifications[ 1 ] );
-    if( !app_internal_opengl_term( &app->gl ) ) app_log( app, APP_LOG_LEVEL_WARNING, "Failed to terminate OpenGL" );
-    if( app->gl_context ) app->wglMakeCurrent( 0, 0 );
-    if( app->gl_context ) app->wglDeleteContext( app->gl_context );
-    if( app->gl_dll ) FreeLibrary( app->gl_dll );
-    if( app->icon ) DestroyIcon( app->icon );
-    if( app->current_pointer ) DestroyIcon( app->current_pointer );
-    if( app->hdc ) ReleaseDC( app->hwnd, app->hdc );
-    if( app->hwnd ) DestroyWindow( app->hwnd );
-    UnregisterClass( TEXT( "app_wc" ), app->hinstance );
+	if( !app_internal_tablet_term( app ) ) app_log( app, APP_LOG_LEVEL_WARNING, "WinTab termination failed" );
+	if( app->sound_thread_handle != INVALID_HANDLE_VALUE )
+		{
+		InterlockedExchange( &app->exit_sound_thread, 1 );
+		WaitForSingleObject( app->sound_thread_handle, INFINITE );
+		CloseHandle( app->sound_thread_handle );
+		}
+	if( app->dsoundbuf ) IDirectSoundBuffer8_Release( app->dsoundbuf );
+	if( app->dsound ) IDirectSound8_Release( app->dsound );
+	if( app->dsound_dll ) FreeLibrary( app->dsound_dll );
+	if( app->sound_notifications[ 0 ] ) CloseHandle( app->sound_notifications[ 0 ] );
+	if( app->sound_notifications[ 1 ] ) CloseHandle( app->sound_notifications[ 1 ] );
+	if( !app_internal_opengl_term( &app->gl ) ) app_log( app, APP_LOG_LEVEL_WARNING, "Failed to terminate OpenGL" );
+	if( app->gl_context ) app->wglMakeCurrent( 0, 0 );
+	if( app->gl_context ) app->wglDeleteContext( app->gl_context );
+	if( app->gl_dll ) FreeLibrary( app->gl_dll );
+	if( app->icon ) DestroyIcon( app->icon );
+	if( app->current_pointer ) DestroyIcon( app->current_pointer );
+	if( app->hdc ) ReleaseDC( app->hwnd, app->hdc );
+	if( app->hwnd ) DestroyWindow( app->hwnd );
+	UnregisterClass( TEXT( "app_wc" ), app->hinstance );
 
-    #ifndef __TINYC__
-    if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
-        timeEndPeriod( tc.wPeriodMin );
-    #endif
+	#ifndef __TINYC__
+	if( timeGetDevCaps( &tc, sizeof( TIMECAPS ) ) == TIMERR_NOERROR )
+		timeEndPeriod( tc.wPeriodMin );
+	#endif
 
-    t = time( NULL );
-    struct tm* end = localtime( &t );
-    sprintf( msg, "Application terminated %02d:%02d:%02d %04d-%02d-%02d.",
-        end->tm_hour, end->tm_min, end->tm_sec, end->tm_year + 1900, end->tm_mon + 1, end->tm_mday );
-    app_log( app, APP_LOG_LEVEL_INFO, msg );
+	t = time( NULL );
+	struct tm* end = localtime( &t );
+	sprintf( msg, "Application terminated %02d:%02d:%02d %04d-%02d-%02d.",
+		end->tm_hour, end->tm_min, end->tm_sec, end->tm_year + 1900, end->tm_mon + 1, end->tm_mday );
+	app_log( app, APP_LOG_LEVEL_INFO, msg );
 
-    APP_FREE( memctx, app );
-    return result;
-    }
+	APP_FREE( memctx, app );
+	return result;
+	}
 
 #pragma warning( pop )
 
 
 app_state_t app_yield( app_t* app )
-    {
-    if( !app->initialized )
-        {
-        if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-            app->screenmode = APP_SCREENMODE_FULLSCREEN;
-            app_screenmode( app, APP_SCREENMODE_WINDOW );
-        }
-        else
-        {
-            app->screenmode = APP_SCREENMODE_WINDOW;
-            app_screenmode( app, APP_SCREENMODE_FULLSCREEN );
-        }
-        STARTUPINFOA startup_info = { sizeof( STARTUPINFOA ) };
-        GetStartupInfoA( &startup_info );
-        if( startup_info.dwFlags & STARTF_USESHOWWINDOW ) {
-            ShowWindow( app->hwnd, startup_info.wShowWindow );
-        } else {
-            ShowWindow( app->hwnd, SW_SHOWDEFAULT );
-        }
-        SetActiveWindow( app->hwnd );
-        BringWindowToTop( app->hwnd );
-        SwitchToThisWindow( app->hwnd, TRUE );
-        if( app->tablet.context ) app->tablet.WTEnable( app->tablet.context, TRUE );
-        app->initialized = TRUE;
-        }
+	{
+	if( !app->initialized )
+		{
+		if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+			app->screenmode = APP_SCREENMODE_FULLSCREEN;
+			app_screenmode( app, APP_SCREENMODE_WINDOW );
+		}
+		else
+		{
+			app->screenmode = APP_SCREENMODE_WINDOW;
+			app_screenmode( app, APP_SCREENMODE_FULLSCREEN );
+		}
+		STARTUPINFOA startup_info = { sizeof( STARTUPINFOA ) };
+		GetStartupInfoA( &startup_info );
+		if( startup_info.dwFlags & STARTF_USESHOWWINDOW ) {
+			ShowWindow( app->hwnd, startup_info.wShowWindow );
+		} else {
+			ShowWindow( app->hwnd, SW_SHOWDEFAULT );
+		}
+		SetActiveWindow( app->hwnd );
+		BringWindowToTop( app->hwnd );
+		SwitchToThisWindow( app->hwnd, TRUE );
+		if( app->tablet.context ) app->tablet.WTEnable( app->tablet.context, TRUE );
+		app->initialized = TRUE;
+		}
 
-    MSG msg;
-    while( PeekMessage( &msg, app->hwnd, 0,0, PM_REMOVE ) )
-        {
-        TranslateMessage( &msg );
-        DispatchMessage( &msg );
-        }
+	MSG msg;
+	while( PeekMessage( &msg, app->hwnd, 0,0, PM_REMOVE ) )
+		{
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
+		}
 
-        SwitchToThread();   //  yield to any thread on same processor
+		SwitchToThread();   //  yield to any thread on same processor
 
-    return app->closed == TRUE ? APP_STATE_EXIT_REQUESTED : APP_STATE_NORMAL;
-    }
+	return app->closed == TRUE ? APP_STATE_EXIT_REQUESTED : APP_STATE_NORMAL;
+	}
 
 
 void app_cancel_exit( app_t* app )
-    {
-    app->closed = FALSE;
-    }
+	{
+	app->closed = FALSE;
+	}
 
 
 void app_title( app_t* app, char const* title )
-    {
-    #ifdef UNICODE
-        int len = (int) strlen (title );
-        if( len < 256 )
-            {
-            WCHAR unistring[ 256 ];
-            MultiByteToWideChar( CP_ACP, 0, title, -1, unistring, len + 1 );
-            SetWindowText( app->hwnd, unistring );
-            }
-    #else
-        SetWindowText( app->hwnd, title );
-    #endif
-    }
+	{
+	#ifdef UNICODE
+		int len = (int) strlen (title );
+		if( len < 256 )
+			{
+			WCHAR unistring[ 256 ];
+			MultiByteToWideChar( CP_ACP, 0, title, -1, unistring, len + 1 );
+			SetWindowText( app->hwnd, unistring );
+			}
+	#else
+		SetWindowText( app->hwnd, title );
+	#endif
+	}
 
 
 char const* app_cmdline( app_t* app )
-    {
-    return app->cmdline;
-    }
+	{
+	return app->cmdline;
+	}
 
 
 char const* app_filename( app_t* app )
-    {
-    return app->exe_path;
-    }
+	{
+	return app->exe_path;
+	}
 
 
 char const* app_userdata( app_t* app )
-    {
-    return app->userdata_path;
-    }
+	{
+	return app->userdata_path;
+	}
 
 
 char const* app_appdata( app_t* app )
-    {
-    return app->appdata_path;
-    }
+	{
+	return app->appdata_path;
+	}
 
 
 APP_U64 app_time_count( app_t* app )
-    {
-    (void) app;
-    LARGE_INTEGER c;
-    QueryPerformanceCounter( &c );
-    return (APP_U64) c.QuadPart;
-    }
+	{
+	(void) app;
+	LARGE_INTEGER c;
+	QueryPerformanceCounter( &c );
+	return (APP_U64) c.QuadPart;
+	}
 
 
 APP_U64 app_time_freq( app_t* app )
-    {
-    (void) app;
-    LARGE_INTEGER f;
-    QueryPerformanceFrequency( &f );
-    return (APP_U64) f.QuadPart;
-    }
+	{
+	(void) app;
+	LARGE_INTEGER f;
+	QueryPerformanceFrequency( &f );
+	return (APP_U64) f.QuadPart;
+	}
 
 
 void app_log( app_t* app, app_log_level_t level, char const* message )
-    {
-    (void) app, (void) level, (void) message;
-    APP_LOG( app->logctx, level, message );
-    }
+	{
+	(void) app, (void) level, (void) message;
+	APP_LOG( app->logctx, level, message );
+	}
 
 
 void app_fatal_error( app_t* app, char const* message )
-    {
-    (void) app, (void) message;
-    APP_FATAL_ERROR( app->fatalctx, message );
-    }
+	{
+	(void) app, (void) message;
+	APP_FATAL_ERROR( app->fatalctx, message );
+	}
 
 
 static HCURSOR app_internal_create_cursor( HWND hwnd, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
-    {
-    int size = width > height ? width : height;
-    BITMAPV5HEADER header;
-    memset( &header, 0, sizeof( BITMAPV5HEADER ) );
-    header.bV5Size = sizeof( BITMAPV5HEADER );
-    header.bV5Width = (LONG) size;
-    header.bV5Height = -(LONG) size;
-    header.bV5Planes = 1;
-    header.bV5BitCount = 32;
-    header.bV5Compression = BI_BITFIELDS;
-    header.bV5RedMask   =  0x00FF0000;
-    header.bV5GreenMask =  0x0000FF00;
-    header.bV5BlueMask  =  0x000000FF;
-    header.bV5AlphaMask =  0xFF000000;
+	{
+	int size = width > height ? width : height;
+	BITMAPV5HEADER header;
+	memset( &header, 0, sizeof( BITMAPV5HEADER ) );
+	header.bV5Size = sizeof( BITMAPV5HEADER );
+	header.bV5Width = (LONG) size;
+	header.bV5Height = -(LONG) size;
+	header.bV5Planes = 1;
+	header.bV5BitCount = 32;
+	header.bV5Compression = BI_BITFIELDS;
+	header.bV5RedMask   =  0x00FF0000;
+	header.bV5GreenMask =  0x0000FF00;
+	header.bV5BlueMask  =  0x000000FF;
+	header.bV5AlphaMask =  0xFF000000;
 
-    HDC hdc = GetDC( hwnd );
-    void* bits = NULL;
-    HBITMAP bitmap = CreateDIBSection( hdc, (BITMAPINFO*)&header, DIB_RGB_COLORS,  (void**) &bits, NULL, (DWORD) 0);
-    ReleaseDC( NULL, hdc );
+	HDC hdc = GetDC( hwnd );
+	void* bits = NULL;
+	HBITMAP bitmap = CreateDIBSection( hdc, (BITMAPINFO*)&header, DIB_RGB_COLORS,  (void**) &bits, NULL, (DWORD) 0);
+	ReleaseDC( NULL, hdc );
 
-    APP_U32* ptr = (APP_U32*) bits;
-    for( int y = 0; y < height; ++y )
-        {
-        for( int x = 0; x < width; ++x )
-        {
-            APP_U32 c = pixels_abgr[ x + y * width ];
-            APP_U32 a = ( c & 0xff000000 ) >> 24;
-            APP_U32 b = ( c & 0x00ff0000 ) >> 16;
-            APP_U32 g = ( c & 0x0000ff00 ) >> 8;
-            APP_U32 r = ( c & 0x000000ff );
-            ptr[ x + y * size ] = ( a << 24 ) | ( r << 16 ) | ( g << 8 ) | b;
-            }
-        }
+	APP_U32* ptr = (APP_U32*) bits;
+	for( int y = 0; y < height; ++y )
+		{
+		for( int x = 0; x < width; ++x )
+		{
+			APP_U32 c = pixels_abgr[ x + y * width ];
+			APP_U32 a = ( c & 0xff000000 ) >> 24;
+			APP_U32 b = ( c & 0x00ff0000 ) >> 16;
+			APP_U32 g = ( c & 0x0000ff00 ) >> 8;
+			APP_U32 r = ( c & 0x000000ff );
+			ptr[ x + y * size ] = ( a << 24 ) | ( r << 16 ) | ( g << 8 ) | b;
+			}
+		}
 
-    HBITMAP empty_mask = CreateBitmap( size, size, 1, 1, NULL );
-    ICONINFO icon_info;
-    icon_info.fIcon = FALSE;
-    icon_info.xHotspot = (DWORD) hotspot_x;
-    icon_info.yHotspot = (DWORD) hotspot_y;
-    icon_info.hbmMask = empty_mask;
-    icon_info.hbmColor = bitmap;
+	HBITMAP empty_mask = CreateBitmap( size, size, 1, 1, NULL );
+	ICONINFO icon_info;
+	icon_info.fIcon = FALSE;
+	icon_info.xHotspot = (DWORD) hotspot_x;
+	icon_info.yHotspot = (DWORD) hotspot_y;
+	icon_info.hbmMask = empty_mask;
+	icon_info.hbmColor = bitmap;
 
-    HCURSOR cursor = CreateIconIndirect( &icon_info );
-    DeleteObject( bitmap );
-    DeleteObject( empty_mask );
+	HCURSOR cursor = CreateIconIndirect( &icon_info );
+	DeleteObject( bitmap );
+	DeleteObject( empty_mask );
 
-    return cursor;
-    }
+	return cursor;
+	}
 
 
 void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
-    {
-    if( app->current_pointer ) DestroyIcon( app->current_pointer );
-    app->current_pointer = 0;
+	{
+	if( app->current_pointer ) DestroyIcon( app->current_pointer );
+	app->current_pointer = 0;
 
-    if( pixels_abgr )
-        app->current_pointer = app_internal_create_cursor( app->hwnd, width, height,
-            pixels_abgr, hotspot_x, hotspot_y );
-    ShowCursor( FALSE );
-    SetCursor( app->current_pointer );
-    ShowCursor( TRUE );
-    }
+	if( pixels_abgr )
+		app->current_pointer = app_internal_create_cursor( app->hwnd, width, height,
+			pixels_abgr, hotspot_x, hotspot_y );
+	ShowCursor( FALSE );
+	SetCursor( app->current_pointer );
+	ShowCursor( TRUE );
+	}
 
 
 static BOOL app_internal_extract_default_windows_cursor( int* width, int* height, APP_U32* pixels_abgr,
-    int* hotspot_x, int* hotspot_y )
-    {
-    HCURSOR cursor = LoadCursor( NULL, IDC_ARROW );
-    if( !cursor ) return FALSE;
+	int* hotspot_x, int* hotspot_y )
+	{
+	HCURSOR cursor = LoadCursor( NULL, IDC_ARROW );
+	if( !cursor ) return FALSE;
 
-    ICONINFO info;
-    if( !GetIconInfo( cursor, &info ) ) { DestroyCursor( cursor ); return FALSE; }
-    BOOL bw_cursor = ( info.hbmColor == NULL );
+	ICONINFO info;
+	if( !GetIconInfo( cursor, &info ) ) { DestroyCursor( cursor ); return FALSE; }
+	BOOL bw_cursor = ( info.hbmColor == NULL );
 
-    BITMAP bmpinfo;
-    memset( &bmpinfo, 0, sizeof( bmpinfo ) );
-    if( bw_cursor && GetObject( info.hbmMask, sizeof( BITMAP ), &bmpinfo ) == 0 )
-        {
-        DestroyCursor( cursor );
-        DeleteObject( info.hbmColor );
-        DeleteObject( info.hbmMask );
-        return FALSE;
-        }
-    if( !bw_cursor && GetObject( info.hbmColor, sizeof( BITMAP ), &bmpinfo ) == 0 )
-        {
-        DestroyCursor( cursor );
-        DeleteObject( info.hbmColor );
-        DeleteObject( info.hbmMask );
-        return FALSE;
-        }
+	BITMAP bmpinfo;
+	memset( &bmpinfo, 0, sizeof( bmpinfo ) );
+	if( bw_cursor && GetObject( info.hbmMask, sizeof( BITMAP ), &bmpinfo ) == 0 )
+		{
+		DestroyCursor( cursor );
+		DeleteObject( info.hbmColor );
+		DeleteObject( info.hbmMask );
+		return FALSE;
+		}
+	if( !bw_cursor && GetObject( info.hbmColor, sizeof( BITMAP ), &bmpinfo ) == 0 )
+		{
+		DestroyCursor( cursor );
+		DeleteObject( info.hbmColor );
+		DeleteObject( info.hbmMask );
+		return FALSE;
+		}
 
-    if( bmpinfo.bmWidth > 256 || bmpinfo.bmHeight > 256 )
-        {
-        DestroyCursor( cursor );
-        DeleteObject( info.hbmColor );
-        DeleteObject( info.hbmMask );
-        return FALSE;
-        }
-    int pointer_width = bmpinfo.bmWidth;
-    int pointer_height = ( bmpinfo.bmHeight >= 0 ? bmpinfo.bmHeight : -bmpinfo.bmHeight ) / ( bw_cursor ? 2 : 1 );
+	if( bmpinfo.bmWidth > 256 || bmpinfo.bmHeight > 256 )
+		{
+		DestroyCursor( cursor );
+		DeleteObject( info.hbmColor );
+		DeleteObject( info.hbmMask );
+		return FALSE;
+		}
+	int pointer_width = bmpinfo.bmWidth;
+	int pointer_height = ( bmpinfo.bmHeight >= 0 ? bmpinfo.bmHeight : -bmpinfo.bmHeight ) / ( bw_cursor ? 2 : 1 );
 
-    if( width ) *width = pointer_width;
-    if( height ) *height = pointer_height;
-    if( hotspot_x ) *hotspot_x = (int) info.xHotspot;
-    if( hotspot_y ) *hotspot_y = (int) info.yHotspot;
-    if( !pixels_abgr )
-        {
-        DestroyCursor( cursor );
-        DeleteObject( info.hbmColor );
-        DeleteObject( info.hbmMask );
-        return TRUE;
-        }
+	if( width ) *width = pointer_width;
+	if( height ) *height = pointer_height;
+	if( hotspot_x ) *hotspot_x = (int) info.xHotspot;
+	if( hotspot_y ) *hotspot_y = (int) info.yHotspot;
+	if( !pixels_abgr )
+		{
+		DestroyCursor( cursor );
+		DeleteObject( info.hbmColor );
+		DeleteObject( info.hbmMask );
+		return TRUE;
+		}
 
-    BITMAPINFOHEADER bmi;
-    bmi.biSize = sizeof( BITMAPINFOHEADER );
-    bmi.biPlanes = 1;
-    bmi.biBitCount = 32;
-    bmi.biWidth = bmpinfo.bmWidth;
-    bmi.biHeight = -bmpinfo.bmHeight;
-    bmi.biCompression = BI_RGB;
-    bmi.biSizeImage = 0;
-    HDC hdc = GetDC( NULL );
-    if( GetDIBits( hdc, bw_cursor ? info.hbmMask : info.hbmColor, 0, (UINT) bmpinfo.bmHeight, pixels_abgr,
-        (BITMAPINFO*) &bmi, DIB_RGB_COLORS ) != bmpinfo.bmHeight )
-        {
-        DestroyCursor( cursor );
-        DeleteObject( info.hbmColor );
-        DeleteObject( info.hbmMask );
-        ReleaseDC( NULL, hdc );
-        return FALSE;
-        }
-    ReleaseDC( NULL, hdc );
+	BITMAPINFOHEADER bmi;
+	bmi.biSize = sizeof( BITMAPINFOHEADER );
+	bmi.biPlanes = 1;
+	bmi.biBitCount = 32;
+	bmi.biWidth = bmpinfo.bmWidth;
+	bmi.biHeight = -bmpinfo.bmHeight;
+	bmi.biCompression = BI_RGB;
+	bmi.biSizeImage = 0;
+	HDC hdc = GetDC( NULL );
+	if( GetDIBits( hdc, bw_cursor ? info.hbmMask : info.hbmColor, 0, (UINT) bmpinfo.bmHeight, pixels_abgr,
+		(BITMAPINFO*) &bmi, DIB_RGB_COLORS ) != bmpinfo.bmHeight )
+		{
+		DestroyCursor( cursor );
+		DeleteObject( info.hbmColor );
+		DeleteObject( info.hbmMask );
+		ReleaseDC( NULL, hdc );
+		return FALSE;
+		}
+	ReleaseDC( NULL, hdc );
 
-    if( bw_cursor )
-        {
-        for( int y = 0; y < pointer_height; ++y )
-            {
-            for( int x = 0; x < pointer_width; ++x )
-                {
-                APP_U32 c = pixels_abgr[ x + pointer_width * y ];
-                APP_U32 m = pixels_abgr[ x + pointer_width * ( pointer_height + y ) ];
-                APP_U32 a = 255 - ( c & 0xff );
-                APP_U32 g = m & 0xff;
-                pixels_abgr[ x + pointer_width * y ] = ( a << 24 ) | ( g << 16 ) | ( g << 8 ) | g;
-                }
-            }
-        }
-    else
-        {
-        for( int y = 0; y < pointer_height; ++y )
-            {
-            for( int x = 0; x < pointer_width; ++x )
-                {
-                APP_U32 c = pixels_abgr[ x + pointer_width * y ];
-                APP_U32 a = ( c >> 24 ) & 0xff;
-                APP_U32 r = ( c >> 16 ) & 0xff;
-                APP_U32 g = ( c >>  8 ) & 0xff;
-                APP_U32 b = ( c       ) & 0xff;
-                pixels_abgr[ x + pointer_width * y ] = ( a << 24 ) | ( b << 16 ) | ( g << 8 ) | r;
-                }
-            }
-        }
+	if( bw_cursor )
+		{
+		for( int y = 0; y < pointer_height; ++y )
+			{
+			for( int x = 0; x < pointer_width; ++x )
+				{
+				APP_U32 c = pixels_abgr[ x + pointer_width * y ];
+				APP_U32 m = pixels_abgr[ x + pointer_width * ( pointer_height + y ) ];
+				APP_U32 a = 255 - ( c & 0xff );
+				APP_U32 g = m & 0xff;
+				pixels_abgr[ x + pointer_width * y ] = ( a << 24 ) | ( g << 16 ) | ( g << 8 ) | g;
+				}
+			}
+		}
+	else
+		{
+		for( int y = 0; y < pointer_height; ++y )
+			{
+			for( int x = 0; x < pointer_width; ++x )
+				{
+				APP_U32 c = pixels_abgr[ x + pointer_width * y ];
+				APP_U32 a = ( c >> 24 ) & 0xff;
+				APP_U32 r = ( c >> 16 ) & 0xff;
+				APP_U32 g = ( c >>  8 ) & 0xff;
+				APP_U32 b = ( c       ) & 0xff;
+				pixels_abgr[ x + pointer_width * y ] = ( a << 24 ) | ( b << 16 ) | ( g << 8 ) | r;
+				}
+			}
+		}
 
-    DeleteObject( info.hbmColor );
-    DeleteObject( info.hbmMask );
-    DestroyCursor( cursor );
-    return TRUE;
-    }
+	DeleteObject( info.hbmColor );
+	DeleteObject( info.hbmMask );
+	DestroyCursor( cursor );
+	return TRUE;
+	}
 
 
 void app_pointer_default( app_t* app, int* width, int* height, APP_U32* pixels_abgr, int* hotspot_x, int* hotspot_y )
-    {
-    (void) app;
+	{
+	(void) app;
 
-    APP_U32 default_pointer_data[ 11 * 16 ] =
-        {
-        0xFF000000,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0xFF000000,0xFF000000,0xFF000000,0xFF000000,
-        0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFFFFFFFF,0xFF000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0xFF000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
-        0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
-        0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
-        0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFF000000,0xFF000000,0x00000000,0x00000000,
-        };
+	APP_U32 default_pointer_data[ 11 * 16 ] =
+		{
+		0xFF000000,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0xFF000000,0xFF000000,0xFF000000,0xFF000000,
+		0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFFFFFFFF,0xFF000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0xFF000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,0x00000000,
+		0xFF000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
+		0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFFFFFFFF,0xFFFFFFFF,0xFF000000,0x00000000,0x00000000,
+		0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0xFF000000,0xFF000000,0xFF000000,0x00000000,0x00000000,
+		};
 
-    if( !app_internal_extract_default_windows_cursor( width, height, pixels_abgr, hotspot_x, hotspot_y ) )
-        {
-        if( width ) *width = 11;
-        if( height ) *height = 16;
-        if( hotspot_x ) *hotspot_x = 0;
-        if( hotspot_y ) *hotspot_y = 0;
-        if( pixels_abgr ) memcpy( pixels_abgr, default_pointer_data, sizeof( APP_U32 ) * 11 * 16 );
-        }
-    }
+	if( !app_internal_extract_default_windows_cursor( width, height, pixels_abgr, hotspot_x, hotspot_y ) )
+		{
+		if( width ) *width = 11;
+		if( height ) *height = 16;
+		if( hotspot_x ) *hotspot_x = 0;
+		if( hotspot_y ) *hotspot_y = 0;
+		if( pixels_abgr ) memcpy( pixels_abgr, default_pointer_data, sizeof( APP_U32 ) * 11 * 16 );
+		}
+	}
 
 
 
 void app_pointer_pos( app_t* app, int x, int y )
-    {
-    POINT p;
-    p.x = x;
-    p.y = y;
-    ClientToScreen( app->hwnd, &p );
-    SetCursorPos( p.x, p.y );
-    }
+	{
+	POINT p;
+	p.x = x;
+	p.y = y;
+	ClientToScreen( app->hwnd, &p );
+	SetCursorPos( p.x, p.y );
+	}
 
 
 int app_pointer_x( app_t* app )
-    {
-    POINT p;
-    GetCursorPos( &p );
-    ScreenToClient( app->hwnd, &p );
-    return (int) p.x;
-    }
+	{
+	POINT p;
+	GetCursorPos( &p );
+	ScreenToClient( app->hwnd, &p );
+	return (int) p.x;
+	}
 
 
 int app_pointer_y( app_t* app )
-    {
-    POINT p;
-    GetCursorPos( &p );
-    ScreenToClient( app->hwnd, &p );
-    return (int) p.y;
-    }
+	{
+	POINT p;
+	GetCursorPos( &p );
+	ScreenToClient( app->hwnd, &p );
+	return (int) p.y;
+	}
 
 
 void app_pointer_limit( app_t* app, int x, int y, int width, int height )
-    {
-    app->clip_cursor = TRUE;
-    app->clip_rect.left= x;
-    app->clip_rect.top = y;
-    app->clip_rect.right = x + width;
-    app->clip_rect.bottom = y + height;
+	{
+	app->clip_cursor = TRUE;
+	app->clip_rect.left= x;
+	app->clip_rect.top = y;
+	app->clip_rect.right = x + width;
+	app->clip_rect.bottom = y + height;
 
-    RECT r = app->clip_rect;
-    ClientToScreen( app->hwnd, (POINT*)&r );
-    ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
-    ClipCursor( &r );
-    }
+	RECT r = app->clip_rect;
+	ClientToScreen( app->hwnd, (POINT*)&r );
+	ClientToScreen( app->hwnd, ( (POINT*)&r ) + 1 );
+	ClipCursor( &r );
+	}
 
 
 void app_pointer_limit_off( app_t* app )
-    {
-    app->clip_cursor = FALSE;
-    ClipCursor( 0 );
-    }
+	{
+	app->clip_cursor = FALSE;
+	ClipCursor( 0 );
+	}
 
 
 void app_interpolation( app_t* app, app_interpolation_t interpolation )
-    {
-    if( interpolation == app->interpolation ) return;
-    app->interpolation = interpolation;
+	{
+	if( interpolation == app->interpolation ) return;
+	app->interpolation = interpolation;
 
-    POINT p;
-    GetCursorPos( &p );
-    ScreenToClient( app->hwnd, &p );
-    int mouse_x = p.x;
-    int mouse_y = p.y;
+	POINT p;
+	GetCursorPos( &p );
+	ScreenToClient( app->hwnd, &p );
+	int mouse_x = p.x;
+	int mouse_y = p.y;
 
-    app_input_event_t input_event;
-    input_event.type = APP_INPUT_MOUSE_MOVE;
-    input_event.data.mouse_pos.x = mouse_x;
-    input_event.data.mouse_pos.y = mouse_y;
-    app_internal_add_input_event( app, &input_event );
+	app_input_event_t input_event;
+	input_event.type = APP_INPUT_MOUSE_MOVE;
+	input_event.data.mouse_pos.x = mouse_x;
+	input_event.data.mouse_pos.y = mouse_y;
+	app_internal_add_input_event( app, &input_event );
 
-    app_internal_opengl_interpolation( &app->gl, interpolation );
-    }
+	app_internal_opengl_interpolation( &app->gl, interpolation );
+	}
 
 
 void app_screenmode( app_t* app, app_screenmode_t screenmode )
-    {
-    if( screenmode == app->screenmode ) return;
-    app->screenmode = screenmode;
-    BOOL visible = IsWindowVisible( app->hwnd );
-    if( screenmode == APP_SCREENMODE_WINDOW )
-        {
-        SetWindowLong( app->hwnd, GWL_STYLE, APP_WINDOWED_WS_STYLE | ( visible ? WS_VISIBLE : 0 ) );
+	{
+	if( screenmode == app->screenmode ) return;
+	app->screenmode = screenmode;
+	BOOL visible = IsWindowVisible( app->hwnd );
+	if( screenmode == APP_SCREENMODE_WINDOW )
+		{
+		SetWindowLong( app->hwnd, GWL_STYLE, APP_WINDOWED_WS_STYLE | ( visible ? WS_VISIBLE : 0 ) );
 
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        placement.showCmd = (UINT)( visible ? SW_SHOW : SW_HIDE );
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		placement.showCmd = (UINT)( visible ? SW_SHOW : SW_HIDE );
 
-        placement.rcNormalPosition.left = app->windowed_x;
-        placement.rcNormalPosition.top = app->windowed_y;
-        placement.rcNormalPosition.right = app->windowed_x + app->windowed_w;
-        placement.rcNormalPosition.bottom = app->windowed_y + app->windowed_h;
-        SetWindowPlacement( app->hwnd, &placement );
-        }
-    else
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
+		placement.rcNormalPosition.left = app->windowed_x;
+		placement.rcNormalPosition.top = app->windowed_y;
+		placement.rcNormalPosition.right = app->windowed_x + app->windowed_w;
+		placement.rcNormalPosition.bottom = app->windowed_y + app->windowed_h;
+		SetWindowPlacement( app->hwnd, &placement );
+		}
+	else
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
 
-        if( visible )
-            {
-        if( placement.showCmd != SW_SHOWMAXIMIZED )
-            {
-            app->windowed_x = placement.rcNormalPosition.left;
-            app->windowed_y = placement.rcNormalPosition.top;
-            app->windowed_w = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
-            app->windowed_h = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
-            }
-        else
-            {
-            ShowWindow( app->hwnd, SW_RESTORE );
-            }
-            }
+		if( visible )
+			{
+		if( placement.showCmd != SW_SHOWMAXIMIZED )
+			{
+			app->windowed_x = placement.rcNormalPosition.left;
+			app->windowed_y = placement.rcNormalPosition.top;
+			app->windowed_w = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
+			app->windowed_h = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
+			}
+		else
+			{
+			ShowWindow( app->hwnd, SW_RESTORE );
+			}
+			}
 
-        HMONITOR hmonitor = MonitorFromWindow( app->hwnd, MONITOR_DEFAULTTOPRIMARY );
-        int display_index = 0;
-        for( int i = 0; i < app->display_count; ++i )
-            {
-            if( app->displays_hmonitor[ i ] == hmonitor )
-                {
-                display_index = i;
-                break;
-                }
-            }
+		HMONITOR hmonitor = MonitorFromWindow( app->hwnd, MONITOR_DEFAULTTOPRIMARY );
+		int display_index = 0;
+		for( int i = 0; i < app->display_count; ++i )
+			{
+			if( app->displays_hmonitor[ i ] == hmonitor )
+				{
+				display_index = i;
+				break;
+				}
+			}
 
 
-        RECT r = app_internal_rect( app->displays[ display_index ].x, app->displays[ display_index ].y,
-            app->displays[ display_index ].x + app->displays[ display_index ].width,
-            app->displays[ display_index ].y + app->displays[ display_index ].height );
-        app->fullscreen_width = r.right - r.left;
-        app->fullscreen_height = r.bottom - r.top;
-        SetWindowPos( app->hwnd, 0, r.left, r.top, app->fullscreen_width, app->fullscreen_height,
-            SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
+		RECT r = app_internal_rect( app->displays[ display_index ].x, app->displays[ display_index ].y,
+			app->displays[ display_index ].x + app->displays[ display_index ].width,
+			app->displays[ display_index ].y + app->displays[ display_index ].height );
+		app->fullscreen_width = r.right - r.left;
+		app->fullscreen_height = r.bottom - r.top;
+		SetWindowPos( app->hwnd, 0, r.left, r.top, app->fullscreen_width, app->fullscreen_height,
+			SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
 
-        SetWindowLong( app->hwnd, GWL_STYLE, ( visible ? WS_VISIBLE : 0 ) );
-        SetWindowPos( app->hwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
-        }
-    }
+		SetWindowLong( app->hwnd, GWL_STYLE, ( visible ? WS_VISIBLE : 0 ) );
+		SetWindowPos( app->hwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
+		}
+	}
 
 
 void app_window_size( app_t* app, int width, int height )
-    {
-    RECT r;
-    r = app_internal_rect( 0, 0, width, height );
-    AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
+	{
+	RECT r;
+	r = app_internal_rect( 0, 0, width, height );
+	AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
 
-    width = r.right - r.left;
-    height = r.bottom - r.top;
-    app->windowed_w = width;
-    app->windowed_h = height;
+	width = r.right - r.left;
+	height = r.bottom - r.top;
+	app->windowed_w = width;
+	app->windowed_h = height;
 
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        SetWindowPos( app->hwnd, 0, 0, 0, width, height, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
-    }
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		SetWindowPos( app->hwnd, 0, 0, 0, width, height, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_FRAMECHANGED );
+	}
 
 
 int app_window_width( app_t* app )
-    {
-    int width = app->windowed_w;
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        width = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
-        }
-    RECT r = app_internal_rect( 0, 0, 0, 0 );
-    AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
-    return width - ( r.right - r.left );
-    }
+	{
+	int width = app->windowed_w;
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		width = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
+		}
+	RECT r = app_internal_rect( 0, 0, 0, 0 );
+	AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
+	return width - ( r.right - r.left );
+	}
 
 
 int app_window_height( app_t* app )
-    {
-    int height = app->windowed_h;
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        height = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
-        }
-    RECT r = app_internal_rect( 0, 0, 0, 0 );
-    AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
-    return height - ( r.bottom - r.top );
-    }
+	{
+	int height = app->windowed_h;
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		height = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
+		}
+	RECT r = app_internal_rect( 0, 0, 0, 0 );
+	AdjustWindowRect( &r, APP_WINDOWED_WS_STYLE | WS_VISIBLE, FALSE );
+	return height - ( r.bottom - r.top );
+	}
 
 
 void app_window_pos( app_t* app, int x, int y )
-    {
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        placement.rcNormalPosition.right = x + ( placement.rcNormalPosition.right - placement.rcNormalPosition.left );
-        placement.rcNormalPosition.bottom = y + ( placement.rcNormalPosition.bottom - placement.rcNormalPosition.top );
-        placement.rcNormalPosition.left = x;
-        placement.rcNormalPosition.top = y;
-        SetWindowPlacement( app->hwnd, &placement );
-        }
+	{
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		placement.rcNormalPosition.right = x + ( placement.rcNormalPosition.right - placement.rcNormalPosition.left );
+		placement.rcNormalPosition.bottom = y + ( placement.rcNormalPosition.bottom - placement.rcNormalPosition.top );
+		placement.rcNormalPosition.left = x;
+		placement.rcNormalPosition.top = y;
+		SetWindowPlacement( app->hwnd, &placement );
+		}
 
-        app->windowed_x = x;
-        app->windowed_y = y;
-        }
+		app->windowed_x = x;
+		app->windowed_y = y;
+		}
 
 
 int app_window_x( app_t* app )
-    {
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        return placement.rcNormalPosition.left;
-        }
-    else
-        {
-        return app->windowed_x;
-        }
-    }
+	{
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		return placement.rcNormalPosition.left;
+		}
+	else
+		{
+		return app->windowed_x;
+		}
+	}
 
 
 int app_window_y( app_t* app )
-    {
-    if( app->screenmode == APP_SCREENMODE_WINDOW )
-        {
-        WINDOWPLACEMENT placement;
-        placement.length = sizeof( placement );
-        GetWindowPlacement( app->hwnd, &placement );
-        return placement.rcNormalPosition.top;
-        }
-    else
-        {
-        return app->windowed_y;
-        }
-    }
+	{
+	if( app->screenmode == APP_SCREENMODE_WINDOW )
+		{
+		WINDOWPLACEMENT placement;
+		placement.length = sizeof( placement );
+		GetWindowPlacement( app->hwnd, &placement );
+		return placement.rcNormalPosition.top;
+		}
+	else
+		{
+		return app->windowed_y;
+		}
+	}
 
 
 app_displays_t app_displays( app_t* app )
-    {
-    app_displays_t displays;
-    displays.count = app->display_count;
-    displays.displays = app->displays;
-    return displays;
-    }
+	{
+	app_displays_t displays;
+	displays.count = app->display_count;
+	displays.displays = app->displays;
+	return displays;
+	}
 
 
 void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
-    {
-    if( app->is_minimized ) return;
-    if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
-    SwapBuffers( app->hdc );
-    }
+	{
+	if( app->is_minimized ) return;
+	if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
+	SwapBuffers( app->hdc );
+	}
 
 
 static void app_sound_write( app_t* app, int sample_pairs_offset, int sample_pairs_count )
-    {
-    int offset = sample_pairs_offset * 2 * ( 16 / 8 );
-    int length = sample_pairs_count * 2 * ( 16 / 8 );
+	{
+	int offset = sample_pairs_offset * 2 * ( 16 / 8 );
+	int length = sample_pairs_count * 2 * ( 16 / 8 );
 
-    // Obtain memory address of write block. This will be in two parts if the block wraps around.
-    LPVOID lpvPtr1;
-    DWORD dwBytes1;
-    LPVOID lpvPtr2;
-    DWORD dwBytes2;
-    HRESULT hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
-        &lpvPtr2, &dwBytes2, 0 );
+	// Obtain memory address of write block. This will be in two parts if the block wraps around.
+	LPVOID lpvPtr1;
+	DWORD dwBytes1;
+	LPVOID lpvPtr2;
+	DWORD dwBytes2;
+	HRESULT hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
+		&lpvPtr2, &dwBytes2, 0 );
 
-    // If DSERR_BUFFERLOST is returned, restore and retry lock.
-    if( hr == DSERR_BUFFERLOST )
-        {
-        IDirectSoundBuffer8_Restore( app->dsoundbuf );
-        hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
-            &lpvPtr2, &dwBytes2, 0 );
-        }
-    if( FAILED( hr) )
-        {
-        app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't lock sound buffer" );
-        IDirectSound8_Release( app->dsound );
-        app->dsound = 0;
-        return;
-        }
+	// If DSERR_BUFFERLOST is returned, restore and retry lock.
+	if( hr == DSERR_BUFFERLOST )
+		{
+		IDirectSoundBuffer8_Restore( app->dsoundbuf );
+		hr = IDirectSoundBuffer8_Lock( app->dsoundbuf, (DWORD) offset, (DWORD) length, &lpvPtr1, &dwBytes1,
+			&lpvPtr2, &dwBytes2, 0 );
+		}
+	if( FAILED( hr) )
+		{
+		app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't lock sound buffer" );
+		IDirectSound8_Release( app->dsound );
+		app->dsound = 0;
+		return;
+		}
 
-    // Write to pointers.
-    app->sound_callback( (APP_S16*) lpvPtr1, (int) dwBytes1 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
-    if( lpvPtr2 ) app->sound_callback( (APP_S16*) lpvPtr2, (int) dwBytes2 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
+	// Write to pointers.
+	app->sound_callback( (APP_S16*) lpvPtr1, (int) dwBytes1 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
+	if( lpvPtr2 ) app->sound_callback( (APP_S16*) lpvPtr2, (int) dwBytes2 / ( 2 * ( 16 / 8 ) ), app->sound_user_data );
 
-    // Release the data back to DirectSound.
-    hr = IDirectSoundBuffer8_Unlock( app->dsoundbuf, lpvPtr1, dwBytes1, lpvPtr2, dwBytes2 );
-    if( FAILED( hr) )
-        {
-        app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't unlock sound buffer" );
-        IDirectSound8_Release( app->dsound );
-        app->dsound = 0;
-        return;
-        }
-    }
+	// Release the data back to DirectSound.
+	hr = IDirectSoundBuffer8_Unlock( app->dsoundbuf, lpvPtr1, dwBytes1, lpvPtr2, dwBytes2 );
+	if( FAILED( hr) )
+		{
+		app_log( app, APP_LOG_LEVEL_WARNING, "Couldn't unlock sound buffer" );
+		IDirectSound8_Release( app->dsound );
+		app->dsound = 0;
+		return;
+		}
+	}
 
 
 static DWORD WINAPI app_sound_thread_proc( LPVOID lpThreadParameter )
-    {
-    app_t* app = (app_t*) lpThreadParameter;
-    int mid_point = app->sample_pairs_count / 2;
-    int half_size = mid_point;
-    int prev_pos = 0;
-    while( InterlockedCompareExchange( &app->exit_sound_thread, 0, 0 ) == 0 )
-    {
-        WaitForMultipleObjectsEx( 2, app->sound_notifications, FALSE, 100, FALSE );
-        DWORD position = 0;
-        IDirectSoundBuffer8_GetCurrentPosition( app->dsoundbuf, &position, 0 );
-        int pos = ( (int) position )/( 2 * ( 16 / 8 ) );
+	{
+	app_t* app = (app_t*) lpThreadParameter;
+	int mid_point = app->sample_pairs_count / 2;
+	int half_size = mid_point;
+	int prev_pos = 0;
+	while( InterlockedCompareExchange( &app->exit_sound_thread, 0, 0 ) == 0 )
+	{
+		WaitForMultipleObjectsEx( 2, app->sound_notifications, FALSE, 100, FALSE );
+		DWORD position = 0;
+		IDirectSoundBuffer8_GetCurrentPosition( app->dsoundbuf, &position, 0 );
+		int pos = ( (int) position )/( 2 * ( 16 / 8 ) );
 
-        if( prev_pos >= mid_point && pos < mid_point )
-            app_sound_write( app, mid_point, half_size );
-        else if( prev_pos < mid_point && pos >= mid_point )
-            app_sound_write( app, 0, half_size );
+		if( prev_pos >= mid_point && pos < mid_point )
+			app_sound_write( app, mid_point, half_size );
+		else if( prev_pos < mid_point && pos >= mid_point )
+			app_sound_write( app, 0, half_size );
 
-        prev_pos = pos;
-        }
+		prev_pos = pos;
+		}
 
-    return 0;
-    }
+	return 0;
+	}
 
 
 void app_sound( app_t* app, int sample_pairs_count, void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data )
-    {
-    if( !app->dsound ) return;
+	{
+	if( !app->dsound ) return;
 
-    if( !sound_callback || !sample_pairs_count )
-        {
-        if( app->sound_thread_handle != INVALID_HANDLE_VALUE )
-            {
-            InterlockedExchange( &app->exit_sound_thread, 1 );
-            WaitForSingleObject( app->sound_thread_handle, INFINITE );
-            CloseHandle( app->sound_thread_handle );
-            app->sound_thread_handle = INVALID_HANDLE_VALUE;
-            }
-        if( app->dsoundbuf )
-            {
-            IDirectSoundBuffer8_Release( app->dsoundbuf );
-            app->dsoundbuf = NULL;
-            }
-        app->sample_pairs_count = 0;
-        app->sound_callback = NULL;
-        app->sound_user_data = NULL;
-        return;
-        }
+	if( !sound_callback || !sample_pairs_count )
+		{
+		if( app->sound_thread_handle != INVALID_HANDLE_VALUE )
+			{
+			InterlockedExchange( &app->exit_sound_thread, 1 );
+			WaitForSingleObject( app->sound_thread_handle, INFINITE );
+			CloseHandle( app->sound_thread_handle );
+			app->sound_thread_handle = INVALID_HANDLE_VALUE;
+			}
+		if( app->dsoundbuf )
+			{
+			IDirectSoundBuffer8_Release( app->dsoundbuf );
+			app->dsoundbuf = NULL;
+			}
+		app->sample_pairs_count = 0;
+		app->sound_callback = NULL;
+		app->sound_user_data = NULL;
+		return;
+		}
 
-    if( app->sample_pairs_count != sample_pairs_count )
-        {
-    app->sample_pairs_count = sample_pairs_count;
+	if( app->sample_pairs_count != sample_pairs_count )
+		{
+	app->sample_pairs_count = sample_pairs_count;
 
-    if( app->dsoundbuf )
-        {
-            IDirectSoundBuffer8_Release( app->dsoundbuf );
-        app->dsoundbuf = 0;
-        }
+	if( app->dsoundbuf )
+		{
+			IDirectSoundBuffer8_Release( app->dsoundbuf );
+		app->dsoundbuf = 0;
+		}
 
-    if( sample_pairs_count > 0 )
-        {
-        int const channels = 2;
-        int const frequency = 44100;
-        int const bits_per_sample = 16;
+	if( sample_pairs_count > 0 )
+		{
+		int const channels = 2;
+		int const frequency = 44100;
+		int const bits_per_sample = 16;
 
-        WORD const DSOUND_WAVE_FORMAT_PCM = 1;
-        DSOUND_WAVEFORMATEX format;
-        memset( &format, 0, sizeof( DSOUND_WAVEFORMATEX ) );
-        format.wFormatTag = DSOUND_WAVE_FORMAT_PCM;
-        format.nChannels = (WORD) channels;
-        format.nSamplesPerSec = (DWORD) frequency;
-        format.nBlockAlign = (WORD) ( ( channels * bits_per_sample ) / 8 );
-        format.nAvgBytesPerSec = (DWORD) ( frequency * format.nBlockAlign );
-        format.wBitsPerSample = (WORD) bits_per_sample;
-        format.cbSize = 0;
+		WORD const DSOUND_WAVE_FORMAT_PCM = 1;
+		DSOUND_WAVEFORMATEX format;
+		memset( &format, 0, sizeof( DSOUND_WAVEFORMATEX ) );
+		format.wFormatTag = DSOUND_WAVE_FORMAT_PCM;
+		format.nChannels = (WORD) channels;
+		format.nSamplesPerSec = (DWORD) frequency;
+		format.nBlockAlign = (WORD) ( ( channels * bits_per_sample ) / 8 );
+		format.nAvgBytesPerSec = (DWORD) ( frequency * format.nBlockAlign );
+		format.wBitsPerSample = (WORD) bits_per_sample;
+		format.cbSize = 0;
 
-        DSBUFFERDESC dsbdesc;
-        memset( &dsbdesc, 0, sizeof( DSBUFFERDESC ) );
-        dsbdesc.dwSize = sizeof( DSBUFFERDESC );
+		DSBUFFERDESC dsbdesc;
+		memset( &dsbdesc, 0, sizeof( DSBUFFERDESC ) );
+		dsbdesc.dwSize = sizeof( DSBUFFERDESC );
 
-            dsbdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY ;
+			dsbdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_GLOBALFOCUS | DSBCAPS_CTRLPOSITIONNOTIFY ;
 
-        int size = channels * ( bits_per_sample / 8 ) * sample_pairs_count;
-        dsbdesc.dwBufferBytes = (DWORD) size;
-        dsbdesc.lpwfxFormat = &format;
+		int size = channels * ( bits_per_sample / 8 ) * sample_pairs_count;
+		dsbdesc.dwBufferBytes = (DWORD) size;
+		dsbdesc.lpwfxFormat = &format;
 
-            struct IDirectSoundBuffer8* soundbuf = NULL;
-            HRESULT hr = IDirectSound8_CreateSoundBuffer( app->dsound, &dsbdesc, &soundbuf, NULL );
-            if( FAILED( hr ) || !soundbuf )
-            {
-            app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
-                IDirectSound8_Release( app->dsound );
-            app->dsound = 0;
-                app->sample_pairs_count = 0;
-                app->sound_callback = NULL;
-                app->sound_user_data = NULL;
-            return;
-            }
+			struct IDirectSoundBuffer8* soundbuf = NULL;
+			HRESULT hr = IDirectSound8_CreateSoundBuffer( app->dsound, &dsbdesc, &soundbuf, NULL );
+			if( FAILED( hr ) || !soundbuf )
+			{
+			app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSound8_Release( app->dsound );
+			app->dsound = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+			return;
+			}
 
-            GUID const GUID_IDirectSoundBuffer8 = { 0x6825a449, 0x7524, 0x4d82, { 0x92, 0x0f, 0x50, 0xe3, 0x6a, 0xb3, 0xab, 0x1e } };
-            #ifdef __cplusplus
-                GUID const& ref_GUID_IDirectSoundBuffer8 = GUID_IDirectSoundBuffer8;
-            #else
-                GUID const* ref_GUID_IDirectSoundBuffer8 = &GUID_IDirectSoundBuffer8;
-            #endif
-            hr = IDirectSoundBuffer8_QueryInterface( soundbuf, ref_GUID_IDirectSoundBuffer8, (void**) &app->dsoundbuf );
-            IDirectSoundBuffer8_Release( soundbuf );
+			GUID const GUID_IDirectSoundBuffer8 = { 0x6825a449, 0x7524, 0x4d82, { 0x92, 0x0f, 0x50, 0xe3, 0x6a, 0xb3, 0xab, 0x1e } };
+			#ifdef __cplusplus
+				GUID const& ref_GUID_IDirectSoundBuffer8 = GUID_IDirectSoundBuffer8;
+			#else
+				GUID const* ref_GUID_IDirectSoundBuffer8 = &GUID_IDirectSoundBuffer8;
+			#endif
+			hr = IDirectSoundBuffer8_QueryInterface( soundbuf, ref_GUID_IDirectSoundBuffer8, (void**) &app->dsoundbuf );
+			IDirectSoundBuffer8_Release( soundbuf );
 
-            if( FAILED( hr ) || !app->dsoundbuf )
-    {
-                app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
-                IDirectSound8_Release( app->dsound );
-                app->dsound = 0;
-                app->sample_pairs_count = 0;
-                app->sound_callback = NULL;
-                app->sound_user_data = NULL;
-                return;
-    }
+			if( FAILED( hr ) || !app->dsoundbuf )
+	{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSound8_Release( app->dsound );
+				app->dsound = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+				return;
+	}
 
-            struct IDirectSoundNotify* notify = NULL;
-            GUID const GUID_IDirectSoundNotify8 = { 0xb0210783, 0x89cd, 0x11d0, { 0xaf, 0x8, 0x0, 0xa0, 0xc9, 0x25, 0xcd, 0x16 } };
-            #ifdef __cplusplus
-                GUID const& ref_GUID_IDirectSoundNotify8 = GUID_IDirectSoundNotify8;
-            #else
-                GUID const* ref_GUID_IDirectSoundNotify8 = &GUID_IDirectSoundNotify8;
-            #endif
-            hr = IDirectSoundBuffer8_QueryInterface( app->dsoundbuf, ref_GUID_IDirectSoundNotify8, (void**) &notify );
-            if( FAILED( hr ) || !notify )
-            {
-                app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
-                IDirectSoundBuffer8_Release( app->dsoundbuf );
-                IDirectSound8_Release( app->dsound );
-                app->dsound = 0;
-                app->dsoundbuf = 0;
-                app->sample_pairs_count = 0;
-                app->sound_callback = NULL;
-                app->sound_user_data = NULL;
-                return;
-                }
+			struct IDirectSoundNotify* notify = NULL;
+			GUID const GUID_IDirectSoundNotify8 = { 0xb0210783, 0x89cd, 0x11d0, { 0xaf, 0x8, 0x0, 0xa0, 0xc9, 0x25, 0xcd, 0x16 } };
+			#ifdef __cplusplus
+				GUID const& ref_GUID_IDirectSoundNotify8 = GUID_IDirectSoundNotify8;
+			#else
+				GUID const* ref_GUID_IDirectSoundNotify8 = &GUID_IDirectSoundNotify8;
+			#endif
+			hr = IDirectSoundBuffer8_QueryInterface( app->dsoundbuf, ref_GUID_IDirectSoundNotify8, (void**) &notify );
+			if( FAILED( hr ) || !notify )
+			{
+				app_log( app, APP_LOG_LEVEL_WARNING, "Failed to create sound buffer" );
+				IDirectSoundBuffer8_Release( app->dsoundbuf );
+				IDirectSound8_Release( app->dsound );
+				app->dsound = 0;
+				app->dsoundbuf = 0;
+				app->sample_pairs_count = 0;
+				app->sound_callback = NULL;
+				app->sound_user_data = NULL;
+				return;
+				}
 
-            DSBPOSITIONNOTIFY notify_positions[ 2 ];
-            notify_positions[ 0 ].dwOffset = 0;
-            notify_positions[ 0 ].hEventNotify = app->sound_notifications[ 0 ];
-            notify_positions[ 1 ].dwOffset = (DWORD)( size / 2 );
-            notify_positions[ 1 ].hEventNotify = app->sound_notifications[ 1 ];
+			DSBPOSITIONNOTIFY notify_positions[ 2 ];
+			notify_positions[ 0 ].dwOffset = 0;
+			notify_positions[ 0 ].hEventNotify = app->sound_notifications[ 0 ];
+			notify_positions[ 1 ].dwOffset = (DWORD)( size / 2 );
+			notify_positions[ 1 ].hEventNotify = app->sound_notifications[ 1 ];
 
-            IDirectSoundNotify_SetNotificationPositions( notify, 2, notify_positions );
-            IDirectSoundNotify_Release( notify );
+			IDirectSoundNotify_SetNotificationPositions( notify, 2, notify_positions );
+			IDirectSoundNotify_Release( notify );
 
-            InterlockedExchange( &app->exit_sound_thread, 0 );
-            app->sound_thread_handle = CreateThread( NULL, 0U, app_sound_thread_proc, app, 0, NULL );
-            SetThreadPriority( app->sound_thread_handle, THREAD_PRIORITY_HIGHEST );
+			InterlockedExchange( &app->exit_sound_thread, 0 );
+			app->sound_thread_handle = CreateThread( NULL, 0U, app_sound_thread_proc, app, 0, NULL );
+			SetThreadPriority( app->sound_thread_handle, THREAD_PRIORITY_HIGHEST );
 
-            IDirectSoundBuffer8_Play( app->dsoundbuf, 0, 0, DSBPLAY_LOOPING );
-        }
-        }
+			IDirectSoundBuffer8_Play( app->dsoundbuf, 0, 0, DSBPLAY_LOOPING );
+		}
+		}
 
-    app->sound_callback = sound_callback;
-    app->sound_user_data = user_data;
-        }
+	app->sound_callback = sound_callback;
+	app->sound_user_data = user_data;
+		}
 
 
 void app_sound_volume( app_t* app, float volume )
-    {
-    if( !app->dsound ) return;
-    if( !app->dsoundbuf ) return;
+	{
+	if( !app->dsound ) return;
+	if( !app->dsoundbuf ) return;
 
-    int level = volume < 0.000015f ? DSBVOLUME_MIN : (int) ( 2000.0f * (float) log10( (double ) volume ) );
-    if( app->sound_level == level ) return;
-    app->sound_level = level;
+	int level = volume < 0.000015f ? DSBVOLUME_MIN : (int) ( 2000.0f * (float) log10( (double ) volume ) );
+	if( app->sound_level == level ) return;
+	app->sound_level = level;
 
-    IDirectSoundBuffer8_SetVolume( app->dsoundbuf, level );
-    }
+	IDirectSoundBuffer8_SetVolume( app->dsoundbuf, level );
+	}
 
 
 app_input_t app_input( app_t* app )
-    {
-    app_input_t input;
-    input.events = app->input_events;
-    input.count = app->input_count;
-    app->input_count = 0;
-    return input;
-    }
+	{
+	app_input_t input;
+	input.events = app->input_events;
+	input.count = app->input_count;
+	app->input_count = 0;
+	return input;
+	}
 
 
 void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
-    {
-    if( width == 0 || height == 0 ) return;
-    RECT r;
-    GetClientRect( app->hwnd, &r );
-    int window_width = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_width : r.right - r.left;
-    int window_height = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_height : r.bottom - r.top;
+	{
+	if( width == 0 || height == 0 ) return;
+	RECT r;
+	GetClientRect( app->hwnd, &r );
+	int window_width = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_width : r.right - r.left;
+	int window_height = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_height : r.bottom - r.top;
 
 
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = window_width / (float) width;
-        float vscale = window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( window_height - pixel_scale * height ) / 2.0f;
-            *x -= (int)( hborder );
-            *y -= (int)( vborder );
-            *x = (int)( *x / pixel_scale );
-            *y = (int)( *y / pixel_scale );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = window_width / width;
-        int vscale = window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( window_width - pixel_scale * width ) / 2;
-        int vborder = ( window_height - pixel_scale * height ) / 2;
-        *x -= (int)( hborder );
-        *y -= (int)( vborder );
-        *x = (int)( *x / pixel_scale );
-        *y = (int)( *y / pixel_scale );
-        }
-    }
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x -= (int)( hborder );
+			*y -= (int)( vborder );
+			*x = (int)( *x / pixel_scale );
+			*y = (int)( *y / pixel_scale );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x -= (int)( hborder );
+		*y -= (int)( vborder );
+		*x = (int)( *x / pixel_scale );
+		*y = (int)( *y / pixel_scale );
+		}
+	}
 
 
 void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
-    {
-    RECT r;
-    GetClientRect( app->hwnd, &r );
-    int window_width = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_width : r.right - r.left;
-    int window_height = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_height : r.bottom - r.top;
+	{
+	RECT r;
+	GetClientRect( app->hwnd, &r );
+	int window_width = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_width : r.right - r.left;
+	int window_height = ( app->screenmode == APP_SCREENMODE_FULLSCREEN ) ? app->fullscreen_height : r.bottom - r.top;
 
 
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = window_width / (float) width;
-        float vscale = window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( window_height - pixel_scale * height ) / 2.0f;
-            *x = (int)( *x * pixel_scale );
-            *y = (int)( *y * pixel_scale );
-            *x += (int)( hborder );
-            *y += (int)( vborder );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = window_width / width;
-        int vscale = window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( window_width - pixel_scale * width ) / 2;
-        int vborder = ( window_height - pixel_scale * height ) / 2;
-        *x = (int)( *x * pixel_scale );
-        *y = (int)( *y * pixel_scale );
-        *x += (int)( hborder );
-        *y += (int)( vborder );
-        }
-    }
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x = (int)( *x * pixel_scale );
+			*y = (int)( *y * pixel_scale );
+			*x += (int)( hborder );
+			*y += (int)( vborder );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x = (int)( *x * pixel_scale );
+		*y = (int)( *y * pixel_scale );
+		*x += (int)( hborder );
+		*y += (int)( vborder );
+		}
+	}
 
 
 
@@ -3324,14 +5405,14 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 #elif defined( APP_SDL )
 
 #ifndef APP_MALLOC
-    #include <stdlib.h>
-    #if defined(__cplusplus)
-        #define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
-    #else
-        #define APP_MALLOC( ctx, size ) ( malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( free( ptr ) )
-    #endif
+	#include <stdlib.h>
+	#if defined(__cplusplus)
+		#define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
+	#else
+		#define APP_MALLOC( ctx, size ) ( malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( free( ptr ) )
+	#endif
 #endif
 
 #include <string.h>
@@ -3340,403 +5421,403 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 #include "SDL.h"
 
 #ifndef APP_FATAL_ERROR
-    #define APP_FATAL_ERROR( ctx, message ) { \
-            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Fatal Error!", message, NULL ); exit( 0xff ); }
+	#define APP_FATAL_ERROR( ctx, message ) { \
+			SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Fatal Error!", message, NULL ); exit( 0xff ); }
 #endif
 
 struct app_t
-    {
-    void* memctx;
-    void* logctx;
-    void* fatalctx;
-    struct app_internal_opengl_t gl;
-    int initialized;
-    int exit_requested;
-    int has_focus;
-    app_interpolation_t interpolation;
-    app_screenmode_t screenmode;
+	{
+	void* memctx;
+	void* logctx;
+	void* fatalctx;
+	struct app_internal_opengl_t gl;
+	int initialized;
+	int exit_requested;
+	int has_focus;
+	app_interpolation_t interpolation;
+	app_screenmode_t screenmode;
 
-    SDL_Window* window;
-    SDL_Cursor* cursor;
+	SDL_Window* window;
+	SDL_Cursor* cursor;
 
-    SDL_AudioDeviceID sound_device;
-    void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
-    void* sound_user_data;
-    int volume;
+	SDL_AudioDeviceID sound_device;
+	void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
+	void* sound_user_data;
+	int volume;
 
-    app_input_event_t input_events[ 1024 ];
-    int input_count;
+	app_input_event_t input_events[ 1024 ];
+	int input_count;
 
-    int display_count;
-    app_display_t displays[ 16 ];
+	int display_count;
+	app_display_t displays[ 16 ];
 
-    };
+	};
 
 
 int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
-    {
-    app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
-    memset( app, 0, (int)sizeof( app_t ) );
-    app->memctx = memctx;
-    app->logctx = logctx;
-    app->fatalctx = fatalctx;
-    app->interpolation = APP_INTERPOLATION_LINEAR;
-    app->screenmode = APP_SCREENMODE_FULLSCREEN;
+	{
+	app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
+	memset( app, 0, (int)sizeof( app_t ) );
+	app->memctx = memctx;
+	app->logctx = logctx;
+	app->fatalctx = fatalctx;
+	app->interpolation = APP_INTERPOLATION_LINEAR;
+	app->screenmode = APP_SCREENMODE_FULLSCREEN;
 
-    int result = 0xff;
-    int display_count;
-    int glres;
-          
-    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
-        {
+	int result = 0xff;
+	int display_count;
+	int glres;
+
+	if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
+		{
 //        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        goto init_failed;
-        }
+		goto init_failed;
+		}
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-    app->window = SDL_CreateWindow( "", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 400, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
-    if( !app->window )
-    {
+	app->window = SDL_CreateWindow( "", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 400, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+	if( !app->window )
+	{
 //        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        goto init_failed;
-    }
+		goto init_failed;
+	}
 
-    app->has_focus = 1;
-    app->volume = 256;
+	app->has_focus = 1;
+	app->volume = 256;
 
-    display_count = SDL_GetNumVideoDisplays();
-    for( int i = 0; i < display_count; ++i )
-        {
-        SDL_Rect r;
-        SDL_GetDisplayBounds( i, &r );
-        app_display_t d;
-        sprintf( d.id, "DISPLAY%d", i );
-        d.x = r.x;
-        d.y = r.y;
-        d.width = r.w;
-        d.height = r.h;
-        app->displays[ i ] = d;
-        }
-    app->display_count = display_count;
+	display_count = SDL_GetNumVideoDisplays();
+	for( int i = 0; i < display_count; ++i )
+		{
+		SDL_Rect r;
+		SDL_GetDisplayBounds( i, &r );
+		app_display_t d;
+		snprintf( d.id, sizeof(d.id), "DISPLAY%d", i );
+		d.x = r.x;
+		d.y = r.y;
+		d.width = r.w;
+		d.height = r.h;
+		app->displays[ i ] = d;
+		}
+	app->display_count = display_count;
 
-    SDL_GL_CreateContext( app->window );
-    glewInit();
+	SDL_GL_CreateContext( app->window );
+	glewInit();
 
-    SDL_GL_SetSwapInterval( 1 );
+	SDL_GL_SetSwapInterval( 1 );
 
-    app->gl.CreateShader = glCreateShader;
-    app->gl.ShaderSource = glShaderSource;
-    app->gl.CompileShader = glCompileShader;
-    app->gl.GetShaderiv = glGetShaderiv;
-    app->gl.CreateProgram = glCreateProgram;
-    app->gl.AttachShader = glAttachShader;
-    app->gl.BindAttribLocation = glBindAttribLocation;
-    app->gl.LinkProgram = glLinkProgram;
-    app->gl.GetProgramiv = glGetProgramiv;
-    app->gl.GenBuffers = glGenBuffers;
-    app->gl.BindBuffer = glBindBuffer;
-    app->gl.EnableVertexAttribArray = glEnableVertexAttribArray;
-    app->gl.VertexAttribPointer = glVertexAttribPointer;
-    app->gl.GenTextures = glGenTextures;
-    app->gl.Enable = glEnable;
-    app->gl.ActiveTexture = glActiveTexture;
-    app->gl.BindTexture = glBindTexture;
-    app->gl.TexParameteri = glTexParameteri;
-    app->gl.DeleteBuffers = glDeleteBuffers;
-    app->gl.DeleteTextures = glDeleteTextures;
-    app->gl.BufferData = glBufferData;
-    app->gl.UseProgram = glUseProgram;
-    app->gl.Uniform1i = glUniform1i;
-    app->gl.Uniform3f = glUniform3f;
-    app->gl.GetUniformLocation = glGetUniformLocation;
-    app->gl.TexImage2D = glTexImage2D;
-    app->gl.ClearColor = glClearColor;
-    app->gl.Clear = glClear;
-    app->gl.DrawArrays = glDrawArrays;
-    app->gl.Viewport = glViewport;
-    app->gl.DeleteShader = glDeleteShader;
-    app->gl.DeleteProgram = glDeleteProgram;
-    #ifdef APP_REPORT_SHADER_ERRORS
-        app->gl.GetShaderInfoLog = glGetShaderInfoLog;
-    #endif
+	app->gl.CreateShader = glCreateShader;
+	app->gl.ShaderSource = glShaderSource;
+	app->gl.CompileShader = glCompileShader;
+	app->gl.GetShaderiv = glGetShaderiv;
+	app->gl.CreateProgram = glCreateProgram;
+	app->gl.AttachShader = glAttachShader;
+	app->gl.BindAttribLocation = glBindAttribLocation;
+	app->gl.LinkProgram = glLinkProgram;
+	app->gl.GetProgramiv = glGetProgramiv;
+	app->gl.GenBuffers = glGenBuffers;
+	app->gl.BindBuffer = glBindBuffer;
+	app->gl.EnableVertexAttribArray = glEnableVertexAttribArray;
+	app->gl.VertexAttribPointer = glVertexAttribPointer;
+	app->gl.GenTextures = glGenTextures;
+	app->gl.Enable = glEnable;
+	app->gl.ActiveTexture = glActiveTexture;
+	app->gl.BindTexture = glBindTexture;
+	app->gl.TexParameteri = glTexParameteri;
+	app->gl.DeleteBuffers = glDeleteBuffers;
+	app->gl.DeleteTextures = glDeleteTextures;
+	app->gl.BufferData = glBufferData;
+	app->gl.UseProgram = glUseProgram;
+	app->gl.Uniform1i = glUniform1i;
+	app->gl.Uniform3f = glUniform3f;
+	app->gl.GetUniformLocation = glGetUniformLocation;
+	app->gl.TexImage2D = glTexImage2D;
+	app->gl.ClearColor = glClearColor;
+	app->gl.Clear = glClear;
+	app->gl.DrawArrays = glDrawArrays;
+	app->gl.Viewport = glViewport;
+	app->gl.DeleteShader = glDeleteShader;
+	app->gl.DeleteProgram = glDeleteProgram;
+	#ifdef APP_REPORT_SHADER_ERRORS
+		app->gl.GetShaderInfoLog = glGetShaderInfoLog;
+	#endif
 
-    glres = app_internal_opengl_init( app, &app->gl, app->interpolation, 640, 400 );
-    if( !glres )
-        {
-        app_fatal_error( app, "OpenGL init fail" );
-        goto init_failed;
-        }
+	glres = app_internal_opengl_init( app, &app->gl, app->interpolation, 640, 400 );
+	if( !glres )
+		{
+		app_fatal_error( app, "OpenGL init fail" );
+		goto init_failed;
+		}
 
-    result = app_proc( app, user_data );
+	result = app_proc( app, user_data );
 
 init_failed:
-    if( app->sound_device )
-        {
-        SDL_PauseAudioDevice( app->sound_device, 1 );
-        SDL_CloseAudioDevice( app->sound_device );
-        app->sound_device = 0;
-        app->sound_callback = NULL;
-        app->sound_user_data = NULL;
-        }
+	if( app->sound_device )
+		{
+		SDL_PauseAudioDevice( app->sound_device, 1 );
+		SDL_CloseAudioDevice( app->sound_device );
+		app->sound_device = 0;
+		app->sound_callback = NULL;
+		app->sound_user_data = NULL;
+		}
 
-    if( app->cursor ) SDL_FreeCursor( app->cursor );
+	if( app->cursor ) SDL_FreeCursor( app->cursor );
 
-    //Destroy window
-    SDL_DestroyWindow( app->window );
+	//Destroy window
+	SDL_DestroyWindow( app->window );
 
 
-    //Quit SDL subsystems
-    SDL_Quit();
+	//Quit SDL subsystems
+	SDL_Quit();
 
-    APP_FREE( memctx, app );
-    return result;
-    }
+	APP_FREE( memctx, app );
+	return result;
+	}
 
 
 static app_key_t app_internal_scancode_to_appkey( app_t* app, SDL_Scancode scancode )
 
-    {
-    int map[ 287 * 2 ] = { APP_KEY_INVALID, SDL_SCANCODE_UNKNOWN, APP_KEY_INVALID, 1, APP_KEY_INVALID, 2, APP_KEY_INVALID, 3, APP_KEY_A, SDL_SCANCODE_A,
-        APP_KEY_B, SDL_SCANCODE_B, APP_KEY_C, SDL_SCANCODE_C, APP_KEY_D, SDL_SCANCODE_D, APP_KEY_E, SDL_SCANCODE_E, APP_KEY_F, SDL_SCANCODE_F, APP_KEY_G,
-        SDL_SCANCODE_G, APP_KEY_H, SDL_SCANCODE_H, APP_KEY_I, SDL_SCANCODE_I, APP_KEY_J, SDL_SCANCODE_J, APP_KEY_K, SDL_SCANCODE_K, APP_KEY_L,
-        SDL_SCANCODE_L, APP_KEY_M, SDL_SCANCODE_M, APP_KEY_N, SDL_SCANCODE_N, APP_KEY_O, SDL_SCANCODE_O, APP_KEY_P, SDL_SCANCODE_P, APP_KEY_Q,
-        SDL_SCANCODE_Q, APP_KEY_R, SDL_SCANCODE_R, APP_KEY_S, SDL_SCANCODE_S, APP_KEY_T, SDL_SCANCODE_T, APP_KEY_U, SDL_SCANCODE_U, APP_KEY_V,
-        SDL_SCANCODE_V, APP_KEY_W, SDL_SCANCODE_W, APP_KEY_X, SDL_SCANCODE_X, APP_KEY_Y, SDL_SCANCODE_Y, APP_KEY_Z, SDL_SCANCODE_Z, APP_KEY_1,
-        SDL_SCANCODE_1, APP_KEY_2, SDL_SCANCODE_2, APP_KEY_3, SDL_SCANCODE_3, APP_KEY_4, SDL_SCANCODE_4, APP_KEY_5, SDL_SCANCODE_5, APP_KEY_6,
-        SDL_SCANCODE_6, APP_KEY_7, SDL_SCANCODE_7, APP_KEY_8, SDL_SCANCODE_8, APP_KEY_9, SDL_SCANCODE_9, APP_KEY_0, SDL_SCANCODE_0, APP_KEY_RETURN,
-        SDL_SCANCODE_RETURN, APP_KEY_ESCAPE, SDL_SCANCODE_ESCAPE, APP_KEY_BACK, SDL_SCANCODE_BACKSPACE, APP_KEY_TAB, SDL_SCANCODE_TAB, APP_KEY_SPACE,
-        SDL_SCANCODE_SPACE, APP_KEY_OEM_MINUS, SDL_SCANCODE_MINUS, APP_KEY_INVALID, SDL_SCANCODE_EQUALS, APP_KEY_OEM_4, SDL_SCANCODE_LEFTBRACKET,
-        APP_KEY_OEM_6, SDL_SCANCODE_RIGHTBRACKET, APP_KEY_OEM_5, SDL_SCANCODE_BACKSLASH, APP_KEY_INVALID, SDL_SCANCODE_NONUSHASH, APP_KEY_OEM_1,
-        SDL_SCANCODE_SEMICOLON, APP_KEY_OEM_7, SDL_SCANCODE_APOSTROPHE, APP_KEY_INVALID, SDL_SCANCODE_GRAVE, APP_KEY_OEM_COMMA, SDL_SCANCODE_COMMA,
-        APP_KEY_OEM_PERIOD, SDL_SCANCODE_PERIOD, APP_KEY_OEM_2, SDL_SCANCODE_SLASH, APP_KEY_CAPITAL, SDL_SCANCODE_CAPSLOCK, APP_KEY_F1, SDL_SCANCODE_F1,
-        APP_KEY_F2, SDL_SCANCODE_F2, APP_KEY_F3, SDL_SCANCODE_F3, APP_KEY_F4, SDL_SCANCODE_F4, APP_KEY_F5, SDL_SCANCODE_F5, APP_KEY_F6, SDL_SCANCODE_F6,
-        APP_KEY_F7, SDL_SCANCODE_F7, APP_KEY_F8, SDL_SCANCODE_F8, APP_KEY_F9, SDL_SCANCODE_F9, APP_KEY_F10, SDL_SCANCODE_F10, APP_KEY_F11,
-        SDL_SCANCODE_F11, APP_KEY_F12, SDL_SCANCODE_F12, APP_KEY_SNAPSHOT, SDL_SCANCODE_PRINTSCREEN, APP_KEY_SCROLL, SDL_SCANCODE_SCROLLLOCK,
-        APP_KEY_PAUSE, SDL_SCANCODE_PAUSE, APP_KEY_INSERT, SDL_SCANCODE_INSERT, APP_KEY_HOME, SDL_SCANCODE_HOME, APP_KEY_PRIOR, SDL_SCANCODE_PAGEUP,
-        APP_KEY_DELETE, SDL_SCANCODE_DELETE, APP_KEY_END, SDL_SCANCODE_END, APP_KEY_NEXT, SDL_SCANCODE_PAGEDOWN, APP_KEY_RIGHT, SDL_SCANCODE_RIGHT,
-        APP_KEY_LEFT, SDL_SCANCODE_LEFT, APP_KEY_DOWN, SDL_SCANCODE_DOWN, APP_KEY_UP, SDL_SCANCODE_UP, APP_KEY_NUMLOCK, SDL_SCANCODE_NUMLOCKCLEAR,
-        APP_KEY_DIVIDE, SDL_SCANCODE_KP_DIVIDE, APP_KEY_MULTIPLY, SDL_SCANCODE_KP_MULTIPLY, APP_KEY_SUBTRACT, SDL_SCANCODE_KP_MINUS, APP_KEY_ADD,
-        SDL_SCANCODE_KP_PLUS, APP_KEY_RETURN, SDL_SCANCODE_KP_ENTER, APP_KEY_NUMPAD1,SDL_SCANCODE_KP_1, APP_KEY_NUMPAD2,SDL_SCANCODE_KP_2, APP_KEY_NUMPAD3,
-        SDL_SCANCODE_KP_3, APP_KEY_NUMPAD4,SDL_SCANCODE_KP_4, APP_KEY_NUMPAD5,SDL_SCANCODE_KP_5, APP_KEY_NUMPAD6,SDL_SCANCODE_KP_6, APP_KEY_NUMPAD7,
-        SDL_SCANCODE_KP_7, APP_KEY_NUMPAD8,SDL_SCANCODE_KP_8, APP_KEY_NUMPAD9,SDL_SCANCODE_KP_9, APP_KEY_NUMPAD0,SDL_SCANCODE_KP_0, APP_KEY_DECIMAL,
-        SDL_SCANCODE_KP_PERIOD, APP_KEY_INVALID, SDL_SCANCODE_NONUSBACKSLASH, APP_KEY_APPS, SDL_SCANCODE_APPLICATION, APP_KEY_INVALID, SDL_SCANCODE_POWER,
-        APP_KEY_RETURN, SDL_SCANCODE_KP_EQUALS, APP_KEY_F13, SDL_SCANCODE_F13, APP_KEY_F14, SDL_SCANCODE_F14, APP_KEY_F15, SDL_SCANCODE_F15, APP_KEY_F16,
-        SDL_SCANCODE_F16, APP_KEY_F17, SDL_SCANCODE_F17, APP_KEY_F18, SDL_SCANCODE_F18, APP_KEY_F19, SDL_SCANCODE_F19, APP_KEY_F20, SDL_SCANCODE_F20,
-        APP_KEY_F21, SDL_SCANCODE_F21, APP_KEY_F22, SDL_SCANCODE_F22, APP_KEY_F23, SDL_SCANCODE_F23, APP_KEY_F24, SDL_SCANCODE_F24, APP_KEY_EXEC,
-        SDL_SCANCODE_EXECUTE, APP_KEY_HELP, SDL_SCANCODE_HELP, APP_KEY_MENU, SDL_SCANCODE_MENU, APP_KEY_SELECT, SDL_SCANCODE_SELECT, APP_KEY_MEDIA_STOP,
-        SDL_SCANCODE_STOP, APP_KEY_INVALID, SDL_SCANCODE_AGAIN, APP_KEY_INVALID, SDL_SCANCODE_UNDO, APP_KEY_INVALID, SDL_SCANCODE_CUT, APP_KEY_INVALID,
-        SDL_SCANCODE_COPY, APP_KEY_INVALID, SDL_SCANCODE_PASTE, APP_KEY_INVALID, SDL_SCANCODE_FIND, APP_KEY_VOLUME_MUTE, SDL_SCANCODE_MUTE,
-        APP_KEY_VOLUME_UP, SDL_SCANCODE_VOLUMEUP, APP_KEY_VOLUME_DOWN, SDL_SCANCODE_VOLUMEDOWN, APP_KEY_INVALID, 130, APP_KEY_INVALID, 131,
-        APP_KEY_INVALID, 132, APP_KEY_SEPARATOR, SDL_SCANCODE_KP_COMMA, APP_KEY_INVALID, SDL_SCANCODE_KP_EQUALSAS400, APP_KEY_INVALID,
-        SDL_SCANCODE_INTERNATIONAL1, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL2, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL3, APP_KEY_INVALID,
-        SDL_SCANCODE_INTERNATIONAL4, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL5, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL6, APP_KEY_INVALID,
-        SDL_SCANCODE_INTERNATIONAL7, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL8, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL9, APP_KEY_HANGUL,
-        SDL_SCANCODE_LANG1, APP_KEY_HANJA, SDL_SCANCODE_LANG2,  APP_KEY_INVALID, SDL_SCANCODE_LANG3, APP_KEY_INVALID, SDL_SCANCODE_LANG4, APP_KEY_INVALID,
-        SDL_SCANCODE_LANG5, APP_KEY_INVALID, SDL_SCANCODE_LANG6, APP_KEY_INVALID, SDL_SCANCODE_LANG7, APP_KEY_INVALID, SDL_SCANCODE_LANG8, APP_KEY_INVALID,
-        SDL_SCANCODE_LANG9, APP_KEY_INVALID, SDL_SCANCODE_ALTERASE, APP_KEY_INVALID, SDL_SCANCODE_SYSREQ, APP_KEY_CANCEL, SDL_SCANCODE_CANCEL, APP_KEY_CLEAR,
-        SDL_SCANCODE_CLEAR, APP_KEY_PRIOR, SDL_SCANCODE_PRIOR, APP_KEY_RETURN, SDL_SCANCODE_RETURN2, APP_KEY_OEM_COMMA, SDL_SCANCODE_SEPARATOR,
-        APP_KEY_INVALID, SDL_SCANCODE_OUT, APP_KEY_INVALID, SDL_SCANCODE_OPER, APP_KEY_INVALID, SDL_SCANCODE_CLEARAGAIN, APP_KEY_CRSEL, SDL_SCANCODE_CRSEL,
-        APP_KEY_EXSEL, SDL_SCANCODE_EXSEL, APP_KEY_INVALID, 165, APP_KEY_INVALID, 166, APP_KEY_INVALID, 167, APP_KEY_INVALID, 168, APP_KEY_INVALID, 169,
-        APP_KEY_INVALID, 170, APP_KEY_INVALID, 171, APP_KEY_INVALID, 172, APP_KEY_INVALID, 173, APP_KEY_INVALID, 174, APP_KEY_INVALID, 175, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_00, APP_KEY_INVALID, SDL_SCANCODE_KP_000, APP_KEY_INVALID, SDL_SCANCODE_THOUSANDSSEPARATOR, APP_KEY_INVALID,
-        SDL_SCANCODE_DECIMALSEPARATOR, APP_KEY_INVALID, SDL_SCANCODE_CURRENCYUNIT, APP_KEY_INVALID, SDL_SCANCODE_CURRENCYSUBUNIT, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_LEFTPAREN, APP_KEY_INVALID, SDL_SCANCODE_KP_RIGHTPAREN, APP_KEY_INVALID, SDL_SCANCODE_KP_LEFTBRACE, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_RIGHTBRACE, APP_KEY_INVALID, SDL_SCANCODE_KP_TAB, APP_KEY_INVALID, SDL_SCANCODE_KP_BACKSPACE, APP_KEY_INVALID, SDL_SCANCODE_KP_A,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_B, APP_KEY_INVALID, SDL_SCANCODE_KP_C, APP_KEY_INVALID, SDL_SCANCODE_KP_D, APP_KEY_INVALID, SDL_SCANCODE_KP_E,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_F, APP_KEY_INVALID, SDL_SCANCODE_KP_XOR, APP_KEY_INVALID, SDL_SCANCODE_KP_POWER, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_PERCENT, APP_KEY_INVALID, SDL_SCANCODE_KP_LESS, APP_KEY_INVALID, SDL_SCANCODE_KP_GREATER, APP_KEY_INVALID, SDL_SCANCODE_KP_AMPERSAND,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_DBLAMPERSAND, APP_KEY_INVALID, SDL_SCANCODE_KP_VERTICALBAR, APP_KEY_INVALID, SDL_SCANCODE_KP_DBLVERTICALBAR,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_COLON, APP_KEY_INVALID, SDL_SCANCODE_KP_HASH, APP_KEY_INVALID, SDL_SCANCODE_KP_SPACE, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_AT, APP_KEY_INVALID, SDL_SCANCODE_KP_EXCLAM, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMSTORE, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMRECALL,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_MEMCLEAR, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMADD, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMSUBTRACT, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_MEMMULTIPLY, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMDIVIDE, APP_KEY_INVALID, SDL_SCANCODE_KP_PLUSMINUS, APP_KEY_INVALID,
-        SDL_SCANCODE_KP_CLEAR, APP_KEY_INVALID, SDL_SCANCODE_KP_CLEARENTRY, APP_KEY_INVALID, SDL_SCANCODE_KP_BINARY, APP_KEY_INVALID, SDL_SCANCODE_KP_OCTAL,
-        APP_KEY_INVALID, SDL_SCANCODE_KP_DECIMAL, APP_KEY_INVALID, SDL_SCANCODE_KP_HEXADECIMAL, APP_KEY_INVALID, 222, APP_KEY_INVALID, 223, APP_KEY_LCONTROL,
-        SDL_SCANCODE_LCTRL, APP_KEY_LSHIFT, SDL_SCANCODE_LSHIFT, APP_KEY_LMENU, SDL_SCANCODE_LALT, APP_KEY_LWIN, SDL_SCANCODE_LGUI, APP_KEY_RCONTROL,
-        SDL_SCANCODE_RCTRL, APP_KEY_RSHIFT, SDL_SCANCODE_RSHIFT, APP_KEY_RMENU, SDL_SCANCODE_RALT, APP_KEY_RWIN, SDL_SCANCODE_RGUI, APP_KEY_INVALID, 232,
-        APP_KEY_INVALID, 233, APP_KEY_INVALID, 234, APP_KEY_INVALID, 235, APP_KEY_INVALID, 236, APP_KEY_INVALID, 237, APP_KEY_INVALID, 238, APP_KEY_INVALID,
-        239, APP_KEY_INVALID, 240, APP_KEY_INVALID, 241, APP_KEY_INVALID, 242, APP_KEY_INVALID, 243, APP_KEY_INVALID, 244, APP_KEY_INVALID, 245,
-        APP_KEY_INVALID, 246, APP_KEY_INVALID, 247, APP_KEY_INVALID, 248, APP_KEY_INVALID, 249, APP_KEY_INVALID, 250, APP_KEY_INVALID, 251, APP_KEY_INVALID,
-        252, APP_KEY_INVALID, 253, APP_KEY_INVALID, 254, APP_KEY_INVALID, 255, APP_KEY_INVALID, 256, APP_KEY_MODECHANGE, SDL_SCANCODE_MODE,
-        APP_KEY_MEDIA_NEXT_TRACK, SDL_SCANCODE_AUDIONEXT, APP_KEY_MEDIA_PREV_TRACK, SDL_SCANCODE_AUDIOPREV, APP_KEY_MEDIA_PLAY_PAUSE, SDL_SCANCODE_AUDIOSTOP,
-        APP_KEY_PLAY, SDL_SCANCODE_AUDIOPLAY, APP_KEY_VOLUME_MUTE, SDL_SCANCODE_AUDIOMUTE, APP_KEY_LAUNCH_MEDIA_SELECT, SDL_SCANCODE_MEDIASELECT,
-        APP_KEY_INVALID, SDL_SCANCODE_WWW, APP_KEY_LAUNCH_MAIL, SDL_SCANCODE_MAIL, APP_KEY_INVALID, SDL_SCANCODE_CALCULATOR, APP_KEY_INVALID,
-        SDL_SCANCODE_COMPUTER, APP_KEY_BROWSER_SEARCH, SDL_SCANCODE_AC_SEARCH, APP_KEY_BROWSER_HOME, SDL_SCANCODE_AC_HOME, APP_KEY_BROWSER_BACK,
-        SDL_SCANCODE_AC_BACK, APP_KEY_BROWSER_FORWARD, SDL_SCANCODE_AC_FORWARD, APP_KEY_BROWSER_STOP, SDL_SCANCODE_AC_STOP, APP_KEY_BROWSER_REFRESH,
-        SDL_SCANCODE_AC_REFRESH, APP_KEY_BROWSER_FAVORITES, SDL_SCANCODE_AC_BOOKMARKS, APP_KEY_INVALID, SDL_SCANCODE_BRIGHTNESSDOWN, APP_KEY_INVALID,
-        SDL_SCANCODE_BRIGHTNESSUP, APP_KEY_INVALID, SDL_SCANCODE_DISPLAYSWITCH, APP_KEY_INVALID, SDL_SCANCODE_KBDILLUMTOGGLE, APP_KEY_INVALID,
-        SDL_SCANCODE_KBDILLUMDOWN, APP_KEY_INVALID, SDL_SCANCODE_KBDILLUMUP, APP_KEY_INVALID, SDL_SCANCODE_EJECT, APP_KEY_SLEEP, SDL_SCANCODE_SLEEP,
-        APP_KEY_LAUNCH_APP1, SDL_SCANCODE_APP1, APP_KEY_LAUNCH_APP2, SDL_SCANCODE_APP2, APP_KEY_INVALID, SDL_SCANCODE_AUDIOREWIND, APP_KEY_INVALID,
-        SDL_SCANCODE_AUDIOFASTFORWARD, };
+	{
+	int map[ 287 * 2 ] = { APP_KEY_INVALID, SDL_SCANCODE_UNKNOWN, APP_KEY_INVALID, 1, APP_KEY_INVALID, 2, APP_KEY_INVALID, 3, APP_KEY_A, SDL_SCANCODE_A,
+		APP_KEY_B, SDL_SCANCODE_B, APP_KEY_C, SDL_SCANCODE_C, APP_KEY_D, SDL_SCANCODE_D, APP_KEY_E, SDL_SCANCODE_E, APP_KEY_F, SDL_SCANCODE_F, APP_KEY_G,
+		SDL_SCANCODE_G, APP_KEY_H, SDL_SCANCODE_H, APP_KEY_I, SDL_SCANCODE_I, APP_KEY_J, SDL_SCANCODE_J, APP_KEY_K, SDL_SCANCODE_K, APP_KEY_L,
+		SDL_SCANCODE_L, APP_KEY_M, SDL_SCANCODE_M, APP_KEY_N, SDL_SCANCODE_N, APP_KEY_O, SDL_SCANCODE_O, APP_KEY_P, SDL_SCANCODE_P, APP_KEY_Q,
+		SDL_SCANCODE_Q, APP_KEY_R, SDL_SCANCODE_R, APP_KEY_S, SDL_SCANCODE_S, APP_KEY_T, SDL_SCANCODE_T, APP_KEY_U, SDL_SCANCODE_U, APP_KEY_V,
+		SDL_SCANCODE_V, APP_KEY_W, SDL_SCANCODE_W, APP_KEY_X, SDL_SCANCODE_X, APP_KEY_Y, SDL_SCANCODE_Y, APP_KEY_Z, SDL_SCANCODE_Z, APP_KEY_1,
+		SDL_SCANCODE_1, APP_KEY_2, SDL_SCANCODE_2, APP_KEY_3, SDL_SCANCODE_3, APP_KEY_4, SDL_SCANCODE_4, APP_KEY_5, SDL_SCANCODE_5, APP_KEY_6,
+		SDL_SCANCODE_6, APP_KEY_7, SDL_SCANCODE_7, APP_KEY_8, SDL_SCANCODE_8, APP_KEY_9, SDL_SCANCODE_9, APP_KEY_0, SDL_SCANCODE_0, APP_KEY_RETURN,
+		SDL_SCANCODE_RETURN, APP_KEY_ESCAPE, SDL_SCANCODE_ESCAPE, APP_KEY_BACK, SDL_SCANCODE_BACKSPACE, APP_KEY_TAB, SDL_SCANCODE_TAB, APP_KEY_SPACE,
+		SDL_SCANCODE_SPACE, APP_KEY_OEM_MINUS, SDL_SCANCODE_MINUS, APP_KEY_INVALID, SDL_SCANCODE_EQUALS, APP_KEY_OEM_4, SDL_SCANCODE_LEFTBRACKET,
+		APP_KEY_OEM_6, SDL_SCANCODE_RIGHTBRACKET, APP_KEY_OEM_5, SDL_SCANCODE_BACKSLASH, APP_KEY_INVALID, SDL_SCANCODE_NONUSHASH, APP_KEY_OEM_1,
+		SDL_SCANCODE_SEMICOLON, APP_KEY_OEM_7, SDL_SCANCODE_APOSTROPHE, APP_KEY_INVALID, SDL_SCANCODE_GRAVE, APP_KEY_OEM_COMMA, SDL_SCANCODE_COMMA,
+		APP_KEY_OEM_PERIOD, SDL_SCANCODE_PERIOD, APP_KEY_OEM_2, SDL_SCANCODE_SLASH, APP_KEY_CAPITAL, SDL_SCANCODE_CAPSLOCK, APP_KEY_F1, SDL_SCANCODE_F1,
+		APP_KEY_F2, SDL_SCANCODE_F2, APP_KEY_F3, SDL_SCANCODE_F3, APP_KEY_F4, SDL_SCANCODE_F4, APP_KEY_F5, SDL_SCANCODE_F5, APP_KEY_F6, SDL_SCANCODE_F6,
+		APP_KEY_F7, SDL_SCANCODE_F7, APP_KEY_F8, SDL_SCANCODE_F8, APP_KEY_F9, SDL_SCANCODE_F9, APP_KEY_F10, SDL_SCANCODE_F10, APP_KEY_F11,
+		SDL_SCANCODE_F11, APP_KEY_F12, SDL_SCANCODE_F12, APP_KEY_SNAPSHOT, SDL_SCANCODE_PRINTSCREEN, APP_KEY_SCROLL, SDL_SCANCODE_SCROLLLOCK,
+		APP_KEY_PAUSE, SDL_SCANCODE_PAUSE, APP_KEY_INSERT, SDL_SCANCODE_INSERT, APP_KEY_HOME, SDL_SCANCODE_HOME, APP_KEY_PRIOR, SDL_SCANCODE_PAGEUP,
+		APP_KEY_DELETE, SDL_SCANCODE_DELETE, APP_KEY_END, SDL_SCANCODE_END, APP_KEY_NEXT, SDL_SCANCODE_PAGEDOWN, APP_KEY_RIGHT, SDL_SCANCODE_RIGHT,
+		APP_KEY_LEFT, SDL_SCANCODE_LEFT, APP_KEY_DOWN, SDL_SCANCODE_DOWN, APP_KEY_UP, SDL_SCANCODE_UP, APP_KEY_NUMLOCK, SDL_SCANCODE_NUMLOCKCLEAR,
+		APP_KEY_DIVIDE, SDL_SCANCODE_KP_DIVIDE, APP_KEY_MULTIPLY, SDL_SCANCODE_KP_MULTIPLY, APP_KEY_SUBTRACT, SDL_SCANCODE_KP_MINUS, APP_KEY_ADD,
+		SDL_SCANCODE_KP_PLUS, APP_KEY_RETURN, SDL_SCANCODE_KP_ENTER, APP_KEY_NUMPAD1,SDL_SCANCODE_KP_1, APP_KEY_NUMPAD2,SDL_SCANCODE_KP_2, APP_KEY_NUMPAD3,
+		SDL_SCANCODE_KP_3, APP_KEY_NUMPAD4,SDL_SCANCODE_KP_4, APP_KEY_NUMPAD5,SDL_SCANCODE_KP_5, APP_KEY_NUMPAD6,SDL_SCANCODE_KP_6, APP_KEY_NUMPAD7,
+		SDL_SCANCODE_KP_7, APP_KEY_NUMPAD8,SDL_SCANCODE_KP_8, APP_KEY_NUMPAD9,SDL_SCANCODE_KP_9, APP_KEY_NUMPAD0,SDL_SCANCODE_KP_0, APP_KEY_DECIMAL,
+		SDL_SCANCODE_KP_PERIOD, APP_KEY_INVALID, SDL_SCANCODE_NONUSBACKSLASH, APP_KEY_APPS, SDL_SCANCODE_APPLICATION, APP_KEY_INVALID, SDL_SCANCODE_POWER,
+		APP_KEY_RETURN, SDL_SCANCODE_KP_EQUALS, APP_KEY_F13, SDL_SCANCODE_F13, APP_KEY_F14, SDL_SCANCODE_F14, APP_KEY_F15, SDL_SCANCODE_F15, APP_KEY_F16,
+		SDL_SCANCODE_F16, APP_KEY_F17, SDL_SCANCODE_F17, APP_KEY_F18, SDL_SCANCODE_F18, APP_KEY_F19, SDL_SCANCODE_F19, APP_KEY_F20, SDL_SCANCODE_F20,
+		APP_KEY_F21, SDL_SCANCODE_F21, APP_KEY_F22, SDL_SCANCODE_F22, APP_KEY_F23, SDL_SCANCODE_F23, APP_KEY_F24, SDL_SCANCODE_F24, APP_KEY_EXEC,
+		SDL_SCANCODE_EXECUTE, APP_KEY_HELP, SDL_SCANCODE_HELP, APP_KEY_MENU, SDL_SCANCODE_MENU, APP_KEY_SELECT, SDL_SCANCODE_SELECT, APP_KEY_MEDIA_STOP,
+		SDL_SCANCODE_STOP, APP_KEY_INVALID, SDL_SCANCODE_AGAIN, APP_KEY_INVALID, SDL_SCANCODE_UNDO, APP_KEY_INVALID, SDL_SCANCODE_CUT, APP_KEY_INVALID,
+		SDL_SCANCODE_COPY, APP_KEY_INVALID, SDL_SCANCODE_PASTE, APP_KEY_INVALID, SDL_SCANCODE_FIND, APP_KEY_VOLUME_MUTE, SDL_SCANCODE_MUTE,
+		APP_KEY_VOLUME_UP, SDL_SCANCODE_VOLUMEUP, APP_KEY_VOLUME_DOWN, SDL_SCANCODE_VOLUMEDOWN, APP_KEY_INVALID, 130, APP_KEY_INVALID, 131,
+		APP_KEY_INVALID, 132, APP_KEY_SEPARATOR, SDL_SCANCODE_KP_COMMA, APP_KEY_INVALID, SDL_SCANCODE_KP_EQUALSAS400, APP_KEY_INVALID,
+		SDL_SCANCODE_INTERNATIONAL1, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL2, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL3, APP_KEY_INVALID,
+		SDL_SCANCODE_INTERNATIONAL4, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL5, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL6, APP_KEY_INVALID,
+		SDL_SCANCODE_INTERNATIONAL7, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL8, APP_KEY_INVALID, SDL_SCANCODE_INTERNATIONAL9, APP_KEY_HANGUL,
+		SDL_SCANCODE_LANG1, APP_KEY_HANJA, SDL_SCANCODE_LANG2,  APP_KEY_INVALID, SDL_SCANCODE_LANG3, APP_KEY_INVALID, SDL_SCANCODE_LANG4, APP_KEY_INVALID,
+		SDL_SCANCODE_LANG5, APP_KEY_INVALID, SDL_SCANCODE_LANG6, APP_KEY_INVALID, SDL_SCANCODE_LANG7, APP_KEY_INVALID, SDL_SCANCODE_LANG8, APP_KEY_INVALID,
+		SDL_SCANCODE_LANG9, APP_KEY_INVALID, SDL_SCANCODE_ALTERASE, APP_KEY_INVALID, SDL_SCANCODE_SYSREQ, APP_KEY_CANCEL, SDL_SCANCODE_CANCEL, APP_KEY_CLEAR,
+		SDL_SCANCODE_CLEAR, APP_KEY_PRIOR, SDL_SCANCODE_PRIOR, APP_KEY_RETURN, SDL_SCANCODE_RETURN2, APP_KEY_OEM_COMMA, SDL_SCANCODE_SEPARATOR,
+		APP_KEY_INVALID, SDL_SCANCODE_OUT, APP_KEY_INVALID, SDL_SCANCODE_OPER, APP_KEY_INVALID, SDL_SCANCODE_CLEARAGAIN, APP_KEY_CRSEL, SDL_SCANCODE_CRSEL,
+		APP_KEY_EXSEL, SDL_SCANCODE_EXSEL, APP_KEY_INVALID, 165, APP_KEY_INVALID, 166, APP_KEY_INVALID, 167, APP_KEY_INVALID, 168, APP_KEY_INVALID, 169,
+		APP_KEY_INVALID, 170, APP_KEY_INVALID, 171, APP_KEY_INVALID, 172, APP_KEY_INVALID, 173, APP_KEY_INVALID, 174, APP_KEY_INVALID, 175, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_00, APP_KEY_INVALID, SDL_SCANCODE_KP_000, APP_KEY_INVALID, SDL_SCANCODE_THOUSANDSSEPARATOR, APP_KEY_INVALID,
+		SDL_SCANCODE_DECIMALSEPARATOR, APP_KEY_INVALID, SDL_SCANCODE_CURRENCYUNIT, APP_KEY_INVALID, SDL_SCANCODE_CURRENCYSUBUNIT, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_LEFTPAREN, APP_KEY_INVALID, SDL_SCANCODE_KP_RIGHTPAREN, APP_KEY_INVALID, SDL_SCANCODE_KP_LEFTBRACE, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_RIGHTBRACE, APP_KEY_INVALID, SDL_SCANCODE_KP_TAB, APP_KEY_INVALID, SDL_SCANCODE_KP_BACKSPACE, APP_KEY_INVALID, SDL_SCANCODE_KP_A,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_B, APP_KEY_INVALID, SDL_SCANCODE_KP_C, APP_KEY_INVALID, SDL_SCANCODE_KP_D, APP_KEY_INVALID, SDL_SCANCODE_KP_E,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_F, APP_KEY_INVALID, SDL_SCANCODE_KP_XOR, APP_KEY_INVALID, SDL_SCANCODE_KP_POWER, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_PERCENT, APP_KEY_INVALID, SDL_SCANCODE_KP_LESS, APP_KEY_INVALID, SDL_SCANCODE_KP_GREATER, APP_KEY_INVALID, SDL_SCANCODE_KP_AMPERSAND,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_DBLAMPERSAND, APP_KEY_INVALID, SDL_SCANCODE_KP_VERTICALBAR, APP_KEY_INVALID, SDL_SCANCODE_KP_DBLVERTICALBAR,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_COLON, APP_KEY_INVALID, SDL_SCANCODE_KP_HASH, APP_KEY_INVALID, SDL_SCANCODE_KP_SPACE, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_AT, APP_KEY_INVALID, SDL_SCANCODE_KP_EXCLAM, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMSTORE, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMRECALL,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_MEMCLEAR, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMADD, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMSUBTRACT, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_MEMMULTIPLY, APP_KEY_INVALID, SDL_SCANCODE_KP_MEMDIVIDE, APP_KEY_INVALID, SDL_SCANCODE_KP_PLUSMINUS, APP_KEY_INVALID,
+		SDL_SCANCODE_KP_CLEAR, APP_KEY_INVALID, SDL_SCANCODE_KP_CLEARENTRY, APP_KEY_INVALID, SDL_SCANCODE_KP_BINARY, APP_KEY_INVALID, SDL_SCANCODE_KP_OCTAL,
+		APP_KEY_INVALID, SDL_SCANCODE_KP_DECIMAL, APP_KEY_INVALID, SDL_SCANCODE_KP_HEXADECIMAL, APP_KEY_INVALID, 222, APP_KEY_INVALID, 223, APP_KEY_LCONTROL,
+		SDL_SCANCODE_LCTRL, APP_KEY_LSHIFT, SDL_SCANCODE_LSHIFT, APP_KEY_LMENU, SDL_SCANCODE_LALT, APP_KEY_LWIN, SDL_SCANCODE_LGUI, APP_KEY_RCONTROL,
+		SDL_SCANCODE_RCTRL, APP_KEY_RSHIFT, SDL_SCANCODE_RSHIFT, APP_KEY_RMENU, SDL_SCANCODE_RALT, APP_KEY_RWIN, SDL_SCANCODE_RGUI, APP_KEY_INVALID, 232,
+		APP_KEY_INVALID, 233, APP_KEY_INVALID, 234, APP_KEY_INVALID, 235, APP_KEY_INVALID, 236, APP_KEY_INVALID, 237, APP_KEY_INVALID, 238, APP_KEY_INVALID,
+		239, APP_KEY_INVALID, 240, APP_KEY_INVALID, 241, APP_KEY_INVALID, 242, APP_KEY_INVALID, 243, APP_KEY_INVALID, 244, APP_KEY_INVALID, 245,
+		APP_KEY_INVALID, 246, APP_KEY_INVALID, 247, APP_KEY_INVALID, 248, APP_KEY_INVALID, 249, APP_KEY_INVALID, 250, APP_KEY_INVALID, 251, APP_KEY_INVALID,
+		252, APP_KEY_INVALID, 253, APP_KEY_INVALID, 254, APP_KEY_INVALID, 255, APP_KEY_INVALID, 256, APP_KEY_MODECHANGE, SDL_SCANCODE_MODE,
+		APP_KEY_MEDIA_NEXT_TRACK, SDL_SCANCODE_AUDIONEXT, APP_KEY_MEDIA_PREV_TRACK, SDL_SCANCODE_AUDIOPREV, APP_KEY_MEDIA_PLAY_PAUSE, SDL_SCANCODE_AUDIOSTOP,
+		APP_KEY_PLAY, SDL_SCANCODE_AUDIOPLAY, APP_KEY_VOLUME_MUTE, SDL_SCANCODE_AUDIOMUTE, APP_KEY_LAUNCH_MEDIA_SELECT, SDL_SCANCODE_MEDIASELECT,
+		APP_KEY_INVALID, SDL_SCANCODE_WWW, APP_KEY_LAUNCH_MAIL, SDL_SCANCODE_MAIL, APP_KEY_INVALID, SDL_SCANCODE_CALCULATOR, APP_KEY_INVALID,
+		SDL_SCANCODE_COMPUTER, APP_KEY_BROWSER_SEARCH, SDL_SCANCODE_AC_SEARCH, APP_KEY_BROWSER_HOME, SDL_SCANCODE_AC_HOME, APP_KEY_BROWSER_BACK,
+		SDL_SCANCODE_AC_BACK, APP_KEY_BROWSER_FORWARD, SDL_SCANCODE_AC_FORWARD, APP_KEY_BROWSER_STOP, SDL_SCANCODE_AC_STOP, APP_KEY_BROWSER_REFRESH,
+		SDL_SCANCODE_AC_REFRESH, APP_KEY_BROWSER_FAVORITES, SDL_SCANCODE_AC_BOOKMARKS, APP_KEY_INVALID, SDL_SCANCODE_BRIGHTNESSDOWN, APP_KEY_INVALID,
+		SDL_SCANCODE_BRIGHTNESSUP, APP_KEY_INVALID, SDL_SCANCODE_DISPLAYSWITCH, APP_KEY_INVALID, SDL_SCANCODE_KBDILLUMTOGGLE, APP_KEY_INVALID,
+		SDL_SCANCODE_KBDILLUMDOWN, APP_KEY_INVALID, SDL_SCANCODE_KBDILLUMUP, APP_KEY_INVALID, SDL_SCANCODE_EJECT, APP_KEY_SLEEP, SDL_SCANCODE_SLEEP,
+		APP_KEY_LAUNCH_APP1, SDL_SCANCODE_APP1, APP_KEY_LAUNCH_APP2, SDL_SCANCODE_APP2, APP_KEY_INVALID, SDL_SCANCODE_AUDIOREWIND, APP_KEY_INVALID,
+		SDL_SCANCODE_AUDIOFASTFORWARD, };
 
-    if( scancode < 0 || scancode >= sizeof( map ) / ( 2 * sizeof( *map ) ) ) return APP_KEY_INVALID;
-    if( map[ scancode * 2 + 1 ] != scancode )
-        {
-        app_log( app, APP_LOG_LEVEL_ERROR, "Keymap definition error" );
-        return APP_KEY_INVALID;
-        }
-    return (app_key_t) map[ scancode * 2 ];
-    }
+	if( scancode < 0 || scancode >= sizeof( map ) / ( 2 * sizeof( *map ) ) ) return APP_KEY_INVALID;
+	if( map[ scancode * 2 + 1 ] != scancode )
+		{
+		app_log( app, APP_LOG_LEVEL_ERROR, "Keymap definition error" );
+		return APP_KEY_INVALID;
+		}
+	return (app_key_t) map[ scancode * 2 ];
+	}
 
 
 static void app_internal_add_input_event( app_t* app, app_input_event_t* event )
-    {
-    if( app->has_focus )
-        {
-        if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
-            app->input_events[ app->input_count++ ] = *event;
-        }
-    }
+	{
+	if( app->has_focus )
+		{
+		if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+			app->input_events[ app->input_count++ ] = *event;
+		}
+	}
 
 
 app_state_t app_yield( app_t* app )
-    {
-    if( !app->initialized )
-        {
-        app->initialized = 1;
-        if( app->screenmode == APP_SCREENMODE_FULLSCREEN ) SDL_SetWindowFullscreen( app->window, SDL_WINDOW_FULLSCREEN_DESKTOP );
-        SDL_ShowWindow( app->window );
-        int w = app->gl.window_width;
-        int h = app->gl.window_height;
-        SDL_GL_GetDrawableSize( app->window, &w, &h );
-        app_internal_opengl_resize( &app->gl, w, h );
-        }
+	{
+	if( !app->initialized )
+		{
+		app->initialized = 1;
+		if( app->screenmode == APP_SCREENMODE_FULLSCREEN ) SDL_SetWindowFullscreen( app->window, SDL_WINDOW_FULLSCREEN_DESKTOP );
+		SDL_ShowWindow( app->window );
+		int w = app->gl.window_width;
+		int h = app->gl.window_height;
+		SDL_GL_GetDrawableSize( app->window, &w, &h );
+		app_internal_opengl_resize( &app->gl, w, h );
+		}
 
-    SDL_Event e;
-    while( SDL_PollEvent( &e ) )
-        {
-        if( e.type == SDL_WINDOWEVENT )
-            {
-            if( e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED )
-                {
-                int w = app->gl.window_width;
-                int h = app->gl.window_height;
-                SDL_GL_GetDrawableSize( app->window, &w, &h );
-                if( w != app->gl.window_width || h != app->gl.window_height )
-                    {
-                    app_internal_opengl_resize( &app->gl, w, h );
-                    }
-                }
-            else if( e.window.event == SDL_WINDOWEVENT_CLOSE )
-                {
-                app->exit_requested = 1;
-                }
-            else if( e.window.event == SDL_WINDOWEVENT_FOCUS_GAINED )
-                {
-                app->has_focus = 1;
-                }
-            else if( e.window.event == SDL_WINDOWEVENT_FOCUS_LOST )
-                {
-                app->has_focus = 0;
-                }
-            }
-        else if( e.type == SDL_KEYDOWN )
-            {
-            app_input_event_t input_event;
-            input_event.type = APP_INPUT_KEY_DOWN;
-            input_event.data.key = app_internal_scancode_to_appkey( app, e.key.keysym.scancode );
-            app_internal_add_input_event( app, &input_event );
-            }
-        else if( e.type == SDL_KEYUP )
-            {
-            app_input_event_t input_event;
-            input_event.type = APP_INPUT_KEY_UP;
-            input_event.data.key = app_internal_scancode_to_appkey( app, e.key.keysym.scancode );
-            app_internal_add_input_event( app, &input_event );
-            }
-        else if( e.type == SDL_TEXTINPUT )
-            {
-            app_input_event_t input_event;
-            char *c;
-            input_event.type = APP_INPUT_CHAR;
-            for ( c = e.text.text; *c; c++ )
-                {
-                input_event.data.char_code = *c;
-                app_internal_add_input_event( app, &input_event );
-                }
-            }
-        else if( e.type == SDL_MOUSEMOTION )
-            {
-            app_input_event_t input_event;
-            input_event.type = APP_INPUT_MOUSE_MOVE;
-            input_event.data.mouse_pos.x = e.motion.x;
-            input_event.data.mouse_pos.y = e.motion.y;
-            app_internal_add_input_event( app, &input_event );
+	SDL_Event e;
+	while( SDL_PollEvent( &e ) )
+		{
+		if( e.type == SDL_WINDOWEVENT )
+			{
+			if( e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED )
+				{
+				int w = app->gl.window_width;
+				int h = app->gl.window_height;
+				SDL_GL_GetDrawableSize( app->window, &w, &h );
+				if( w != app->gl.window_width || h != app->gl.window_height )
+					{
+					app_internal_opengl_resize( &app->gl, w, h );
+					}
+				}
+			else if( e.window.event == SDL_WINDOWEVENT_CLOSE )
+				{
+				app->exit_requested = 1;
+				}
+			else if( e.window.event == SDL_WINDOWEVENT_FOCUS_GAINED )
+				{
+				app->has_focus = 1;
+				}
+			else if( e.window.event == SDL_WINDOWEVENT_FOCUS_LOST )
+				{
+				app->has_focus = 0;
+				}
+			}
+		else if( e.type == SDL_KEYDOWN )
+			{
+			app_input_event_t input_event;
+			input_event.type = APP_INPUT_KEY_DOWN;
+			input_event.data.key = app_internal_scancode_to_appkey( app, e.key.keysym.scancode );
+			app_internal_add_input_event( app, &input_event );
+			}
+		else if( e.type == SDL_KEYUP )
+			{
+			app_input_event_t input_event;
+			input_event.type = APP_INPUT_KEY_UP;
+			input_event.data.key = app_internal_scancode_to_appkey( app, e.key.keysym.scancode );
+			app_internal_add_input_event( app, &input_event );
+			}
+		else if( e.type == SDL_TEXTINPUT )
+			{
+			app_input_event_t input_event;
+			char *c;
+			input_event.type = APP_INPUT_CHAR;
+			for ( c = e.text.text; *c; c++ )
+				{
+				input_event.data.char_code = *c;
+				app_internal_add_input_event( app, &input_event );
+				}
+			}
+		else if( e.type == SDL_MOUSEMOTION )
+			{
+			app_input_event_t input_event;
+			input_event.type = APP_INPUT_MOUSE_MOVE;
+			input_event.data.mouse_pos.x = e.motion.x;
+			input_event.data.mouse_pos.y = e.motion.y;
+			app_internal_add_input_event( app, &input_event );
 
-            input_event.type = APP_INPUT_MOUSE_DELTA;
-            input_event.data.mouse_pos.x = e.motion.xrel;
-            input_event.data.mouse_pos.y = e.motion.yrel;
-            app_internal_add_input_event( app, &input_event );
-            }
-        else if( e.type == SDL_MOUSEBUTTONDOWN )
-            {
-            app_input_event_t input_event;
-            input_event.type = APP_INPUT_KEY_DOWN;
-            if( e.button.button == SDL_BUTTON_LEFT )
-                input_event.data.key = APP_KEY_LBUTTON;
-            else if( e.button.button == SDL_BUTTON_RIGHT )
-                input_event.data.key = APP_KEY_RBUTTON;
-            else if( e.button.button == SDL_BUTTON_MIDDLE )
-                input_event.data.key = APP_KEY_MBUTTON;
-            else if( e.button.button == SDL_BUTTON_X1 )
-                input_event.data.key = APP_KEY_XBUTTON1;
-            else if( e.button.button == SDL_BUTTON_X2 )
-                input_event.data.key = APP_KEY_XBUTTON2;
-            app_internal_add_input_event( app, &input_event );
-            }
-        else if( e.type == SDL_MOUSEBUTTONUP )
-            {
-            app_input_event_t input_event;
-            input_event.type = APP_INPUT_KEY_UP;
-            if( e.button.button == SDL_BUTTON_LEFT )
-                input_event.data.key = APP_KEY_LBUTTON;
-            else if( e.button.button == SDL_BUTTON_RIGHT )
-                input_event.data.key = APP_KEY_RBUTTON;
-            else if( e.button.button == SDL_BUTTON_MIDDLE )
-                input_event.data.key = APP_KEY_MBUTTON;
-            else if( e.button.button == SDL_BUTTON_X1 )
-                input_event.data.key = APP_KEY_XBUTTON1;
-            else if( e.button.button == SDL_BUTTON_X2 )
-                input_event.data.key = APP_KEY_XBUTTON2;
-            app_internal_add_input_event( app, &input_event );
-            }
-        else if( e.type == SDL_MOUSEWHEEL )
-            {
-            float const microsoft_mouse_wheel_constant = 120.0f;
-            float wheel_delta = ( (float) e.wheel.y ) / microsoft_mouse_wheel_constant;
-            if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
-                {
-                app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
-                event->data.wheel_delta += wheel_delta;
-                }
-            else
-                {
-                app_input_event_t input_event;
-                input_event.type = APP_INPUT_SCROLL_WHEEL;
-                input_event.data.wheel_delta = wheel_delta;
-                app_internal_add_input_event( app, &input_event );
-                }
-            }
+			input_event.type = APP_INPUT_MOUSE_DELTA;
+			input_event.data.mouse_pos.x = e.motion.xrel;
+			input_event.data.mouse_pos.y = e.motion.yrel;
+			app_internal_add_input_event( app, &input_event );
+			}
+		else if( e.type == SDL_MOUSEBUTTONDOWN )
+			{
+			app_input_event_t input_event;
+			input_event.type = APP_INPUT_KEY_DOWN;
+			if( e.button.button == SDL_BUTTON_LEFT )
+				input_event.data.key = APP_KEY_LBUTTON;
+			else if( e.button.button == SDL_BUTTON_RIGHT )
+				input_event.data.key = APP_KEY_RBUTTON;
+			else if( e.button.button == SDL_BUTTON_MIDDLE )
+				input_event.data.key = APP_KEY_MBUTTON;
+			else if( e.button.button == SDL_BUTTON_X1 )
+				input_event.data.key = APP_KEY_XBUTTON1;
+			else if( e.button.button == SDL_BUTTON_X2 )
+				input_event.data.key = APP_KEY_XBUTTON2;
+			app_internal_add_input_event( app, &input_event );
+			}
+		else if( e.type == SDL_MOUSEBUTTONUP )
+			{
+			app_input_event_t input_event;
+			input_event.type = APP_INPUT_KEY_UP;
+			if( e.button.button == SDL_BUTTON_LEFT )
+				input_event.data.key = APP_KEY_LBUTTON;
+			else if( e.button.button == SDL_BUTTON_RIGHT )
+				input_event.data.key = APP_KEY_RBUTTON;
+			else if( e.button.button == SDL_BUTTON_MIDDLE )
+				input_event.data.key = APP_KEY_MBUTTON;
+			else if( e.button.button == SDL_BUTTON_X1 )
+				input_event.data.key = APP_KEY_XBUTTON1;
+			else if( e.button.button == SDL_BUTTON_X2 )
+				input_event.data.key = APP_KEY_XBUTTON2;
+			app_internal_add_input_event( app, &input_event );
+			}
+		else if( e.type == SDL_MOUSEWHEEL )
+			{
+			float const microsoft_mouse_wheel_constant = 120.0f;
+			float wheel_delta = ( (float) e.wheel.y ) / microsoft_mouse_wheel_constant;
+			if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
+				{
+				app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
+				event->data.wheel_delta += wheel_delta;
+				}
+			else
+				{
+				app_input_event_t input_event;
+				input_event.type = APP_INPUT_SCROLL_WHEEL;
+				input_event.data.wheel_delta = wheel_delta;
+				app_internal_add_input_event( app, &input_event );
+				}
+			}
 
-        }
+		}
 
-    return app->exit_requested ? APP_STATE_EXIT_REQUESTED : APP_STATE_NORMAL;
-    }
+	return app->exit_requested ? APP_STATE_EXIT_REQUESTED : APP_STATE_NORMAL;
+	}
 
 
 void app_cancel_exit( app_t* app )
-    {
-    app->exit_requested = 0;
-    }
+	{
+	app->exit_requested = 0;
+	}
 
 
 void app_title( app_t* app, char const* title )
-    {
-    SDL_SetWindowTitle( app->window, title );
-    }
+	{
+	SDL_SetWindowTitle( app->window, title );
+	}
 
 
 char const* app_cmdline( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
@@ -3746,308 +5827,308 @@ char const* app_appdata( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
 
 
 APP_U64 app_time_count( app_t* app )
-    {
-    return SDL_GetPerformanceCounter();
-    }
+	{
+	return SDL_GetPerformanceCounter();
+	}
 
 
 APP_U64 app_time_freq( app_t* app )
-    {
-    return SDL_GetPerformanceFrequency();
-    }
+	{
+	return SDL_GetPerformanceFrequency();
+	}
 
 
 void app_log( app_t* app, app_log_level_t level, char const* message ) { /* NOT IMPLEMENTED */ }
 
 
 void app_fatal_error( app_t* app, char const* message )
-    {
-    APP_FATAL_ERROR( app->fatalctx, message );
-    }
+	{
+	APP_FATAL_ERROR( app->fatalctx, message );
+	}
 
 
 void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y )
-    {
-    SDL_Surface* surf = SDL_CreateRGBSurfaceFrom( (void*)pixels_abgr, width, height, 32, 4 * width, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000 );
-    if( app->cursor ) SDL_FreeCursor( app->cursor );
-    app->cursor = SDL_CreateColorCursor( surf, hotspot_x, hotspot_y );
-    SDL_SetCursor( app->cursor );
-    SDL_FreeSurface( surf );
-    }
+	{
+	SDL_Surface* surf = SDL_CreateRGBSurfaceFrom( (void*)pixels_abgr, width, height, 32, 4 * width, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000 );
+	if( app->cursor ) SDL_FreeCursor( app->cursor );
+	app->cursor = SDL_CreateColorCursor( surf, hotspot_x, hotspot_y );
+	SDL_SetCursor( app->cursor );
+	SDL_FreeSurface( surf );
+	}
 
 
 void app_pointer_default( app_t* app, int* width, int* height, APP_U32* pixels_abgr, int* hotspot_x, int* hotspot_y ) { /* NOT IMPLEMENTED */ }
 
 
 void app_pointer_pos( app_t* app, int x, int y )
-    {
-    SDL_WarpMouseInWindow( app->window, x, y );
-    }
+	{
+	SDL_WarpMouseInWindow( app->window, x, y );
+	}
 
 
 int app_pointer_x( app_t* app )
-    {
-    int x = 0;
-    SDL_GetMouseState( &x, NULL );
-    return x;
-    }
+	{
+	int x = 0;
+	SDL_GetMouseState( &x, NULL );
+	return x;
+	}
 
 
 int app_pointer_y( app_t* app )
-    {
-    int y = 0;
-    SDL_GetMouseState( NULL, &y );
-    return y;
-    }
+	{
+	int y = 0;
+	SDL_GetMouseState( NULL, &y );
+	return y;
+	}
 
 
 void app_pointer_limit( app_t* app, int x, int y, int width, int height ) { /* NOT IMPLEMENTED */ }
 void app_pointer_limit_off( app_t* app ) { /* NOT IMPLEMENTED */ }
 
 void app_interpolation( app_t* app, app_interpolation_t interpolation )
-    {
-    if( interpolation == app->interpolation ) return;
-    app->interpolation = interpolation;
+	{
+	if( interpolation == app->interpolation ) return;
+	app->interpolation = interpolation;
 
-    int mouse_x;
-    int mouse_y;
-    SDL_GetMouseState( &mouse_x, &mouse_y );
+	int mouse_x;
+	int mouse_y;
+	SDL_GetMouseState( &mouse_x, &mouse_y );
 
-    app_input_event_t input_event;
-    input_event.type = APP_INPUT_MOUSE_MOVE;
-    input_event.data.mouse_pos.x = mouse_x;
-    input_event.data.mouse_pos.y = mouse_y;
-    app_internal_add_input_event( app, &input_event );
+	app_input_event_t input_event;
+	input_event.type = APP_INPUT_MOUSE_MOVE;
+	input_event.data.mouse_pos.x = mouse_x;
+	input_event.data.mouse_pos.y = mouse_y;
+	app_internal_add_input_event( app, &input_event );
 
-    app_internal_opengl_interpolation( &app->gl, interpolation );
-    }
+	app_internal_opengl_interpolation( &app->gl, interpolation );
+	}
 
 
 void app_screenmode( app_t* app, app_screenmode_t screenmode )
-    {
-    if( screenmode != app->screenmode )
-        {
-        app->screenmode = screenmode;
-        SDL_SetWindowFullscreen( app->window,
-            screenmode == APP_SCREENMODE_FULLSCREEN ? SDL_WINDOW_FULLSCREEN_DESKTOP  : 0 );
-        }
-    }
+	{
+	if( screenmode != app->screenmode )
+		{
+		app->screenmode = screenmode;
+		SDL_SetWindowFullscreen( app->window,
+			screenmode == APP_SCREENMODE_FULLSCREEN ? SDL_WINDOW_FULLSCREEN_DESKTOP  : 0 );
+		}
+	}
 
 
 void app_window_size( app_t* app, int width, int height )
-    {
-    SDL_SetWindowSize( app->window, width, height );
-    }
+	{
+	SDL_SetWindowSize( app->window, width, height );
+	}
 
 
 int app_window_width( app_t* app )
-    {
-    int width = 0;
-    SDL_GetWindowSize( app->window, &width, NULL );
-    return width;
-    }
+	{
+	int width = 0;
+	SDL_GetWindowSize( app->window, &width, NULL );
+	return width;
+	}
 
 
 int app_window_height( app_t* app )
-    {
-    int height = 0;
-    SDL_GetWindowSize( app->window, NULL, &height );
-    return height;
-    }
+	{
+	int height = 0;
+	SDL_GetWindowSize( app->window, NULL, &height );
+	return height;
+	}
 
 
 void app_window_pos( app_t* app, int x, int y )
-    {
-    SDL_SetWindowPosition( app->window, x, y );
-    }
+	{
+	SDL_SetWindowPosition( app->window, x, y );
+	}
 
 
 int app_window_x( app_t* app )
-    {
-    int x = 0;
-    SDL_GetWindowPosition( app->window, &x, NULL );
-    return x;
-    }
+	{
+	int x = 0;
+	SDL_GetWindowPosition( app->window, &x, NULL );
+	return x;
+	}
 
 
 int app_window_y( app_t* app )
-    {
-    int y = 0;
-    SDL_GetWindowPosition( app->window, NULL, &y );
-    return y;
-    }
+	{
+	int y = 0;
+	SDL_GetWindowPosition( app->window, NULL, &y );
+	return y;
+	}
 
 
 app_displays_t app_displays( app_t* app )
-    {
-    app_displays_t displays;
-    displays.count = app->display_count;
-    displays.displays = app->displays;
-    return displays;
-    }
+	{
+	app_displays_t displays;
+	displays.count = app->display_count;
+	displays.displays = app->displays;
+	return displays;
+	}
 
 
 void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
-    {
-    if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
-    SDL_GL_SwapWindow( app->window );
-    }
+	{
+	if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
+	SDL_GL_SwapWindow( app->window );
+	}
 
 
 static void app_internal_sdl_sound_callback( void* userdata, Uint8* stream, int len )
-    {
-    app_t* app = (app_t*) userdata;
-    if( app->sound_callback )
-        {
-        app->sound_callback( (APP_S16*) stream, len / ( 2 * sizeof( APP_S16 ) ), app->sound_user_data );
-        if( app->volume < 256 )
-            {
-            APP_S16* samples = (APP_S16*) stream;
-            for( int i = 0; i < len / sizeof( APP_S16 ); ++i )
-                {
-                int s = (int)(*samples);
-                s = ( s * app->volume ) >> 8;
-                *samples++ = (APP_S16) s;
-                }
-            }
-        }
-    }
+	{
+	app_t* app = (app_t*) userdata;
+	if( app->sound_callback )
+		{
+		app->sound_callback( (APP_S16*) stream, len / ( 2 * sizeof( APP_S16 ) ), app->sound_user_data );
+		if( app->volume < 256 )
+			{
+			APP_S16* samples = (APP_S16*) stream;
+			for( int i = 0; i < len / sizeof( APP_S16 ); ++i )
+				{
+				int s = (int)(*samples);
+				s = ( s * app->volume ) >> 8;
+				*samples++ = (APP_S16) s;
+				}
+			}
+		}
+	}
 
 
 void app_sound( app_t* app, int sample_pairs_count, void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data )
-    {
-    if( app->sound_device )
-        {
-        SDL_PauseAudioDevice( app->sound_device, 1 );
-        SDL_CloseAudioDevice( app->sound_device );
-        app->sound_callback = NULL;
-        app->sound_user_data = NULL;
-        app->sound_device = 0;
-        }
-    if( sample_pairs_count > 0 && sound_callback )
-        {
-        SDL_AudioSpec spec;
-        spec.freq = 44100;
-        spec.format = AUDIO_S16;
-        spec.channels = 2;
-        spec.silence = 0;
-        spec.samples = sample_pairs_count * 2;
-        spec.padding = 0;
-        spec.size = 0;
-        spec.callback = app_internal_sdl_sound_callback;
-        spec.userdata = app;
+	{
+	if( app->sound_device )
+		{
+		SDL_PauseAudioDevice( app->sound_device, 1 );
+		SDL_CloseAudioDevice( app->sound_device );
+		app->sound_callback = NULL;
+		app->sound_user_data = NULL;
+		app->sound_device = 0;
+		}
+	if( sample_pairs_count > 0 && sound_callback )
+		{
+		SDL_AudioSpec spec;
+		spec.freq = 44100;
+		spec.format = AUDIO_S16;
+		spec.channels = 2;
+		spec.silence = 0;
+		spec.samples = sample_pairs_count * 2;
+		spec.padding = 0;
+		spec.size = 0;
+		spec.callback = app_internal_sdl_sound_callback;
+		spec.userdata = app;
 
-        app->sound_device = SDL_OpenAudioDevice( NULL, 0, &spec, NULL, 0 );
-        if( !app->sound_device ) return;
+		app->sound_device = SDL_OpenAudioDevice( NULL, 0, &spec, NULL, 0 );
+		if( !app->sound_device ) return;
 
-        app->sound_callback = sound_callback;
-        app->sound_user_data = user_data;
-        SDL_PauseAudioDevice( app->sound_device, 0 );
-        }
-    }
+		app->sound_callback = sound_callback;
+		app->sound_user_data = user_data;
+		SDL_PauseAudioDevice( app->sound_device, 0 );
+		}
+	}
 
 
 void app_sound_volume( app_t* app, float volume )
-    {
-    int v = (int) ( volume * 256.0f );
-    app->volume = v < 0 ? 0 : v > 256 ? 256 : v;
-    }
+	{
+	int v = (int) ( volume * 256.0f );
+	app->volume = v < 0 ? 0 : v > 256 ? 256 : v;
+	}
 
 
 app_input_t app_input( app_t* app )
-    {
-    app_input_t input;
-    input.events = app->input_events;
-    input.count = app->input_count;
-    app->input_count = 0;
-    return input;
-    }
+	{
+	app_input_t input;
+	input.events = app->input_events;
+	input.count = app->input_count;
+	app->input_count = 0;
+	return input;
+	}
 
 
 void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
-    {
-    if( width == 0 || height == 0 ) return;
-    int window_width;
-    int window_height;
-    SDL_GL_GetDrawableSize( app->window, &window_width, &window_height );
+	{
+	if( width == 0 || height == 0 ) return;
+	int window_width;
+	int window_height;
+	SDL_GL_GetDrawableSize( app->window, &window_width, &window_height );
 
 
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = window_width / (float) width;
-        float vscale = window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( window_height - pixel_scale * height ) / 2.0f;
-            *x -= (int)( hborder );
-            *y -= (int)( vborder );
-            *x = (int)( *x / pixel_scale );
-            *y = (int)( *y / pixel_scale );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = window_width / width;
-        int vscale = window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( window_width - pixel_scale * width ) / 2;
-        int vborder = ( window_height - pixel_scale * height ) / 2;
-        *x -= (int)( hborder );
-        *y -= (int)( vborder );
-        *x = (int)( *x / pixel_scale );
-        *y = (int)( *y / pixel_scale );
-        }
-    }
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x -= (int)( hborder );
+			*y -= (int)( vborder );
+			*x = (int)( *x / pixel_scale );
+			*y = (int)( *y / pixel_scale );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x -= (int)( hborder );
+		*y -= (int)( vborder );
+		*x = (int)( *x / pixel_scale );
+		*y = (int)( *y / pixel_scale );
+		}
+	}
 
 
 void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
-    {
-    int window_width;
-    int window_height;
-    SDL_GL_GetDrawableSize( app->window, &window_width, &window_height );
+	{
+	int window_width;
+	int window_height;
+	SDL_GL_GetDrawableSize( app->window, &window_width, &window_height );
 
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = window_width / (float) width;
-        float vscale = window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( window_height - pixel_scale * height ) / 2.0f;
-            *x = (int)( *x * pixel_scale );
-            *y = (int)( *y * pixel_scale );
-            *x += (int)( hborder );
-            *y += (int)( vborder );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = window_width / width;
-        int vscale = window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( window_width - pixel_scale * width ) / 2;
-        int vborder = ( window_height - pixel_scale * height ) / 2;
-        *x = (int)( *x * pixel_scale );
-        *y = (int)( *y * pixel_scale );
-        *x += (int)( hborder );
-        *y += (int)( vborder );
-        }
-    }
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = window_width / (float) width;
+		float vscale = window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( window_height - pixel_scale * height ) / 2.0f;
+			*x = (int)( *x * pixel_scale );
+			*y = (int)( *y * pixel_scale );
+			*x += (int)( hborder );
+			*y += (int)( vborder );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = window_width / width;
+		int vscale = window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( window_width - pixel_scale * width ) / 2;
+		int vborder = ( window_height - pixel_scale * height ) / 2;
+		*x = (int)( *x * pixel_scale );
+		*y = (int)( *y * pixel_scale );
+		*x += (int)( hborder );
+		*y += (int)( vborder );
+		}
+	}
 
 
 
@@ -4059,48 +6140,48 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 #elif defined( APP_WASM )
 
 #ifndef APP_MALLOC
-    #include <stdlib.h>
-    #if defined(__cplusplus)
-        #define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
-    #else
-        #define APP_MALLOC( ctx, size ) ( malloc( size ) )
-        #define APP_FREE( ctx, ptr ) ( free( ptr ) )
-    #endif
+	#include <stdlib.h>
+	#if defined(__cplusplus)
+		#define APP_MALLOC( ctx, size ) ( ::malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( ::free( ptr ) )
+	#else
+		#define APP_MALLOC( ctx, size ) ( malloc( size ) )
+		#define APP_FREE( ctx, ptr ) ( free( ptr ) )
+	#endif
 #endif
 
 #include <string.h>
 #include <stdio.h>
 
 WAJIC(void, app_js_print, (const char* msg),
-    {
-    WA.print(MStrGet(msg) + "\n");
-    })
+	{
+	WA.print(MStrGet(msg) + "\n");
+	})
 
 #ifndef APP_FATAL_ERROR
-    #define APP_FATAL_ERROR( ctx, message ) { app_js_print(message); abort(); }
+	#define APP_FATAL_ERROR( ctx, message ) { app_js_print(message); abort(); }
 #endif
 
 struct app_t
-    {
-    void* memctx;
-    void* logctx;
-    void* fatalctx;
-    struct app_internal_opengl_t gl;
-    int has_focus;
-    app_interpolation_t interpolation;
+	{
+	void* memctx;
+	void* logctx;
+	void* fatalctx;
+	struct app_internal_opengl_t gl;
+	int has_focus;
+	app_interpolation_t interpolation;
 
-    void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
-    void* sound_user_data;
-    int sound_buffer_size;
-    APP_S16* sound_buffer;
-    int volume;
+	void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data );
+	void* sound_user_data;
+	int sound_buffer_size;
+	APP_S16* sound_buffer;
+	int volume;
 
-    app_input_event_t input_events[ 1024 ];
-    int input_count;
-    int pointer_x;
-    int pointer_y;
-    };
+	app_input_event_t input_events[ 1024 ];
+	int input_count;
+	int pointer_x;
+	int pointer_y;
+	};
 
 
 // The javascript event handling keeps a simple buffer of events with 3 ints per event
@@ -4116,331 +6197,331 @@ struct app_t
 
 WAJIC_WITH_INIT(
 (
-    var evts = [], evtcursor = 0, dpr = window.devicePixelRatio||1, canvas, aspect_ratio, fullscreen;
-    var update_canvas_size = (w)=>
-    {
-        var h = (w *= dpr)/aspect_ratio|0;
-        if (w<32 || h<32 || (w == canvas.width && h == canvas.height) || fullscreen) return;
-        canvas.width = w;
-        canvas.height = h;
-        evts.push(1, canvas.width, canvas.height);
-    };
-    var alias = (el, a, b, c)=>
-    {
-        return el[a+c] || el['moz'+b+c] || el['webkit'+b+c] || el['ms'+b+c];
-    };
+	var evts = [], evtcursor = 0, dpr = window.devicePixelRatio||1, canvas, aspect_ratio, fullscreen;
+	var update_canvas_size = (w)=>
+	{
+		var h = (w *= dpr)/aspect_ratio|0;
+		if (w<32 || h<32 || (w == canvas.width && h == canvas.height) || fullscreen) return;
+		canvas.width = w;
+		canvas.height = h;
+		evts.push(1, canvas.width, canvas.height);
+	};
+	var alias = (el, a, b, c)=>
+	{
+		return el[a+c] || el['moz'+b+c] || el['webkit'+b+c] || el['ms'+b+c];
+	};
 ),
 void, app_js_setup_canvas, (int* out_width, int* out_height),
 {
-    canvas = WA.canvas;
-    if (!canvas.height) { canvas.width = 1024; canvas.height = 576; }
-    MU32[out_width>>2] = canvas.clientWidth;
-    MU32[out_height>>2] = canvas.clientHeight;
-    aspect_ratio = canvas.width/canvas.height;
+	canvas = WA.canvas;
+	if (!canvas.height) { canvas.width = 1024; canvas.height = 576; }
+	MU32[out_width>>2] = canvas.clientWidth;
+	MU32[out_height>>2] = canvas.clientHeight;
+	aspect_ratio = canvas.width/canvas.height;
 
-    var cancelEvent = (e)=>{ if (e.preventDefault) e.preventDefault(true); else if (e.stopPropagation) e.stopPropagation(true); else e.stopped = true; };
-    var documtEvent = (t, f, a)=>{ document.addEventListener(t, f); if (!a) { documtEvent('moz'+t, f, 1); documtEvent('webkit'+t, f, 1); documtEvent('ms'+t, f, 1); } };
-    var windowEvent = (t, f)=>{ window.addEventListener(t, f, true); };
-    var canvasEvent = (t, f)=>{ canvas.addEventListener(t, f, {capture:true,passive:false}); };
-    windowEvent('resize', ()=>{ update_canvas_size(canvas.clientWidth); });
-    windowEvent('focus', ()=>{ evts.push(2, 1, 0); });
-    windowEvent('blur',  ()=>{ evts.push(2, (fullscreen?1:0), 0); });
-    windowEvent('keydown', (e)=>
-    {
-        evts.push(3, 1, e.keyCode);
-        if (e.key.length == 1 && e.key.charCodeAt() < 128 && !e.ctrlKey) evts.push(4, e.key.charCodeAt(), 0);
-        cancelEvent(e);
-    });
-    windowEvent('keyup',   (e)=>
-    {
-        evts.push(3, 0, e.keyCode);
-        cancelEvent(e);
-    });
-    canvasEvent('mousemove', (e)=>
-    {
-        evts.push(5,
-            (e.offsetX * canvas.width /  canvas.clientWidth )|0,
-            (e.offsetY * canvas.height / canvas.clientHeight)|0);
-        cancelEvent(e);
-    });
-    var buttons = 0;
-    canvasEvent('mousedown', (e)=>
-    {
-        var btn = (1<<e.button);
-        if (buttons & btn) return;
-        buttons |= btn;
-        evts.push(6, 1, e.button);
-        cancelEvent(e);
-    });
-    windowEvent('mouseup', (e)=>
-    {
-        var btn = (1<<e.button);
-        if (!(buttons & btn)) return;
-        buttons &= ~btn;
-        evts.push(6, 0, e.button);
-        cancelEvent(e);
-    });
-    canvasEvent('wheel', (e)=>{ evts.push(7, e.deltaY); cancelEvent(e); });
-    documtEvent('fullscreenchange', ()=>
-    {
-        fullscreen = alias(document,'f','F','ullscreenElement') || alias(document,'f','F','ullScreenElement');
-        if (fullscreen)
-        {
-            canvas.orgS = canvas.style.cssText;
-            canvas.orgW = canvas.clientWidth;
-            canvas.style.cssText = 'background:black';
-            canvas.height = screen.height * dpr;
-            canvas.width = screen.width * dpr;
-            evts.push(1, canvas.width, canvas.height);
-        }
-        else if (canvas.orgS)
-        {
-            canvas.style.cssText = canvas.orgS;
-            update_canvas_size(canvas.orgW);
-        }
-    });
-    WA.SetFullscreen = (f)=>
-    {
-        if (!f == !fullscreen) return;
-        var el = (f ? WA.canvas : document);
-        var fn = (f ? (alias(el,'r','R','equestFullscreen') || alias(el,'r','R','equestFullScreen')) : (alias(el,'e','E','xitFullscreen') || alias(el,'c','C','ancelFullScreen')));
-        if (fn) fn.apply(el, []);
-    };
+	var cancelEvent = (e)=>{ if (e.preventDefault) e.preventDefault(true); else if (e.stopPropagation) e.stopPropagation(true); else e.stopped = true; };
+	var documtEvent = (t, f, a)=>{ document.addEventListener(t, f); if (!a) { documtEvent('moz'+t, f, 1); documtEvent('webkit'+t, f, 1); documtEvent('ms'+t, f, 1); } };
+	var windowEvent = (t, f)=>{ window.addEventListener(t, f, true); };
+	var canvasEvent = (t, f)=>{ canvas.addEventListener(t, f, {capture:true,passive:false}); };
+	windowEvent('resize', ()=>{ update_canvas_size(canvas.clientWidth); });
+	windowEvent('focus', ()=>{ evts.push(2, 1, 0); });
+	windowEvent('blur',  ()=>{ evts.push(2, (fullscreen?1:0), 0); });
+	windowEvent('keydown', (e)=>
+	{
+		evts.push(3, 1, e.keyCode);
+		if (e.key.length == 1 && e.key.charCodeAt() < 128 && !e.ctrlKey) evts.push(4, e.key.charCodeAt(), 0);
+		cancelEvent(e);
+	});
+	windowEvent('keyup',   (e)=>
+	{
+		evts.push(3, 0, e.keyCode);
+		cancelEvent(e);
+	});
+	canvasEvent('mousemove', (e)=>
+	{
+		evts.push(5,
+			(e.offsetX * canvas.width /  canvas.clientWidth )|0,
+			(e.offsetY * canvas.height / canvas.clientHeight)|0);
+		cancelEvent(e);
+	});
+	var buttons = 0;
+	canvasEvent('mousedown', (e)=>
+	{
+		var btn = (1<<e.button);
+		if (buttons & btn) return;
+		buttons |= btn;
+		evts.push(6, 1, e.button);
+		cancelEvent(e);
+	});
+	windowEvent('mouseup', (e)=>
+	{
+		var btn = (1<<e.button);
+		if (!(buttons & btn)) return;
+		buttons &= ~btn;
+		evts.push(6, 0, e.button);
+		cancelEvent(e);
+	});
+	canvasEvent('wheel', (e)=>{ evts.push(7, e.deltaY); cancelEvent(e); });
+	documtEvent('fullscreenchange', ()=>
+	{
+		fullscreen = alias(document,'f','F','ullscreenElement') || alias(document,'f','F','ullScreenElement');
+		if (fullscreen)
+		{
+			canvas.orgS = canvas.style.cssText;
+			canvas.orgW = canvas.clientWidth;
+			canvas.style.cssText = 'background:black';
+			canvas.height = screen.height * dpr;
+			canvas.width = screen.width * dpr;
+			evts.push(1, canvas.width, canvas.height);
+		}
+		else if (canvas.orgS)
+		{
+			canvas.style.cssText = canvas.orgS;
+			update_canvas_size(canvas.orgW);
+		}
+	});
+	WA.SetFullscreen = (f)=>
+	{
+		if (!f == !fullscreen) return;
+		var el = (f ? WA.canvas : document);
+		var fn = (f ? (alias(el,'r','R','equestFullscreen') || alias(el,'r','R','equestFullScreen')) : (alias(el,'e','E','xitFullscreen') || alias(el,'c','C','ancelFullScreen')));
+		if (fn) fn.apply(el, []);
+	};
 })
 
 WAJIC(void, app_js_screenmode, (int fullscreen),
 {
-    WA.SetFullscreen(fullscreen);
+	WA.SetFullscreen(fullscreen);
 })
 
 WAJIC(void, app_js_set_aspect_ratio, (int* width, int* height),
 {
-    var new_aspect_ratio = MU32[width>>2]/MU32[height>>2];
-    if (Math.abs(new_aspect_ratio - aspect_ratio) > 0.01)
-    {
-        aspect_ratio = new_aspect_ratio;
-        update_canvas_size(canvas.clientWidth);
-    }
-    MU32[width>>2] = canvas.width;
-    MU32[height>>2] = canvas.height;
+	var new_aspect_ratio = MU32[width>>2]/MU32[height>>2];
+	if (Math.abs(new_aspect_ratio - aspect_ratio) > 0.01)
+	{
+		aspect_ratio = new_aspect_ratio;
+		update_canvas_size(canvas.clientWidth);
+	}
+	MU32[width>>2] = canvas.width;
+	MU32[height>>2] = canvas.height;
 })
 
 WAJIC(int, app_js_get_event, (int evt[3]),
 {
-    if (evtcursor >= evts.length)
-    {
-        evts.length = evtcursor = 0;
-        return 0;
-    }
-    MU32[(evt>>2)+0] = evts[evtcursor++];
-    MU32[(evt>>2)+1] = evts[evtcursor++];
-    MU32[(evt>>2)+2] = evts[evtcursor++];
-    return 1;
+	if (evtcursor >= evts.length)
+	{
+		evts.length = evtcursor = 0;
+		return 0;
+	}
+	MU32[(evt>>2)+0] = evts[evtcursor++];
+	MU32[(evt>>2)+1] = evts[evtcursor++];
+	MU32[(evt>>2)+2] = evts[evtcursor++];
+	return 1;
 })
 
 
 int app_run( int (*app_proc)( app_t*, void* ), void* user_data, void* memctx, void* logctx, void* fatalctx )
-    {
-    app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
-    memset( app, 0, (int)sizeof( app_t ) );
-    app->memctx = memctx;
-    app->logctx = logctx;
-    app->fatalctx = fatalctx;
-    app->interpolation = APP_INTERPOLATION_LINEAR;
+	{
+	app_t* app = (app_t*) APP_MALLOC( memctx, sizeof( app_t ) );
+	memset( app, 0, (int)sizeof( app_t ) );
+	app->memctx = memctx;
+	app->logctx = logctx;
+	app->fatalctx = fatalctx;
+	app->interpolation = APP_INTERPOLATION_LINEAR;
 
-    app->gl.CreateShader = glCreateShader;
-    app->gl.ShaderSource = glShaderSource;
-    app->gl.CompileShader = glCompileShader;
-    app->gl.GetShaderiv = glGetShaderiv;
-    app->gl.CreateProgram = glCreateProgram;
-    app->gl.AttachShader = glAttachShader;
-    app->gl.BindAttribLocation = glBindAttribLocation;
-    app->gl.LinkProgram = glLinkProgram;
-    app->gl.GetProgramiv = glGetProgramiv;
-    app->gl.GenBuffers = glGenBuffers;
-    app->gl.BindBuffer = glBindBuffer;
-    app->gl.EnableVertexAttribArray = glEnableVertexAttribArray;
-    app->gl.VertexAttribPointer = glVertexAttribPointer;
-    app->gl.GenTextures = glGenTextures;
-    app->gl.Enable = glEnable;
-    app->gl.ActiveTexture = glActiveTexture;
-    app->gl.BindTexture = glBindTexture;
-    app->gl.TexParameteri = glTexParameteri;
-    app->gl.DeleteBuffers = glDeleteBuffers;
-    app->gl.DeleteTextures = glDeleteTextures;
-    app->gl.BufferData = glBufferData;
-    app->gl.UseProgram = glUseProgram;
-    app->gl.Uniform1i = glUniform1i;
-    app->gl.Uniform3f = glUniform3f;
-    app->gl.GetUniformLocation = glGetUniformLocation;
-    app->gl.TexImage2D = glTexImage2D;
-    app->gl.ClearColor = glClearColor;
-    app->gl.Clear = glClear;
-    app->gl.DrawArrays = glDrawArrays;
-    app->gl.Viewport = glViewport;
-    app->gl.DeleteShader = glDeleteShader;
-    app->gl.DeleteProgram = glDeleteProgram;
-    #ifdef APP_REPORT_SHADER_ERRORS
-        app->gl.GetShaderInfoLog = glGetShaderInfoLog;
-    #endif
+	app->gl.CreateShader = glCreateShader;
+	app->gl.ShaderSource = glShaderSource;
+	app->gl.CompileShader = glCompileShader;
+	app->gl.GetShaderiv = glGetShaderiv;
+	app->gl.CreateProgram = glCreateProgram;
+	app->gl.AttachShader = glAttachShader;
+	app->gl.BindAttribLocation = glBindAttribLocation;
+	app->gl.LinkProgram = glLinkProgram;
+	app->gl.GetProgramiv = glGetProgramiv;
+	app->gl.GenBuffers = glGenBuffers;
+	app->gl.BindBuffer = glBindBuffer;
+	app->gl.EnableVertexAttribArray = glEnableVertexAttribArray;
+	app->gl.VertexAttribPointer = glVertexAttribPointer;
+	app->gl.GenTextures = glGenTextures;
+	app->gl.Enable = glEnable;
+	app->gl.ActiveTexture = glActiveTexture;
+	app->gl.BindTexture = glBindTexture;
+	app->gl.TexParameteri = glTexParameteri;
+	app->gl.DeleteBuffers = glDeleteBuffers;
+	app->gl.DeleteTextures = glDeleteTextures;
+	app->gl.BufferData = glBufferData;
+	app->gl.UseProgram = glUseProgram;
+	app->gl.Uniform1i = glUniform1i;
+	app->gl.Uniform3f = glUniform3f;
+	app->gl.GetUniformLocation = glGetUniformLocation;
+	app->gl.TexImage2D = glTexImage2D;
+	app->gl.ClearColor = glClearColor;
+	app->gl.Clear = glClear;
+	app->gl.DrawArrays = glDrawArrays;
+	app->gl.Viewport = glViewport;
+	app->gl.DeleteShader = glDeleteShader;
+	app->gl.DeleteProgram = glDeleteProgram;
+	#ifdef APP_REPORT_SHADER_ERRORS
+		app->gl.GetShaderInfoLog = glGetShaderInfoLog;
+	#endif
 
-    int result = 0xff;
+	int result = 0xff;
 
-    app_js_setup_canvas( &app->gl.window_width, &app->gl.window_height );
-    glSetupCanvasContext( 1, 0, 0, 0 );
-    glViewport( 0, 0, app->gl.window_width, app->gl.window_height );
+	app_js_setup_canvas( &app->gl.window_width, &app->gl.window_height );
+	glSetupCanvasContext( 1, 0, 0, 0 );
+	glViewport( 0, 0, app->gl.window_width, app->gl.window_height );
 
-    app->has_focus = 1;
-    app->volume = 256;
+	app->has_focus = 1;
+	app->volume = 256;
 
-    int glres = app_internal_opengl_init( app, &app->gl, app->interpolation, app->gl.window_width, app->gl.window_height );
-    if( !glres )
-        {
-        app_fatal_error( app, "OpenGL init fail" );
-        goto init_failed;
-        }
+	int glres = app_internal_opengl_init( app, &app->gl, app->interpolation, app->gl.window_width, app->gl.window_height );
+	if( !glres )
+		{
+		app_fatal_error( app, "OpenGL init fail" );
+		goto init_failed;
+		}
 
-    result = app_proc( app, user_data );
+	result = app_proc( app, user_data );
 
 init_failed:
 
-    APP_FREE( memctx, app );
-    return result;
-    }
+	APP_FREE( memctx, app );
+	return result;
+	}
 
 
 static void app_internal_add_input_event( app_t* app, app_input_event_t* event )
-    {
-    if( app->has_focus )
-        {
-        if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
-            app->input_events[ app->input_count++ ] = *event;
-        }
-    }
+	{
+	if( app->has_focus )
+		{
+		if( app->input_count < sizeof( app->input_events ) / sizeof( *app->input_events ) )
+			app->input_events[ app->input_count++ ] = *event;
+		}
+	}
 
 
 static app_key_t app_internal_scancode_to_appkey( app_t* app, int scancode )
-    {
-    static const app_key_t map[] = {
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_CANCEL,      APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_HELP,         APP_KEY_INVALID,         APP_KEY_BACK,            APP_KEY_TAB,
-        APP_KEY_RETURN,         APP_KEY_INVALID,             APP_KEY_CLEAR,        APP_KEY_RETURN,      APP_KEY_RETURN,      APP_KEY_INVALID,   APP_KEY_LSHIFT,       APP_KEY_LCONTROL,        APP_KEY_LMENU,           APP_KEY_PAUSE,
-        APP_KEY_CAPITAL,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_HANJA,     APP_KEY_INVALID,      APP_KEY_ESCAPE,          APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_MODECHANGE,          APP_KEY_SPACE,        APP_KEY_PRIOR,       APP_KEY_NEXT,        APP_KEY_END,       APP_KEY_HOME,         APP_KEY_LEFT,            APP_KEY_UP,              APP_KEY_RIGHT,
-        APP_KEY_DOWN,           APP_KEY_SELECT,              APP_KEY_SNAPSHOT,     APP_KEY_EXEC,        APP_KEY_SNAPSHOT,    APP_KEY_INSERT,    APP_KEY_DELETE,       APP_KEY_HELP,            APP_KEY_0,               APP_KEY_1,
-        APP_KEY_2,              APP_KEY_3,                   APP_KEY_4,            APP_KEY_5,           APP_KEY_6,           APP_KEY_7,         APP_KEY_8,            APP_KEY_9,               APP_KEY_INVALID,         APP_KEY_OEM_1,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_A,         APP_KEY_B,            APP_KEY_C,               APP_KEY_D,               APP_KEY_E,
-        APP_KEY_F,              APP_KEY_G,                   APP_KEY_H,            APP_KEY_I,           APP_KEY_J,           APP_KEY_K,         APP_KEY_L,            APP_KEY_M,               APP_KEY_N,               APP_KEY_O,
-        APP_KEY_P,              APP_KEY_Q,                   APP_KEY_R,            APP_KEY_S,           APP_KEY_T,           APP_KEY_U,         APP_KEY_V,            APP_KEY_W,               APP_KEY_X,               APP_KEY_Y,
-        APP_KEY_Z,              APP_KEY_LWIN,                APP_KEY_RWIN,         APP_KEY_APPS,        APP_KEY_INVALID,     APP_KEY_SLEEP,     APP_KEY_NUMPAD0,      APP_KEY_NUMPAD1,         APP_KEY_NUMPAD2,         APP_KEY_NUMPAD3,
-        APP_KEY_NUMPAD4,        APP_KEY_NUMPAD5,             APP_KEY_NUMPAD6,      APP_KEY_NUMPAD7,     APP_KEY_NUMPAD8,     APP_KEY_NUMPAD9,   APP_KEY_MULTIPLY,     APP_KEY_ADD,             APP_KEY_OEM_COMMA,       APP_KEY_SUBTRACT,
-        APP_KEY_INVALID,        APP_KEY_DIVIDE,              APP_KEY_F1,           APP_KEY_F2,          APP_KEY_F3,          APP_KEY_F4,        APP_KEY_F5,           APP_KEY_F6,              APP_KEY_F7,              APP_KEY_F8,
-        APP_KEY_F9,             APP_KEY_F10,                 APP_KEY_F11,          APP_KEY_F12,         APP_KEY_F13,         APP_KEY_F14,       APP_KEY_F15,          APP_KEY_F16,             APP_KEY_F17,             APP_KEY_F18,
-        APP_KEY_F19,            APP_KEY_F20,                 APP_KEY_F21,          APP_KEY_F22,         APP_KEY_F23,         APP_KEY_F24,       APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_NUMLOCK,     APP_KEY_SCROLL,    APP_KEY_RETURN,       APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_LSHIFT,         APP_KEY_RSHIFT,              APP_KEY_LCONTROL,     APP_KEY_RCONTROL,    APP_KEY_LMENU,       APP_KEY_RMENU,     APP_KEY_BROWSER_BACK, APP_KEY_BROWSER_FORWARD, APP_KEY_BROWSER_REFRESH, APP_KEY_BROWSER_STOP,
-        APP_KEY_BROWSER_SEARCH, APP_KEY_BROWSER_FAVORITES,   APP_KEY_BROWSER_HOME, APP_KEY_VOLUME_MUTE, APP_KEY_VOLUME_DOWN, APP_KEY_VOLUME_UP, APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_RETURN,          APP_KEY_INVALID,
-        APP_KEY_LAUNCH_MAIL,    APP_KEY_LAUNCH_MEDIA_SELECT, APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_OEM_1,        APP_KEY_INVALID,         APP_KEY_OEM_COMMA,       APP_KEY_OEM_MINUS,
-        APP_KEY_OEM_PERIOD,     APP_KEY_OEM_2,               APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_OEM_4,
-        APP_KEY_OEM_5,          APP_KEY_OEM_6,               APP_KEY_OEM_7,        APP_KEY_INVALID,     APP_KEY_LWIN,        APP_KEY_RMENU,     APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_HANGUL,      APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_CRSEL,           APP_KEY_EXSEL,           APP_KEY_INVALID,
-        APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_CLEAR,       APP_KEY_INVALID, };
+	{
+	static const app_key_t map[] = {
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_CANCEL,      APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_HELP,         APP_KEY_INVALID,         APP_KEY_BACK,            APP_KEY_TAB,
+		APP_KEY_RETURN,         APP_KEY_INVALID,             APP_KEY_CLEAR,        APP_KEY_RETURN,      APP_KEY_RETURN,      APP_KEY_INVALID,   APP_KEY_LSHIFT,       APP_KEY_LCONTROL,        APP_KEY_LMENU,           APP_KEY_PAUSE,
+		APP_KEY_CAPITAL,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_HANJA,     APP_KEY_INVALID,      APP_KEY_ESCAPE,          APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_MODECHANGE,          APP_KEY_SPACE,        APP_KEY_PRIOR,       APP_KEY_NEXT,        APP_KEY_END,       APP_KEY_HOME,         APP_KEY_LEFT,            APP_KEY_UP,              APP_KEY_RIGHT,
+		APP_KEY_DOWN,           APP_KEY_SELECT,              APP_KEY_SNAPSHOT,     APP_KEY_EXEC,        APP_KEY_SNAPSHOT,    APP_KEY_INSERT,    APP_KEY_DELETE,       APP_KEY_HELP,            APP_KEY_0,               APP_KEY_1,
+		APP_KEY_2,              APP_KEY_3,                   APP_KEY_4,            APP_KEY_5,           APP_KEY_6,           APP_KEY_7,         APP_KEY_8,            APP_KEY_9,               APP_KEY_INVALID,         APP_KEY_OEM_1,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_A,         APP_KEY_B,            APP_KEY_C,               APP_KEY_D,               APP_KEY_E,
+		APP_KEY_F,              APP_KEY_G,                   APP_KEY_H,            APP_KEY_I,           APP_KEY_J,           APP_KEY_K,         APP_KEY_L,            APP_KEY_M,               APP_KEY_N,               APP_KEY_O,
+		APP_KEY_P,              APP_KEY_Q,                   APP_KEY_R,            APP_KEY_S,           APP_KEY_T,           APP_KEY_U,         APP_KEY_V,            APP_KEY_W,               APP_KEY_X,               APP_KEY_Y,
+		APP_KEY_Z,              APP_KEY_LWIN,                APP_KEY_RWIN,         APP_KEY_APPS,        APP_KEY_INVALID,     APP_KEY_SLEEP,     APP_KEY_NUMPAD0,      APP_KEY_NUMPAD1,         APP_KEY_NUMPAD2,         APP_KEY_NUMPAD3,
+		APP_KEY_NUMPAD4,        APP_KEY_NUMPAD5,             APP_KEY_NUMPAD6,      APP_KEY_NUMPAD7,     APP_KEY_NUMPAD8,     APP_KEY_NUMPAD9,   APP_KEY_MULTIPLY,     APP_KEY_ADD,             APP_KEY_OEM_COMMA,       APP_KEY_SUBTRACT,
+		APP_KEY_INVALID,        APP_KEY_DIVIDE,              APP_KEY_F1,           APP_KEY_F2,          APP_KEY_F3,          APP_KEY_F4,        APP_KEY_F5,           APP_KEY_F6,              APP_KEY_F7,              APP_KEY_F8,
+		APP_KEY_F9,             APP_KEY_F10,                 APP_KEY_F11,          APP_KEY_F12,         APP_KEY_F13,         APP_KEY_F14,       APP_KEY_F15,          APP_KEY_F16,             APP_KEY_F17,             APP_KEY_F18,
+		APP_KEY_F19,            APP_KEY_F20,                 APP_KEY_F21,          APP_KEY_F22,         APP_KEY_F23,         APP_KEY_F24,       APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_NUMLOCK,     APP_KEY_SCROLL,    APP_KEY_RETURN,       APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_LSHIFT,         APP_KEY_RSHIFT,              APP_KEY_LCONTROL,     APP_KEY_RCONTROL,    APP_KEY_LMENU,       APP_KEY_RMENU,     APP_KEY_BROWSER_BACK, APP_KEY_BROWSER_FORWARD, APP_KEY_BROWSER_REFRESH, APP_KEY_BROWSER_STOP,
+		APP_KEY_BROWSER_SEARCH, APP_KEY_BROWSER_FAVORITES,   APP_KEY_BROWSER_HOME, APP_KEY_VOLUME_MUTE, APP_KEY_VOLUME_DOWN, APP_KEY_VOLUME_UP, APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_RETURN,          APP_KEY_INVALID,
+		APP_KEY_LAUNCH_MAIL,    APP_KEY_LAUNCH_MEDIA_SELECT, APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_OEM_1,        APP_KEY_INVALID,         APP_KEY_OEM_COMMA,       APP_KEY_OEM_MINUS,
+		APP_KEY_OEM_PERIOD,     APP_KEY_OEM_2,               APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_OEM_4,
+		APP_KEY_OEM_5,          APP_KEY_OEM_6,               APP_KEY_OEM_7,        APP_KEY_INVALID,     APP_KEY_LWIN,        APP_KEY_RMENU,     APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_INVALID,     APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_INVALID,         APP_KEY_INVALID,         APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_HANGUL,      APP_KEY_INVALID,   APP_KEY_INVALID,      APP_KEY_CRSEL,           APP_KEY_EXSEL,           APP_KEY_INVALID,
+		APP_KEY_INVALID,        APP_KEY_INVALID,             APP_KEY_INVALID,      APP_KEY_INVALID,     APP_KEY_CLEAR,       APP_KEY_INVALID, };
 
-    if( scancode < 0 || scancode >= sizeof( map ) / sizeof( *map ) ) return APP_KEY_INVALID;
-    return (app_key_t) map[ scancode ];
-    }
+	if( scancode < 0 || scancode >= sizeof( map ) / sizeof( *map ) ) return APP_KEY_INVALID;
+	return (app_key_t) map[ scancode ];
+	}
 
 
 app_state_t app_yield( app_t* app )
-    {
-    int evt[3];
-    app_input_event_t input_event;
-    app_key_t key;
-    while (app_js_get_event( evt ))
-    {
-        switch (evt[0])
-            {
-            //         EVENT ID                ARG 1           ARG 2
-            case 1: // WINDOW_SIZE_CHANGED     w               h
-                if( evt[1] != app->gl.window_width || evt[2] != app->gl.window_height )
-                    {
-                    app_internal_opengl_resize( &app->gl, evt[1], evt[2] );
-                    }
-                break;
-            case 2: // WINDOW_FOCUS            gained/lost
-                app->has_focus = evt[1];
-                break;
-            case 3: // KEY                     down/up         scancode
-                input_event.type = (evt[1] ? APP_INPUT_KEY_DOWN : APP_INPUT_KEY_UP);
-                key = app_internal_scancode_to_appkey( app, evt[2] );
-                if( key == APP_KEY_LCONTROL || key == APP_KEY_RCONTROL )
-                    {
-                    input_event.data.key = APP_KEY_CONTROL;
-                    app_internal_add_input_event( app, &input_event );
-                    }
-                else if( key == APP_KEY_LSHIFT || key == APP_KEY_RSHIFT )
-                    {
-                    input_event.data.key = APP_KEY_SHIFT;
-                    app_internal_add_input_event( app, &input_event );
-                    }
-                else if( key == APP_KEY_LMENU || key == APP_KEY_RMENU )
-                    {
-                    input_event.data.key = APP_KEY_MENU;
-                    app_internal_add_input_event( app, &input_event );
-                    }
-                input_event.data.key = key;
-                app_internal_add_input_event( app, &input_event );
-                break;
-            case 4: // CHAR                    charcode
-                input_event.type = APP_INPUT_CHAR;
-                input_event.data.char_code = (char) evt[1];
-                app_internal_add_input_event( app, &input_event );
-                break;
-            case 5: // MOUSE_MOTION            x               y
-                input_event.type = APP_INPUT_MOUSE_MOVE;
-                app->pointer_x = input_event.data.mouse_pos.x = evt[1];
-                app->pointer_y = input_event.data.mouse_pos.y = evt[2];
-                app_internal_add_input_event( app, &input_event );
-                break;
-            case 6: // MOUSE_BUTTON            down/up         buttonnum
-                input_event.type = (evt[1] ? APP_INPUT_KEY_DOWN : APP_INPUT_KEY_UP);
-                if( evt[2] == 0 )
-                    input_event.data.key = APP_KEY_LBUTTON;
-                else if( evt[2] == 1 )
-                    input_event.data.key = APP_KEY_RBUTTON;
-                else if( evt[2] == 2 )
-                    input_event.data.key = APP_KEY_MBUTTON;
-                else if( evt[2] == 3 )
-                    input_event.data.key = APP_KEY_XBUTTON1;
-                else if( evt[2] == 4 )
-                    input_event.data.key = APP_KEY_XBUTTON2;
-                else
-                    break;
-                app_internal_add_input_event( app, &input_event );
-                break;
-            case 7: // MOUSE_WHEEL             wheel
-                {
-                float const microsoft_mouse_wheel_constant = 120.0f;
-                float wheel_delta = ( (float) evt[1] ) / microsoft_mouse_wheel_constant;
-                if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
-                    {
-                    app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
-                    event->data.wheel_delta += wheel_delta;
-                    }
-                else
-                    {
-                    input_event.type = APP_INPUT_SCROLL_WHEEL;
-                    input_event.data.wheel_delta = wheel_delta;
-                    app_internal_add_input_event( app, &input_event );
-                    }
-                } break;
-        }
-    }
-    return APP_STATE_NORMAL;
-    }
+	{
+	int evt[3];
+	app_input_event_t input_event;
+	app_key_t key;
+	while (app_js_get_event( evt ))
+	{
+		switch (evt[0])
+			{
+			//         EVENT ID                ARG 1           ARG 2
+			case 1: // WINDOW_SIZE_CHANGED     w               h
+				if( evt[1] != app->gl.window_width || evt[2] != app->gl.window_height )
+					{
+					app_internal_opengl_resize( &app->gl, evt[1], evt[2] );
+					}
+				break;
+			case 2: // WINDOW_FOCUS            gained/lost
+				app->has_focus = evt[1];
+				break;
+			case 3: // KEY                     down/up         scancode
+				input_event.type = (evt[1] ? APP_INPUT_KEY_DOWN : APP_INPUT_KEY_UP);
+				key = app_internal_scancode_to_appkey( app, evt[2] );
+				if( key == APP_KEY_LCONTROL || key == APP_KEY_RCONTROL )
+					{
+					input_event.data.key = APP_KEY_CONTROL;
+					app_internal_add_input_event( app, &input_event );
+					}
+				else if( key == APP_KEY_LSHIFT || key == APP_KEY_RSHIFT )
+					{
+					input_event.data.key = APP_KEY_SHIFT;
+					app_internal_add_input_event( app, &input_event );
+					}
+				else if( key == APP_KEY_LMENU || key == APP_KEY_RMENU )
+					{
+					input_event.data.key = APP_KEY_MENU;
+					app_internal_add_input_event( app, &input_event );
+					}
+				input_event.data.key = key;
+				app_internal_add_input_event( app, &input_event );
+				break;
+			case 4: // CHAR                    charcode
+				input_event.type = APP_INPUT_CHAR;
+				input_event.data.char_code = (char) evt[1];
+				app_internal_add_input_event( app, &input_event );
+				break;
+			case 5: // MOUSE_MOTION            x               y
+				input_event.type = APP_INPUT_MOUSE_MOVE;
+				app->pointer_x = input_event.data.mouse_pos.x = evt[1];
+				app->pointer_y = input_event.data.mouse_pos.y = evt[2];
+				app_internal_add_input_event( app, &input_event );
+				break;
+			case 6: // MOUSE_BUTTON            down/up         buttonnum
+				input_event.type = (evt[1] ? APP_INPUT_KEY_DOWN : APP_INPUT_KEY_UP);
+				if( evt[2] == 0 )
+					input_event.data.key = APP_KEY_LBUTTON;
+				else if( evt[2] == 1 )
+					input_event.data.key = APP_KEY_RBUTTON;
+				else if( evt[2] == 2 )
+					input_event.data.key = APP_KEY_MBUTTON;
+				else if( evt[2] == 3 )
+					input_event.data.key = APP_KEY_XBUTTON1;
+				else if( evt[2] == 4 )
+					input_event.data.key = APP_KEY_XBUTTON2;
+				else
+					break;
+				app_internal_add_input_event( app, &input_event );
+				break;
+			case 7: // MOUSE_WHEEL             wheel
+				{
+				float const microsoft_mouse_wheel_constant = 120.0f;
+				float wheel_delta = ( (float) evt[1] ) / microsoft_mouse_wheel_constant;
+				if( app->input_count > 0 && app->input_events[ app->input_count - 1 ].type == APP_INPUT_SCROLL_WHEEL )
+					{
+					app_input_event_t* event = &app->input_events[ app->input_count - 1 ];
+					event->data.wheel_delta += wheel_delta;
+					}
+				else
+					{
+					input_event.type = APP_INPUT_SCROLL_WHEEL;
+					input_event.data.wheel_delta = wheel_delta;
+					app_internal_add_input_event( app, &input_event );
+					}
+				} break;
+		}
+	}
+	return APP_STATE_NORMAL;
+	}
 
 
 void app_cancel_exit( app_t* app ) { /* NOT IMPLEMENTED */ }
@@ -4453,35 +6534,35 @@ char const* app_appdata( app_t* app ) { /* NOT IMPLEMENTED */ return NULL; }
 
 WAJIC_WITH_INIT(
 (
-    var start_time = Date.now();
+	var start_time = Date.now();
 ),
 APP_U32, app_js_get_ticks, (),
 {
-    return Date.now() - start_time;
+	return Date.now() - start_time;
 })
 
 APP_U64 app_time_count( app_t* app )
-    {
-    return (APP_U64)app_js_get_ticks()*1000;
-    }
+	{
+	return (APP_U64)app_js_get_ticks()*1000;
+	}
 
 
 APP_U64 app_time_freq( app_t* app )
-    {
-    return (APP_U64)1000*1000;
-    }
+	{
+	return (APP_U64)1000*1000;
+	}
 
 
 void app_log( app_t* app, app_log_level_t level, char const* message )
-    {
-    printf("[APP] [%d] %s\n", (int)level, message);
-    }
+	{
+	printf("[APP] [%d] %s\n", (int)level, message);
+	}
 
 
 void app_fatal_error( app_t* app, char const* message )
-    {
-    APP_FATAL_ERROR( app->fatalctx, message );
-    }
+	{
+	APP_FATAL_ERROR( app->fatalctx, message );
+	}
 
 
 void app_pointer( app_t* app, int width, int height, APP_U32* pixels_abgr, int hotspot_x, int hotspot_y ) { /* NOT IMPLEMENTED */ }
@@ -4490,266 +6571,266 @@ void app_pointer_pos( app_t* app, int x, int y ) { /* NOT IMPLEMENTED */ }
 
 
 int app_pointer_x( app_t* app )
-    {
-    return app->pointer_x;
-    }
+	{
+	return app->pointer_x;
+	}
 
 
 int app_pointer_y( app_t* app )
-    {
-    return app->pointer_y;
-    }
+	{
+	return app->pointer_y;
+	}
 
 
 void app_pointer_limit( app_t* app, int x, int y, int width, int height ) { /* NOT IMPLEMENTED */ }
 void app_pointer_limit_off( app_t* app ) { /* NOT IMPLEMENTED */ }
 
 void app_interpolation( app_t* app, app_interpolation_t interpolation )
-    {
-    if( interpolation == app->interpolation ) return;
-    app->interpolation = interpolation;
+	{
+	if( interpolation == app->interpolation ) return;
+	app->interpolation = interpolation;
 
-    app_internal_opengl_interpolation( &app->gl, interpolation );
-    }
+	app_internal_opengl_interpolation( &app->gl, interpolation );
+	}
 
 
 void app_screenmode( app_t* app, app_screenmode_t screenmode )
-    {
-    app_js_screenmode( (int) ( screenmode == APP_SCREENMODE_FULLSCREEN ) );
-    }
+	{
+	app_js_screenmode( (int) ( screenmode == APP_SCREENMODE_FULLSCREEN ) );
+	}
 
 
 void app_window_size( app_t* app, int width, int height )
-    {
-    // view size is controlled by the browser, we only control the display aspect ratio
-    app_js_set_aspect_ratio( &width, &height );
-    if( width != app->gl.window_width || height != app->gl.window_height )
-        {
-        app_internal_opengl_resize( &app->gl, width, height );
-        }
-    }
+	{
+	// view size is controlled by the browser, we only control the display aspect ratio
+	app_js_set_aspect_ratio( &width, &height );
+	if( width != app->gl.window_width || height != app->gl.window_height )
+		{
+		app_internal_opengl_resize( &app->gl, width, height );
+		}
+	}
 
 
 int app_window_width( app_t* app )
-    {
-    return app->gl.window_width;
-    }
+	{
+	return app->gl.window_width;
+	}
 
 
 int app_window_height( app_t* app )
-    {
-    return app->gl.window_height;
-    }
+	{
+	return app->gl.window_height;
+	}
 
 
 void app_window_pos( app_t* app, int x, int y ) { /* NOT IMPLEMENTED */ }
 
 
 int app_window_x( app_t* app )
-    {
-    return 0;
-    }
+	{
+	return 0;
+	}
 
 
 int app_window_y( app_t* app )
-    {
-    return 0;
-    }
+	{
+	return 0;
+	}
 
 
 app_displays_t app_displays( app_t* app )
-    {
-    // Fixed display for web
-    static app_display_t display;
-    display.id[0] = '\0';
-    display.x = 0;
-    display.y = 0;
-    display.width = 1920;
-    display.height = 1080;
-    app_displays_t displays;
-    displays.count = 1;
-    displays.displays = &display;
-    return displays;
-    }
+	{
+	// Fixed display for web
+	static app_display_t display;
+	display.id[0] = '\0';
+	display.x = 0;
+	display.y = 0;
+	display.width = 1920;
+	display.height = 1080;
+	app_displays_t displays;
+	displays.count = 1;
+	displays.displays = &display;
+	return displays;
+	}
 
 
 WAJIC_WITH_INIT(
 (
-    var audio_ctx, audio_done = 0, audio_latency = 2048, audio_bufs = [], audio_bufidx = 0, audio_miss = 0;
-    var start_audio = ()=>
-    {
-        if (audio_ctx.state == 'running') return 1;
-        audio_done = audio_ctx.currentTime;
-        audio_ctx.resume();
-    };
-    var set_start_audio_event = (name)=>document.addEventListener(name, start_audio, {once:true});
+	var audio_ctx, audio_done = 0, audio_latency = 2048, audio_bufs = [], audio_bufidx = 0, audio_miss = 0;
+	var start_audio = ()=>
+	{
+		if (audio_ctx.state == 'running') return 1;
+		audio_done = audio_ctx.currentTime;
+		audio_ctx.resume();
+	};
+	var set_start_audio_event = (name)=>document.addEventListener(name, start_audio, {once:true});
 ),
 int, app_js_audio_needed, (bool has_focus),
 {
-    if (!audio_ctx)
-    {
-        if (audio_ctx === false) return 0;
-        try { (audio_ctx = new (alias(window,"","",'AudioContext'))()).createBuffer(1,1,44100).getChannelData(0); } catch (e) { }
-        if (!audio_ctx) { audio_ctx = false; WA.print('Warning: WebAudio not supported\n'); return 0; }
-        for (var i = 0; i != 10; i++) audio_bufs[i] = audio_ctx.createBuffer(2, 512, 44100);
-        if (!start_audio()) { set_start_audio_event('click'); set_start_audio_event('touchstart'); set_start_audio_event('keydown'); }
-    }
-    if (!start_audio() && !start_audio()) return 0;
-    var ct = audio_ctx.currentTime;
-    if (audio_done < ct)
-    {
-        if (has_focus && (audio_miss += 2) > 7)
-        {
-            audio_latency += 512;
-            audio_miss = 0;
-        }
-        audio_done = ct;
-    }
-    else if (audio_miss > 1) audio_miss--;
-    return ((ct - audio_done) * 44100 + .5 + audio_latency * (has_focus ? 1 : 2) + 511)>>9;
+	if (!audio_ctx)
+	{
+		if (audio_ctx === false) return 0;
+		try { (audio_ctx = new (alias(window,"","",'AudioContext'))()).createBuffer(1,1,44100).getChannelData(0); } catch (e) { }
+		if (!audio_ctx) { audio_ctx = false; WA.print('Warning: WebAudio not supported\n'); return 0; }
+		for (var i = 0; i != 10; i++) audio_bufs[i] = audio_ctx.createBuffer(2, 512, 44100);
+		if (!start_audio()) { set_start_audio_event('click'); set_start_audio_event('touchstart'); set_start_audio_event('keydown'); }
+	}
+	if (!start_audio() && !start_audio()) return 0;
+	var ct = audio_ctx.currentTime;
+	if (audio_done < ct)
+	{
+		if (has_focus && (audio_miss += 2) > 7)
+		{
+			audio_latency += 512;
+			audio_miss = 0;
+		}
+		audio_done = ct;
+	}
+	else if (audio_miss > 1) audio_miss--;
+	return ((ct - audio_done) * 44100 + .5 + audio_latency * (has_focus ? 1 : 2) + 511)>>9;
 })
 
 WAJIC(int, app_js_audio_push, (APP_S16* sample_pairs, int volume),
 {
-    sample_pairs = new Int16Array(MU8.buffer).subarray(sample_pairs>>1);
-    var buf = audio_bufs[audio_bufidx = ((audio_bufidx + 1) % 10)];
-    var left = buf.getChannelData(0), right = buf.getChannelData(1);
-    var f = (1 / 32768) * (volume / 255);
-    for (var i = 0; i != 512; i++)
-    {
-        left[i] = sample_pairs[i*2] * f;
-        right[i] = sample_pairs[i*2+1] * f;
-    }
-    var source = audio_ctx.createBufferSource();
-    source.connect(audio_ctx.destination);
-    source.buffer = buf;
-    source[source.start ? 'start' : 'noteOn'](0.005+audio_done);
-    audio_done += 512/44100;
+	sample_pairs = new Int16Array(MU8.buffer).subarray(sample_pairs>>1);
+	var buf = audio_bufs[audio_bufidx = ((audio_bufidx + 1) % 10)];
+	var left = buf.getChannelData(0), right = buf.getChannelData(1);
+	var f = (1 / 32768) * (volume / 255);
+	for (var i = 0; i != 512; i++)
+	{
+		left[i] = sample_pairs[i*2] * f;
+		right[i] = sample_pairs[i*2+1] * f;
+	}
+	var source = audio_ctx.createBufferSource();
+	source.connect(audio_ctx.destination);
+	source.buffer = buf;
+	source[source.start ? 'start' : 'noteOn'](0.005+audio_done);
+	audio_done += 512/44100;
 })
 
 
 void app_present( app_t* app, APP_U32 const* pixels_xbgr, int width, int height, APP_U32 mod_xbgr, APP_U32 border_xbgr )
-    {
-    if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
-    for( int needed = app_js_audio_needed(app->has_focus); app->sound_callback && needed--;)
-        {
-        app->sound_callback(app->sound_buffer, 512, app->sound_user_data);
-        app_js_audio_push(app->sound_buffer, app->volume);
-        }
-    if( app->has_focus )
-        WaCoroWaitAnimFrame();
-    else
-        WaCoroSleep(50);
-    }
+	{
+	if( pixels_xbgr ) app_internal_opengl_present( &app->gl, pixels_xbgr, width, height, mod_xbgr, border_xbgr );
+	for( int needed = app_js_audio_needed(app->has_focus); app->sound_callback && needed--;)
+		{
+		app->sound_callback(app->sound_buffer, 512, app->sound_user_data);
+		app_js_audio_push(app->sound_buffer, app->volume);
+		}
+	if( app->has_focus )
+		WaCoroWaitAnimFrame();
+	else
+		WaCoroSleep(50);
+	}
 
 
 void app_sound( app_t* app, int sample_pairs_count, void (*sound_callback)( APP_S16* sample_pairs, int sample_pairs_count, void* user_data ), void* user_data )
-    {
-    app->sound_callback = sound_callback;
-    app->sound_user_data = user_data;
-    if( sound_callback && !app->sound_buffer )
-        app->sound_buffer = (APP_S16*) APP_MALLOC( app->memctx, sizeof(APP_S16) * 512 * 2 );
-    else if( !sound_callback && app->sound_buffer )
-        APP_FREE( app->memctx, app->sound_buffer );
-    }
+	{
+	app->sound_callback = sound_callback;
+	app->sound_user_data = user_data;
+	if( sound_callback && !app->sound_buffer )
+		app->sound_buffer = (APP_S16*) APP_MALLOC( app->memctx, sizeof(APP_S16) * 512 * 2 );
+	else if( !sound_callback && app->sound_buffer )
+		APP_FREE( app->memctx, app->sound_buffer );
+	}
 
 
 void app_sound_volume( app_t* app, float volume )
-    {
-    int v = (int) ( volume * 256.0f );
-    app->volume = v < 0 ? 0 : v > 256 ? 256 : v;
-    }
+	{
+	int v = (int) ( volume * 256.0f );
+	app->volume = v < 0 ? 0 : v > 256 ? 256 : v;
+	}
 
 
 app_input_t app_input( app_t* app )
-    {
-    app_input_t input;
-    input.events = app->input_events;
-    input.count = app->input_count;
-    app->input_count = 0;
-    return input;
-    }
+	{
+	app_input_t input;
+	input.events = app->input_events;
+	input.count = app->input_count;
+	app->input_count = 0;
+	return input;
+	}
 
 
 void app_coordinates_window_to_bitmap( app_t* app, int width, int height, int* x, int* y )
-    {
-    if( width == 0 || height == 0 ) return;
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = app->gl.window_width / (float) width;
-        float vscale = app->gl.window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( app->gl.window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( app->gl.window_height - pixel_scale * height ) / 2.0f;
-            *x -= (int)( hborder );
-            *y -= (int)( vborder );
-            *x = (int)( *x / pixel_scale );
-            *y = (int)( *y / pixel_scale );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = app->gl.window_width / width;
-        int vscale = app->gl.window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( app->gl.window_width - pixel_scale * width ) / 2;
-        int vborder = ( app->gl.window_height - pixel_scale * height ) / 2;
-        *x -= (int)( hborder );
-        *y -= (int)( vborder );
-        *x = (int)( *x / pixel_scale );
-        *y = (int)( *y / pixel_scale );
-        }
-    }
+	{
+	if( width == 0 || height == 0 ) return;
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = app->gl.window_width / (float) width;
+		float vscale = app->gl.window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( app->gl.window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( app->gl.window_height - pixel_scale * height ) / 2.0f;
+			*x -= (int)( hborder );
+			*y -= (int)( vborder );
+			*x = (int)( *x / pixel_scale );
+			*y = (int)( *y / pixel_scale );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = app->gl.window_width / width;
+		int vscale = app->gl.window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( app->gl.window_width - pixel_scale * width ) / 2;
+		int vborder = ( app->gl.window_height - pixel_scale * height ) / 2;
+		*x -= (int)( hborder );
+		*y -= (int)( vborder );
+		*x = (int)( *x / pixel_scale );
+		*y = (int)( *y / pixel_scale );
+		}
+	}
 
 
 void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x, int* y )
-    {
-    if( app->interpolation == APP_INTERPOLATION_LINEAR )
-        {
-        float hscale = app->gl.window_width / (float) width;
-        float vscale = app->gl.window_height / (float) height;
-        float pixel_scale = hscale < vscale ? hscale : vscale;
-        if( pixel_scale > 0.0f )
-            {
-            float hborder = ( app->gl.window_width - pixel_scale * width ) / 2.0f;
-            float vborder = ( app->gl.window_height - pixel_scale * height ) / 2.0f;
-            *x = (int)( *x * pixel_scale );
-            *y = (int)( *y * pixel_scale );
-            *x += (int)( hborder );
-            *y += (int)( vborder );
-            }
-        else
-            {
-            *x = 0;
-            *y = 0;
-            }
-        }
-    else
-        {
-        int hscale = app->gl.window_width / width;
-        int vscale = app->gl.window_height / height;
-        int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
-        pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
-        int hborder = ( app->gl.window_width - pixel_scale * width ) / 2;
-        int vborder = ( app->gl.window_height - pixel_scale * height ) / 2;
-        *x = (int)( *x * pixel_scale );
-        *y = (int)( *y * pixel_scale );
-        *x += (int)( hborder );
-        *y += (int)( vborder );
-        }
-    }
+	{
+	if( app->interpolation == APP_INTERPOLATION_LINEAR )
+		{
+		float hscale = app->gl.window_width / (float) width;
+		float vscale = app->gl.window_height / (float) height;
+		float pixel_scale = hscale < vscale ? hscale : vscale;
+		if( pixel_scale > 0.0f )
+			{
+			float hborder = ( app->gl.window_width - pixel_scale * width ) / 2.0f;
+			float vborder = ( app->gl.window_height - pixel_scale * height ) / 2.0f;
+			*x = (int)( *x * pixel_scale );
+			*y = (int)( *y * pixel_scale );
+			*x += (int)( hborder );
+			*y += (int)( vborder );
+			}
+		else
+			{
+			*x = 0;
+			*y = 0;
+			}
+		}
+	else
+		{
+		int hscale = app->gl.window_width / width;
+		int vscale = app->gl.window_height / height;
+		int pixel_scale = pixel_scale = hscale < vscale ? hscale : vscale;
+		pixel_scale = pixel_scale < 1 ? 1 : pixel_scale;
+		int hborder = ( app->gl.window_width - pixel_scale * width ) / 2;
+		int vborder = ( app->gl.window_height - pixel_scale * height ) / 2;
+		*x = (int)( *x * pixel_scale );
+		*y = (int)( *y * pixel_scale );
+		*x += (int)( hborder );
+		*y += (int)( vborder );
+		}
+	}
 
 
 #else
-    #error Undefined platform. Define APP_WINDOWS, APP_SDL, APP_WASM or APP_NULL.
+	#error Undefined platform. Define APP_WINDOWS, APP_SDL, APP_WASM or APP_NULL.
 #endif
 
 
@@ -4757,9 +6838,9 @@ void app_coordinates_bitmap_to_window( app_t* app, int width, int height, int* x
 
 /*
 revision history:
-    0.4     pointer x/y, callback for sound, modifier keys fix, gl binding fix, cursor fix
-    0.3     added API documentation
-    0.2     first publicly released version
+	0.4     pointer x/y, callback for sound, modifier keys fix, gl binding fix, cursor fix
+	0.3     added API documentation
+	0.2     first publicly released version
 */
 
 /*

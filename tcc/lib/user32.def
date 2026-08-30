@@ -233,6 +233,8 @@ GetClassInfoExW
 GetClassInfoW
 GetClassLongA
 GetClassLongW
+GetClassLongPtrA
+GetClassLongPtrW
 GetClassNameA
 GetClassNameW
 GetClassWord

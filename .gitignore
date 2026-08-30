@@ -2,3 +2,7 @@
 *.out
 *.html
 wasm
+.vs
+*.ilk
+*.pdb
+out

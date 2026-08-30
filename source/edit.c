@@ -1,4 +1,4 @@
-// Simple code editor. I just thought it would be nice to include a DOS-style 
+// Simple code editor. I just thought it would be nice to include a DOS-style
 // text editor, but it is not at all an attempt to make a serious editor.
 // The code ended up being really messy, mostly because I only find 10 minutes
 // here and there to work on it over the course of a few days. There are most
@@ -79,7 +79,7 @@ int insertchars( struct str_t* str, int i, char const* ch, int n );
 int getwidth( struct str_t* str, int n, int i ) {
     char* s = str->chars + n;
     char* end = s + i;
-    int x = 0; 
+    int x = 0;
     while( s < end ) {
         if( *s == '\t' ) {
             int ofs = tab_width - ( x % tab_width );
@@ -102,7 +102,7 @@ int getwidth( struct str_t* str, int n, int i ) {
 
 void layoutrow( struct StbTexteditRowStruct* row, struct str_t* str, int n ) {
     char const* s = str->chars + n;
-    int len = 0; 
+    int len = 0;
     int x = 0;
     while( *s ) {
         if( *s == '\t' ) {
@@ -127,7 +127,7 @@ int g_modified = 0;
 
 void deletechars( struct str_t* str, int i, int n ) {
     if( str->size - ( i + n ) > 0 ) {
-        memmove( str->chars + i, str->chars + i + n, str->size - ( i + n ) );    
+        memmove( str->chars + i, str->chars + i + n, str->size - ( i + n ) );
     }
     str->size -= n;
     str->chars[ str->size ] = '\0';
@@ -141,7 +141,7 @@ int insertchars( struct str_t* str, int i, char const* ch, int n ) {
         if( str->size + n >= str->capacity ) {
             str->capacity += n;
         }
-        str->chars = (char*) realloc( str->chars, str->capacity + 1 ); 
+        str->chars = (char*) realloc( str->chars, str->capacity + 1 );
     }
     if( str->size - i > 0 ) {
         memmove( str->chars + i + n, str->chars + i, str->size - i );
@@ -231,50 +231,50 @@ void help( void ) {
     setcol( 0 );
     clrscr();
     int row = 1;
-    goxy( 1, row++ ); putstring( " EDIT.EXE - Simple code editor" );   
+    goxy( 1, row++ ); putstring( " EDIT.EXE - Simple code editor" );
     goxy( 1, row++ ); putstring( " \xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf" );
-    goxy( 1, row++ ); putstring( "This is a very basic example of an editor for editing code. It supports only  " );   
-    goxy( 1, row++ ); putstring( "the most common editing operations, and some basic syntax highlighting for C. " );   
-    goxy( 1, row++ ); putstring( "For serious programming, you are better off using another editor - this one is" );   
-    goxy( 1, row++ ); putstring( "kind of experimental, quickly thrown together and not thoroughly tested.      " );   
-    goxy( 1, row++ ); putstring( "Use at your own risk, there's no guarantee that EDIT won't corrupt your files." );   
-    goxy( 1, row++ ); putstring( "                                                                              " );   
-    goxy( 1, row++ ); putstring( " Keyboard Shortcuts" );   
+    goxy( 1, row++ ); putstring( "This is a very basic example of an editor for editing code. It supports only  " );
+    goxy( 1, row++ ); putstring( "the most common editing operations, and some basic syntax highlighting for C. " );
+    goxy( 1, row++ ); putstring( "For serious programming, you are better off using another editor - this one is" );
+    goxy( 1, row++ ); putstring( "kind of experimental, quickly thrown together and not thoroughly tested.      " );
+    goxy( 1, row++ ); putstring( "Use at your own risk, there's no guarantee that EDIT won't corrupt your files." );
+    goxy( 1, row++ ); putstring( "                                                                              " );
+    goxy( 1, row++ ); putstring( " Keyboard Shortcuts" );
     goxy( 1, row++ ); putstring( " \xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf\xdf" );
-    goxy( 1, row++ ); putstring( "F1     Show help screen                                                       " );   
-    goxy( 1, row++ ); putstring( "CTRL+S Save the current document                                              " );   
-    goxy( 1, row++ ); putstring( "CTRL+W Exit without saving                                                    " );   
-    goxy( 1, row++ ); putstring( "CTRL+C Copy selection to internal clipboard                                   " );   
-    goxy( 1, row++ ); putstring( "CTRL+V Paste from internal clipboard                                          " );   
-    goxy( 1, row++ ); putstring( "CTRL+X Cut selection into internal clipboard                                  " );   
-    goxy( 1, row++ ); putstring( "CTRL+Z Undo                                                                   " );   
-    goxy( 1, row++ ); putstring( "CTRL+Y Redo                                                                   " );   
-    goxy( 1, row++ ); putstring( "HOME   Start of line                                                          " );   
-    goxy( 1, row++ ); putstring( "END    End of line                                                            " );   
-    goxy( 1, row++ ); putstring( "PGUP   Move one page up                                                       " );   
-    goxy( 1, row++ ); putstring( "PGDOWN Move one page down                                                     " );   
-    goxy( 1, row++ ); putstring( "The mouse can be used to move the cursor, or drag to define a selection.      " );   
+    goxy( 1, row++ ); putstring( "F1     Show help screen                                                       " );
+    goxy( 1, row++ ); putstring( "CTRL+S Save the current document                                              " );
+    goxy( 1, row++ ); putstring( "CTRL+W Exit without saving                                                    " );
+    goxy( 1, row++ ); putstring( "CTRL+C Copy selection to internal clipboard                                   " );
+    goxy( 1, row++ ); putstring( "CTRL+V Paste from internal clipboard                                          " );
+    goxy( 1, row++ ); putstring( "CTRL+X Cut selection into internal clipboard                                  " );
+    goxy( 1, row++ ); putstring( "CTRL+Z Undo                                                                   " );
+    goxy( 1, row++ ); putstring( "CTRL+Y Redo                                                                   " );
+    goxy( 1, row++ ); putstring( "HOME   Start of line                                                          " );
+    goxy( 1, row++ ); putstring( "END    End of line                                                            " );
+    goxy( 1, row++ ); putstring( "PGUP   Move one page up                                                       " );
+    goxy( 1, row++ ); putstring( "PGDOWN Move one page down                                                     " );
+    goxy( 1, row++ ); putstring( "The mouse can be used to move the cursor, or drag to define a selection.      " );
     while( !*readkeys() ) waitvbl();
     readchars();
     curson();
 }
 
 
-#ifndef _WIN32 
+#ifndef _WIN32
     #include <strings.h>
     #define stricmp strcasecmp
 #endif
 
 
 int main( int argc, char* argv[] ) {
-    
-    #ifdef __wasm__  
+
+    #ifdef __wasm__
         // This is a hack to make web assembly builds of the editor open a source file for demo purposes
         argc = 2; argv[ 1 ] = "source/rotozoom.c";
     #endif
 
     setvideomode( videomode_80x25_9x16 );
-   
+
     if( argc != 2 ) {
         goxy( 0, 0 ); putstring( "Usage:" );
         goxy( 4, 1 ); putstring( "edit filename.ext" );
@@ -284,22 +284,22 @@ int main( int argc, char* argv[] ) {
         while( !*readkeys() ) waitvbl();
         return 1;
     }
-    
+
     int scrlines = 25;
     if( use_50lines ) {
         setvideomode( videomode_80x50_8x8 );
         scrlines = 50;
     }
-    
+
     char const* filename = argv[ 1 ];
-    
+
     int syntax_highlight = 0;
     char const* ext = strrchr( filename, '.' );
     if( ext && ( stricmp( ext, ".c" ) == 0 || stricmp( ext, ".h" ) == 0 ) ) {
         syntax_highlight = 1;
     }
 
-    
+
     struct str_t str;
 
     FILE* fp = fopen( filename, "r" );
@@ -320,7 +320,7 @@ int main( int argc, char* argv[] ) {
         str.chars = (char*)malloc(str.capacity + 1);
         *str.chars = '\0';
     }
-    
+
     int clipboard_capacity = 4096;
     int clipboard_size = 0;
     char* clipboard_chars = (char*) malloc( clipboard_capacity );
@@ -328,7 +328,7 @@ int main( int argc, char* argv[] ) {
     static STB_TexteditState state;
     stb_textedit_initialize_state( &state, 0 );
     state.row_count_per_page = scrlines - 2;
-    
+
     int prev_mx = 0;
     int prev_my = 0;
     int first = 1;
@@ -357,7 +357,7 @@ int main( int argc, char* argv[] ) {
         }
         while( *keys ) {
             unsigned long long key = ( (unsigned long long) *keys );
-            
+
             if( key == KEY_F1 ) {
                 help();
                 break;
@@ -368,15 +368,15 @@ int main( int argc, char* argv[] ) {
                 if( fp ) {
                     fprintf( fp, "%s", str.chars );
                     fclose( fp );
-                    g_modified = 0;                    
+                    g_modified = 0;
                 }
             }
 
-            if( ( key == KEY_C && keystate( KEY_CONTROL ) ) 
-                || ( key == KEY_X && keystate( KEY_CONTROL ) ) 
-                || ( key == KEY_INSERT && keystate( KEY_CONTROL ) ) 
+            if( ( key == KEY_C && keystate( KEY_CONTROL ) )
+                || ( key == KEY_X && keystate( KEY_CONTROL ) )
+                || ( key == KEY_INSERT && keystate( KEY_CONTROL ) )
                 || ( key == KEY_DELETE && keystate( KEY_SHIFT ) ) ) {
-            
+
                 int start = state.select_start;
                 int end = state.select_end;
                 if( start > end ) {
@@ -397,9 +397,9 @@ int main( int argc, char* argv[] ) {
                     stb_textedit_cut( &str, &state );
                 }
             }
-            if( ( key == KEY_V && keystate( KEY_CONTROL ) ) 
+            if( ( key == KEY_V && keystate( KEY_CONTROL ) )
                 || ( key == KEY_INSERT && keystate( KEY_SHIFT ) ) ) {
-             
+
                 stb_textedit_paste( &str, &state, clipboard_chars, clipboard_size );
             }
 
@@ -417,13 +417,13 @@ int main( int argc, char* argv[] ) {
             }
             if( key == KEY_NEXT) {
                 yscroll += state.row_count_per_page;
-            }          
-            
+            }
+
             stb_textedit_key( &str, &state, key );
             ++keys;
         }
-        
-        
+
+
         int cursrow = 0;
         int curscol = 0;
         int rows = 0;
@@ -468,7 +468,7 @@ int main( int argc, char* argv[] ) {
         if( curscol < xscroll ) {
             xscroll = curscol;
         }
-        
+
         int cursx = curscol - xscroll;
         int cursy = cursrow - yscroll;
         setbg( col_background );
@@ -501,7 +501,7 @@ int main( int argc, char* argv[] ) {
                 }
                 if( in_line_comment && *s == '\n' ) {
                     in_line_comment = 0;
-                }            
+                }
                 if( entered_block_comment != s - 1 && in_block_comment && *s == '/' && ( *(s-1) == '*' ) ) {
                     in_block_comment = 0;
                 }
@@ -553,7 +553,7 @@ int main( int argc, char* argv[] ) {
                         if( all_digits || is_float) {
                             is_number = 1;
                         } else {
-                            static char* keywords[] = { 
+                            static char* keywords[] = {
                                 "auto", "double", "int", "struct", "break", "else", "long", "switch",
                                 "case", "enum", "register", "typedef", "char", "extern", "return", "union",
                                 "const", "float", "short", "unsigned", "continue", "for", "signed", "void",
@@ -594,16 +594,16 @@ int main( int argc, char* argv[] ) {
                 }
                 if( s - str.chars >= selstart && s - str.chars < selend ) {
                     setbg( col_select_background );
-                    setcol( col_select_text );                
+                    setcol( col_select_text );
                 } else {
                     setbg( col_background );
                     setcol( col_default );
                     if( syntax_highlight ) {
                         if( in_block_comment || in_line_comment ) {
                             setcol( col_comment );
-                        } else if( in_string ) { 
+                        } else if( in_string ) {
                             setcol( col_string );
-                        } else if( in_preproc ) { 
+                        } else if( in_preproc ) {
                             setcol( col_preproc );
                         } else if( !isalnum( *s ) && *s != '_' ) {
                             setcol( col_symbol );
@@ -615,7 +615,7 @@ int main( int argc, char* argv[] ) {
                             setcol( col_default );
                         }
                     }
-                }            
+                }
                 if( *s == '\t' ) {
                     int ofs = tab_width - ( ( x + xscroll ) % tab_width );
                     for( int i = 0; i < ofs; ++i ) {
@@ -651,7 +651,7 @@ int main( int argc, char* argv[] ) {
             if( syntax_highlight ) {
                 if( in_line_comment && *s == '\n' ) {
                     in_line_comment = 0;
-                }            
+                }
                 if( entered_block_comment != s - 1 && in_block_comment && *s == '/' && ( *(s-1) == '*' ) ) {
                     in_block_comment = 0;
                 }
@@ -660,7 +660,7 @@ int main( int argc, char* argv[] ) {
                 }
                 if( in_preproc && *s == '\n' ) {
                     in_preproc = 0;
-                }            
+                }
             }
             if( *s == '\n' ) {
                 goxy(x,y);
@@ -680,7 +680,7 @@ int main( int argc, char* argv[] ) {
             ++y;
             x = 0;
         }
-        
+
         goxy( 0, scrlines - 1 );
         setbg( 7 );
         setcol( 4 ); putstring( " F1" );
@@ -695,10 +695,10 @@ int main( int argc, char* argv[] ) {
         setcol( 0 ); putstring( curs );
         if( g_modified ) {
             setcol( 0 ); putstring( "\xf" );
-        } 
+        }
         setcol( 0 ); putstring( filename );
         clreol();
-        
+
         gotoxy( cursx, cursy );
 
         if( mx < -1 ) mx = -1;
@@ -718,9 +718,13 @@ int main( int argc, char* argv[] ) {
             isdragging = 0;
         }
 
-        if( keystate( KEY_W ) && keystate( KEY_CONTROL ) )  break;
+        if( keystate( KEY_W ) )
+		{
+			if(keystate( KEY_CONTROL ))
+				break;
+		}
     }
-    
+
     free( clipboard_chars );
     free( str.chars );
 
@@ -738,22 +742,22 @@ ALTERNATIVE A - MIT License
 
 Copyright (c) 2021 Mattias Gustavsson
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ------------------------------------------------------------------------------
@@ -762,22 +766,22 @@ ALTERNATIVE B - Public Domain (www.unlicense.org)
 
 This is free and unencumbered software released into the public domain.
 
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this 
-software, either in source code form or as a compiled binary, for any purpose, 
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
+software, either in source code form or as a compiled binary, for any purpose,
 commercial or non-commercial, and by any means.
 
-In jurisdictions that recognize copyright laws, the author or authors of this 
-software dedicate any and all copyright interest in the software to the public 
-domain. We make this dedication for the benefit of the public at large and to 
-the detriment of our heirs and successors. We intend this dedication to be an 
-overt act of relinquishment in perpetuity of all present and future rights to 
+In jurisdictions that recognize copyright laws, the author or authors of this
+software dedicate any and all copyright interest in the software to the public
+domain. We make this dedication for the benefit of the public at large and to
+the detriment of our heirs and successors. We intend this dedication to be an
+overt act of relinquishment in perpetuity of all present and future rights to
 this software under copyright law.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN 
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ------------------------------------------------------------------------------

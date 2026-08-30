@@ -1,6 +1,6 @@
 // Port of fire code for Turbo Pascal (DOS) by Frank Jan Sorensen
 // I remember being very impressed by this when I first came across it.
-// I've done some minor tweaks to the code, but mostly it is just a 
+// I've done some minor tweaks to the code, but mostly it is just a
 // straight port from the Turbo Pascal version.
 //      /Mattias Gustavsson
 //---------------------------------------------------------------------
@@ -37,7 +37,7 @@ int FireIncrease =   3;   /*3 = Wood, 90 = Gazolin*/
 struct ColorValue {
     int R, G, B;
 };
- 
+
 void Hsi2Rgb( float H, float S, float I, struct ColorValue* C ) {
 /*Convert (Hue, Saturation, Intensity) -> (RGB)*/
   float T;
@@ -97,12 +97,12 @@ float Sqr( float x ) {
 
 void Help( void ) {
   readkeys();
-  setvideomode( videomode_80x25_9x16 ); 
+  setvideomode( videomode_80x25_9x16 );
   clrscr();
   gotoxy(0,0);cputs("Burn version 1.00");
-  
+
   gotoxy(0,2);cputs("Light\"n\"play");
-  
+
   gotoxy(0,4);cputs("Keys : ");
   gotoxy(0,5);cputs("<space> : Throw in a match");
   gotoxy(0,6);cputs("<W>     : Water");
@@ -111,10 +111,10 @@ void Help( void ) {
   gotoxy(0,9);cputs("<C>     : Initialize fire");
   gotoxy(0,10);cputs("<1>..<9>: Burnability (1=Wood, 9=Gaz)");
   gotoxy(0,11);cputs("<?>     : This help");
-  
+
   gotoxy(0,13);cputs("Hit any key kid >");
   while( !*readkeys() ) waitvbl();
-  setvideomode( videomode_320x200 ); 
+  setvideomode( videomode_320x200 );
   MakePal();
 };
 
@@ -129,7 +129,7 @@ int main( int argc, char* argv[] ) {
 
   Help();
   srand((unsigned)time(NULL));
-  setvideomode( videomode_320x200 ); 
+  setvideomode( videomode_320x200 );
   MoreFire=1;
   MakePal();
   unsigned char* Scr = screenbuffer();
@@ -155,7 +155,7 @@ int main( int argc, char* argv[] ) {
   while( !shuttingdown() && !keystate( KEY_ESCAPE ) ) {
     waitvbl();
     Ch = *readchars();
- 
+
     /* Put the values from FlameArray on the bottom line of the screen */
     for( I=XStart; I<=XEnd; ++I ) {
         putpixel(I,199,FlameArray[I]);
@@ -227,7 +227,7 @@ int main( int argc, char* argv[] ) {
 
   }
   /*Restore video mode*/
-  setvideomode( videomode_80x25_9x16 ); 
+  setvideomode( videomode_80x25_9x16 );
   /*Good bye*/
   return 0;
 }

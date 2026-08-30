@@ -16,7 +16,7 @@ enum bitmap_t {
     LOGO,
     BOAT,
     CHAIR,
-    GUY_CHAIR, 
+    GUY_CHAIR,
     GUY_IDLE,
     GUY_JUMP,
     GUY_LEFT,
@@ -26,21 +26,21 @@ enum bitmap_t {
     HUT_BOOK,
     HUT_BOOK_NOBULB,
     HUT_TV,
-    HUT_TV_NODISH, 
-    PALMTREE, 
+    HUT_TV_NODISH,
+    PALMTREE,
     PENGUIN,
-    PENGUIN_BATTERY, 
-    PENGUIN_WALK, 
-    RADIO_BATTERY, 
+    PENGUIN_BATTERY,
+    PENGUIN_WALK,
+    RADIO_BATTERY,
     RADIO_BATTERY_DISH,
-    RADIO_BULB, 
+    RADIO_BULB,
     RADIO_BULB_BATTERY,
     RADIO_BULB_DISH,
-    RADIO_DISH, 
-    RADIO_FULL, 
-    RADIO_NONE, 
-    RADIO_SPR, 
-    TREE2, 
+    RADIO_DISH,
+    RADIO_FULL,
+    RADIO_NONE,
+    RADIO_SPR,
+    TREE2,
 };
 
 struct {
@@ -100,20 +100,20 @@ void loadbitmaps( void ) {
                 sprintf( temp, filename, j + 1 );
                 int w = 0;
                 int h = 0;
-                bitmaps[ i ].pixels[ j ] = loadgif( temp, &w, &h, &palcount, palette );            
+                bitmaps[ i ].pixels[ j ] = loadgif( temp, &w, &h, &palcount, palette );
                 if( !bitmaps[ i ].pixels[ j ] ) {
                     bitmaps[ i ].cels = j;
                     break;
                 } else {
-                    bitmaps[ i ].w = w; 
+                    bitmaps[ i ].w = w;
                     bitmaps[ i ].h = h;
                 }
             }
         } else {
-            bitmaps[ i ].pixels[ 0 ] = loadgif( filename, &bitmaps[ i ].w, &bitmaps[ i ].h, &palcount, palette );            
+            bitmaps[ i ].pixels[ 0 ] = loadgif( filename, &bitmaps[ i ].w, &bitmaps[ i ].h, &palcount, palette );
             bitmaps[ i ].cels = 1;
         }
-    } 
+    }
 }
 
 
@@ -409,7 +409,7 @@ void execdialog( void ) {
 		case DIALOG_STATE_RUN_DIALOG: {
 			rundialogline();
 		} break;
-		
+
 		case DIALOG_STATE_DISPLAYING_SPEECH: {
             ++dialog.current_index;
 			rundialogline();
@@ -469,12 +469,12 @@ void setup_speech( int speech, char const* character )
         int wrap;
     } speech_settings[] = {
 		{ "player_sitting", 50, 85, COLOR_GREEN, 220 },
-		{ "player", 20, 60, COLOR_GREEN, 220 }, 
-		{ "player_hut", 100, 60, COLOR_GREEN, 220 }, 
-		{ "player_radio", 50, 20, COLOR_GREEN, 220 }, 
-		{ "tv_guy", 20, 20, COLOR_YELLOW, 220 }, 
-		{ "book_guy", 20, 20, COLOR_CYAN, 220 }, 
-		{ "penguin", 185, 75, COLOR_ORANGE, 120 }, 
+		{ "player", 20, 60, COLOR_GREEN, 220 },
+		{ "player_hut", 100, 60, COLOR_GREEN, 220 },
+		{ "player_radio", 50, 20, COLOR_GREEN, 220 },
+		{ "tv_guy", 20, 20, COLOR_YELLOW, 220 },
+		{ "book_guy", 20, 20, COLOR_CYAN, 220 },
+		{ "penguin", 185, 75, COLOR_ORANGE, 120 },
 	};
 
     for( int i = 0; i < sizeof( speech_settings ) / sizeof( *speech_settings ) ; ++i ) {
@@ -488,44 +488,44 @@ void setup_speech( int speech, char const* character )
 }
 
 
-float ease_in_out_quad( float t ) { 
-	return ( ( t *= 2.0f ) < 1.0f ) 
-		? ( 0.5f * t * t ) 
-		: ( -0.5f * ( ( t - 1.0f ) * ( t - 3.0f ) - 1.0f ) ); 
+float ease_in_out_quad( float t ) {
+	return ( ( t *= 2.0f ) < 1.0f )
+		? ( 0.5f * t * t )
+		: ( -0.5f * ( ( t - 1.0f ) * ( t - 3.0f ) - 1.0f ) );
 }
 
 
-float ease_out_quad( float t ) { 
-	return -t * ( t - 2.0f ); 
+float ease_out_quad( float t ) {
+	return -t * ( t - 2.0f );
 }
 
 
-float ease_out_elastic( float t ) { 
+float ease_out_elastic( float t ) {
 	if( t == 0.0f ) {
-        return 0.0f; 	
+        return 0.0f;
     }
 	if( t == 1.0f ) {
-        return 1.0f; 
+        return 1.0f;
     }
-	
-	float p = 0.4f; 
-	float s = p / 4.0f; 
-	return ( (float)pow( 2.0f, -10.0f * t ) * (float)sin( ( t - s ) * ( 2.0f * (float)acos( -1.0f ) ) / p ) + 1.0f ); 
+
+	float p = 0.4f;
+	float s = p / 4.0f;
+	return ( (float)pow( 2.0f, -10.0f * t ) * (float)sin( ( t - s ) * ( 2.0f * (float)acos( -1.0f ) ) / p ) + 1.0f );
 }
 
 
-float ease_out_bounce( float t ) { 
+float ease_out_bounce( float t ) {
 	if( t < ( 1.0f / 2.75f ) ) {
-		return 7.5625f * t * t; 
+		return 7.5625f * t * t;
     } else if( t < ( 2.0f / 2.75f ) ) {
         t -= ( 1.50f / 2.75f );
-		return 7.5625f * t * t + 0.75f; 
+		return 7.5625f * t * t + 0.75f;
     } else if( t < ( 2.5f / 2.75f ) ) {
         t -= ( 2.25f / 2.75f );
-		return 7.5625f * t * t + 0.9375f; 
+		return 7.5625f * t * t + 0.9375f;
     } else {
         t -= ( 2.625f / 2.75f );
-		return 7.5625f * t * t + 0.984375f; 
+		return 7.5625f * t * t + 0.984375f;
     }
 }
 
@@ -547,7 +547,7 @@ void title_screen( void ) {
 
 	while( !shuttingdown() ) {
         waitvbl();
-		if( keystate( KEY_ESCAPE ) ) break; 
+		if( keystate( KEY_ESCAPE ) ) break;
 		if( keystate( KEY_SPACE ) ) return;
 
         if( face_delay >= 0 ) {
@@ -599,7 +599,7 @@ int main( int argc, char* argv[] ) {
     playmusic( loadmid( "files/stranded/stranded.mid" ), 1, 255 );
 
 	title_screen();
-  
+
     int objects[ 32 ] = { 0 };
     int objects_count = 0;
 
@@ -618,9 +618,9 @@ int main( int argc, char* argv[] ) {
 
 	int xpos = 65;
 	int guy = sprite( spr_index++, xpos, 25 + o, GUY_CHAIR );
-    
+
 	int interact = label( spr_index++, 160, 70, "", COLOR_WHITE );
-    
+
     int radio_back = sprite( spr_index++, -250 + o, 0, BACKGROUND );
     sprite_hide( radio_back );
 
@@ -632,7 +632,7 @@ int main( int argc, char* argv[] ) {
 
 	int hut_bulb = sprite( spr_index++, 0, 0, HUT_BOOK );
     sprite_hide( hut_bulb );
-        	
+
     int guy_inside = sprite( spr_index++, 0, 0 + o, GUY_IDLE );
     sprite_hide( guy_inside );
 
@@ -655,7 +655,7 @@ int main( int argc, char* argv[] ) {
 	int at_hut_bulb = 0;
 	int has_dish = 0;
 	int has_bulb = 0;
-	int has_battery = 0;	  
+	int has_battery = 0;
   int shown_intro = 0;
   int boat_delay = 0;
   int boat_move = 0;
@@ -671,7 +671,7 @@ int main( int argc, char* argv[] ) {
 		sprite_origin( guy, xpos, 0 );
 		sprite_pos( guy, xpos, sprite_y( guy ) );
 		sprite_pos( background, -xpos, sprite_y( background ) );
-		sprite_pos( treeline, -xpos, sprite_y( treeline ) );			
+		sprite_pos( treeline, -xpos, sprite_y( treeline ) );
 
         if( !shown_intro ) {
             delay( 60 );
@@ -683,7 +683,7 @@ int main( int argc, char* argv[] ) {
         sprite_cel( guy, (int) anim );
 
         waitvbl();
-    
+
 		if( fadeout ) {
             if( --fadeout_delay <= 0 ) {
 			    int all_black = 1;
@@ -699,7 +699,7 @@ int main( int argc, char* argv[] ) {
 			    if( all_black ) break;;
             }
 		}
-		
+
 		if( keystate( KEY_ESCAPE ) ) break;
 
 
@@ -759,11 +759,11 @@ int main( int argc, char* argv[] ) {
                 sprite_bitmap( guy, sitting ? GUY_CHAIR : GUY_IDLE );
 				setup_speech( speech, dialogactor() );
 				label_text( speech, dialogline() );
-				if( speech_visible && *readkeys() == KEY_SPACE )  {					
+				if( speech_visible && *readkeys() == KEY_SPACE )  {
 					speech_visible = 0;
-                    label_text( speech, "" ); 
+                    label_text( speech, "" );
                     delay( 30 );
-					execdialog(); 
+					execdialog();
                     speech_visible = 1;
 				}
 			} else {
@@ -773,17 +773,17 @@ int main( int argc, char* argv[] ) {
             swapbuffers();
             continue;
 		} else {
-		    label_text( speech, "" ); 
+		    label_text( speech, "" );
 		}
-		   
-        label_text( interact, "" ); 
+
+        label_text( interact, "" );
 		if( !sitting && !at_radio && !at_hut_tv && !at_hut_bulb && !rescued ) {
 			if( is_near( radio, xpos ) ) set_interact( radio, "Radio", interact, 0 );
 			if( is_near( hut1, xpos ) ) set_interact( hut1, "Hut", interact, 0 );
 			if( is_near( hut2, xpos ) ) set_interact( hut2, "Hut", interact, 0 );
 			if( !penguin_gone && is_near( penguin, xpos ) ) set_interact( penguin, "Penguin", interact, 60 );
 			if( !has_battery && penguin_gone && is_near( penguin_battery, xpos ) ) set_interact( penguin_battery, "Battery", interact, 0 );
-				
+
 			if( keystate( KEY_LEFT ) )  {
 				xpos -= 2;
 				if( xpos < 10 ) xpos = 10;
@@ -831,7 +831,7 @@ int main( int argc, char* argv[] ) {
 					sprite_show( radio_back );
 					at_radio = 1;
 				}
-				
+
                 if( is_near( hut1, xpos ) ) {
 					sprite_show( hut_tv_pic );
 					sprite_show( guy_inside );
@@ -882,7 +882,7 @@ int main( int argc, char* argv[] ) {
 		} else if( sitting && may_stand ) {
 			if( *readkeys() == KEY_SPACE ) {
 				sitting = 0;
-                sprite( guy, 0, 30+o, GUY_IDLE ); 
+                sprite( guy, 0, 30+o, GUY_IDLE );
 			}
 		} else if( at_radio ) {
 			if( *readkeys() == KEY_SPACE ) {
@@ -897,7 +897,7 @@ int main( int argc, char* argv[] ) {
 		            sprite_pos( guy, xpos, sprite_y( guy ) );
                     boat_delay = 90;
                     boat_move = 0;
-					fadeout = 1; 
+					fadeout = 1;
 				}
 			}
 		} else if( at_hut_tv ) {
@@ -951,22 +951,22 @@ ALTERNATIVE A - MIT License
 
 Copyright (c) 2021 Mattias Gustavsson
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ------------------------------------------------------------------------------
@@ -975,22 +975,22 @@ ALTERNATIVE B - Public Domain (www.unlicense.org)
 
 This is free and unencumbered software released into the public domain.
 
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this 
-software, either in source code form or as a compiled binary, for any purpose, 
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
+software, either in source code form or as a compiled binary, for any purpose,
 commercial or non-commercial, and by any means.
 
-In jurisdictions that recognize copyright laws, the author or authors of this 
-software dedicate any and all copyright interest in the software to the public 
-domain. We make this dedication for the benefit of the public at large and to 
-the detriment of our heirs and successors. We intend this dedication to be an 
-overt act of relinquishment in perpetuity of all present and future rights to 
+In jurisdictions that recognize copyright laws, the author or authors of this
+software dedicate any and all copyright interest in the software to the public
+domain. We make this dedication for the benefit of the public at large and to
+the detriment of our heirs and successors. We intend this dedication to be an
+overt act of relinquishment in perpetuity of all present and future rights to
 this software under copyright law.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN 
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ------------------------------------------------------------------------------
